@@ -1,4 +1,3 @@
-
 import {
   BarChart3,
   PackageSearch,
@@ -149,22 +148,15 @@ const DashboardSidebar = () => {
       >
         {/* Logo area */}
         <div className="flex items-center justify-between h-14 px-4 border-b border-gray-800 flex-shrink-0">
-          <AnimatePresence mode="wait">
-            {!collapsed && (
-              <motion.div
-                key="logo-text"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="flex items-center gap-2"
-              >
-                <ShoppingCart className="h-5 w-5 text-green-500" />
-                <span className="whitespace-nowrap overflow-hidden font-bold text-lg text-green-500">
-                  ShopNerd
-                </span>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {!collapsed && (
+            <div className="flex items-center gap-2">
+              <ShoppingCart className="h-5 w-5 text-green-500" />
+              <span className="whitespace-nowrap overflow-hidden font-bold text-lg text-green-500">
+                ShopNerd
+              </span>
+            </div>
+          )}
+
           <Button
             variant="ghost"
             size="icon"
@@ -198,8 +190,8 @@ const DashboardSidebar = () => {
                       to={link.href}
                       className={cn(
                         "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors",
-                        isActive(link.href) 
-                          ? "bg-gray-800 text-white" 
+                        isActive(link.href)
+                          ? "bg-gray-800 text-white"
                           : "text-gray-300 hover:text-white hover:bg-gray-800",
                         collapsed && "justify-center px-0"
                       )}
@@ -215,15 +207,15 @@ const DashboardSidebar = () => {
                       >
                         {link.icon}
                       </div>
-                      
+
                       {!collapsed && (
                         <motion.span
                           layout
                           className="whitespace-nowrap overflow-hidden"
                           style={{ display: "inline-block" }}
-                          transition={{ 
+                          transition={{
                             duration: 0.15,
-                            ease: "easeOut"
+                            ease: "easeOut",
                           }}
                         >
                           {link.label}
@@ -251,8 +243,8 @@ const DashboardSidebar = () => {
                       to={link.href}
                       className={cn(
                         "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors",
-                        isActive(link.href) 
-                          ? "bg-gray-800 text-white" 
+                        isActive(link.href)
+                          ? "bg-gray-800 text-white"
                           : "text-gray-300 hover:text-white hover:bg-gray-800",
                         collapsed && "justify-center px-0"
                       )}
@@ -268,15 +260,15 @@ const DashboardSidebar = () => {
                       >
                         {link.icon}
                       </div>
-                      
+
                       {!collapsed && (
                         <motion.span
                           layout
                           className="whitespace-nowrap overflow-hidden"
                           style={{ display: "inline-block" }}
-                          transition={{ 
+                          transition={{
                             duration: 0.15,
-                            ease: "easeOut"
+                            ease: "easeOut",
                           }}
                         >
                           {link.label}
@@ -298,8 +290,8 @@ const DashboardSidebar = () => {
                     to={link.href}
                     className={cn(
                       "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors",
-                      isActive(link.href) 
-                        ? "bg-gray-800 text-white" 
+                      isActive(link.href)
+                        ? "bg-gray-800 text-white"
                         : "text-gray-300 hover:text-white hover:bg-gray-800",
                       collapsed && "justify-center px-0"
                     )}
@@ -315,15 +307,15 @@ const DashboardSidebar = () => {
                     >
                       {link.icon}
                     </div>
-                    
+
                     {!collapsed && (
                       <motion.span
                         layout
                         className="whitespace-nowrap overflow-hidden"
                         style={{ display: "inline-block" }}
-                        transition={{ 
+                        transition={{
                           duration: 0.15,
-                          ease: "easeOut"
+                          ease: "easeOut",
                         }}
                       >
                         {link.label}
