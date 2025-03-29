@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import {
   BarChart,
@@ -329,10 +328,7 @@ const Dashboard = () => {
             }
             className="md:col-span-1"
           />
-          <AppEcosystemCard apps={appEcosystemData} className="md:col-span-2 lg:col-span-1" />
-          <div className="md:col-span-3 lg:col-span-1">
-            <ProductPerformanceTable products={productPerformanceData.slice(0, 3)} />
-          </div>
+          <AppEcosystemCard apps={appEcosystemData} className="md:col-span-2 lg:col-span-2" />
         </div>
 
         <div className="grid gap-4">
