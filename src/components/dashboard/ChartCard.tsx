@@ -24,15 +24,15 @@ const ChartCard: React.FC<ChartCardProps> = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <Card className={cn("overflow-hidden purple-highlight", className)}>
+      <Card className={cn("overflow-hidden", className)}>
         <CardHeader className="pb-2 flex flex-row items-start justify-between">
           <div>
-            <CardTitle className="text-md font-medium tracking-tight text-glow">{title}</CardTitle>
+            <CardTitle className="text-md font-medium">{title}</CardTitle>
             {description && (
               <p className="text-sm text-muted-foreground mt-1">{description}</p>
             )}
           </div>
-          <div className="rounded-full p-1.5 bg-primary/20 text-primary purple-glow">
+          <div className="rounded-full p-1.5 bg-primary/10 text-primary">
             <ArrowUpRight className="h-4 w-4" />
           </div>
         </CardHeader>
