@@ -435,80 +435,26 @@ const Sales = () => {
             </Card>
           </motion.div>
 
-          {/* Average Order Value (AOV) Trend */}
-          <motion.div className="lg:col-span-1" variants={itemVariants}>
-            <Card className="matrix-flow shadow-glow-sm h-full">
-              <CardHeader>
-                <CardTitle className="terminal-text">AOV Trend</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ResponsiveContainer width="100%" height={350}>
-                  <BarChart
-                    data={aovData}
-                    margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
-                  >
-                    <defs>
-                      <linearGradient id="colorAOV" x1="0" y1="0" x2="0" y2="1">
-                        <stop
-                          offset="5%"
-                          stopColor="#8b5cf6"
-                          stopOpacity={0.8}
-                        />
-                        <stop
-                          offset="95%"
-                          stopColor="#8b5cf6"
-                          stopOpacity={0.2}
-                        />
-                      </linearGradient>
-                      <filter id="shadow-aov" height="200%">
-                        <feDropShadow
-                          dx="0"
-                          dy="4"
-                          stdDeviation="8"
-                          floodColor="#8b5cf6"
-                          floodOpacity="0.2"
-                        />
-                      </filter>
-                    </defs>
-                    <CartesianGrid
-                      strokeDasharray="3 3"
-                      vertical={false}
-                      stroke="#333"
-                      opacity={0.2}
-                    />
-                    <XAxis
-                      dataKey="name"
-                      stroke="#999"
-                      axisLine={false}
-                      tickLine={false}
-                      dy={10}
-                    />
-                    <YAxis
-                      stroke="#999"
-                      axisLine={false}
-                      tickLine={false}
-                      dx={-10}
-                    />
-                    <Tooltip
-                      contentStyle={glassStyle}
-                      cursor={{ fill: "rgba(255, 255, 255, 0.05)" }}
-                      formatter={(value) => [`$${value}`, "AOV"]}
-                      animationDuration={300}
-                    />
-                    <Bar
-                      dataKey="value"
-                      name="AOV"
-                      fill="url(#colorAOV)"
-                      radius={[8, 8, 0, 0]}
-                      filter="url(#shadow-aov)"
-                      animationDuration={1500}
-                      animationEasing="ease"
-                      isAnimationActive={true}
-                    />
-                  </BarChart>
-                </ResponsiveContainer>
-              </CardContent>
-            </Card>
+          {/* By Location - Map preview */}
+          <motion.div variants={itemVariants}>
+            <ChartCard
+              title="Sales by Location"
+              chart={
+                <div className="h-[380px] flex flex-col">
+                  <SalesMapChart data={salesByLocation} />
+                  <div className="mt-auto">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full mt-2 backdrop-blur-sm bg-background/40 hover:bg-background/60 transition-all"
+                    >
+                      <MapPin className="mr-2 h-4 w-4" />
+                      View Full Map
+                    </Button>
+                  </div>
+                </div>
+              }
+            />
           </motion.div>
         </motion.div>
 
@@ -614,26 +560,80 @@ const Sales = () => {
             />
           </motion.div>
 
-          {/* By Location - Map preview */}
-          <motion.div variants={itemVariants}>
-            <ChartCard
-              title="Sales by Location"
-              chart={
-                <div className="h-[280px] flex flex-col">
-                  <SalesMapChart data={salesByLocation} />
-                  <div className="mt-auto">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="w-full mt-2 backdrop-blur-sm bg-background/40 hover:bg-background/60 transition-all"
-                    >
-                      <MapPin className="mr-2 h-4 w-4" />
-                      View Full Map
-                    </Button>
-                  </div>
-                </div>
-              }
-            />
+          {/* Average Order Value (AOV) Trend */}
+          <motion.div className="lg:col-span-1" variants={itemVariants}>
+            <Card className="matrix-flow shadow-glow-sm h-full">
+              <CardHeader>
+                <CardTitle className="terminal-text">AOV Trend</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ResponsiveContainer width="100%" height={350}>
+                  <BarChart
+                    data={aovData}
+                    margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
+                  >
+                    <defs>
+                      <linearGradient id="colorAOV" x1="0" y1="0" x2="0" y2="1">
+                        <stop
+                          offset="5%"
+                          stopColor="#8b5cf6"
+                          stopOpacity={0.8}
+                        />
+                        <stop
+                          offset="95%"
+                          stopColor="#8b5cf6"
+                          stopOpacity={0.2}
+                        />
+                      </linearGradient>
+                      <filter id="shadow-aov" height="200%">
+                        <feDropShadow
+                          dx="0"
+                          dy="4"
+                          stdDeviation="8"
+                          floodColor="#8b5cf6"
+                          floodOpacity="0.2"
+                        />
+                      </filter>
+                    </defs>
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      vertical={false}
+                      stroke="#333"
+                      opacity={0.2}
+                    />
+                    <XAxis
+                      dataKey="name"
+                      stroke="#999"
+                      axisLine={false}
+                      tickLine={false}
+                      dy={10}
+                    />
+                    <YAxis
+                      stroke="#999"
+                      axisLine={false}
+                      tickLine={false}
+                      dx={-10}
+                    />
+                    <Tooltip
+                      contentStyle={glassStyle}
+                      cursor={{ fill: "rgba(255, 255, 255, 0.05)" }}
+                      formatter={(value) => [`$${value}`, "AOV"]}
+                      animationDuration={300}
+                    />
+                    <Bar
+                      dataKey="value"
+                      name="AOV"
+                      fill="url(#colorAOV)"
+                      radius={[8, 8, 0, 0]}
+                      filter="url(#shadow-aov)"
+                      animationDuration={1500}
+                      animationEasing="ease"
+                      isAnimationActive={true}
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
           </motion.div>
         </motion.div>
 
