@@ -116,6 +116,16 @@ const Dashboard = () => {
     setActiveIndex(index);
   };
 
+  // Custom renderer for the pie chart legend
+  const renderColorfulLegendText = (value, entry) => {
+    const { color } = entry;
+    return (
+      <span style={{ color: '#ccc', fontSize: '12px', marginLeft: '5px' }}>
+        {value}
+      </span>
+    );
+  };
+
   return (
     <DashboardLayout>
       <div className="space-y-6 animate-fade-in">
@@ -322,6 +332,21 @@ const Dashboard = () => {
                       backdropFilter: "blur(12px)",
                       boxShadow: "0 10px 15px rgba(0, 0, 0, 0.3)",
                       color: "#fff"
+                    }}
+                  />
+                  <Legend 
+                    layout="horizontal" 
+                    verticalAlign="bottom" 
+                    align="center"
+                    formatter={renderColorfulLegendText}
+                    iconSize={10}
+                    iconType="circle"
+                    wrapperStyle={{
+                      padding: "10px 5px",
+                      borderRadius: "5px",
+                      backgroundColor: "rgba(17, 25, 40, 0.5)", 
+                      backdropFilter: "blur(8px)",
+                      border: "1px solid rgba(255, 255, 255, 0.1)",
                     }}
                   />
                 </PieChart>
