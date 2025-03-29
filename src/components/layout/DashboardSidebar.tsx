@@ -109,7 +109,7 @@ const DashboardSidebar = () => {
       <Button
         variant="ghost"
         size="icon"
-        className="fixed top-3 left-3 z-40 flex items-center justify-center md:hidden hover:bg-background/90 shadow-sm"
+        className="fixed top-3 left-3 z-40 flex items-center justify-center md:hidden hover:bg-accent shadow-sm"
         onClick={() => setMobileOpen(!mobileOpen)}
       >
         <Menu className="h-6 w-6 text-foreground" />
@@ -132,7 +132,7 @@ const DashboardSidebar = () => {
       {/* Sidebar with animation */}
       <motion.div
         className={cn(
-          "flex flex-col border-r bg-sidebar fixed md:sticky top-0 h-screen z-40 overflow-hidden",
+          "flex flex-col border-r bg-card fixed md:sticky top-0 h-screen z-40 overflow-hidden",
           collapsed ? "w-[70px]" : "w-[240px]"
         )}
         initial={isMobile ? { x: "-100%" } : false}
@@ -147,11 +147,11 @@ const DashboardSidebar = () => {
         }}
       >
         {/* Logo area */}
-        <div className="flex items-center justify-between h-14 px-4 border-b border-sidebar-border flex-shrink-0">
+        <div className="flex items-center justify-between h-14 px-4 border-b border-border flex-shrink-0">
           {!collapsed && (
-            <div className="flex items-center gap-2">
-              <ShoppingCart className="h-5 w-5 text-primary" />
-              <span className="whitespace-nowrap overflow-hidden font-bold text-lg text-primary">
+            <div className="flex items-center gap-2 justify-center">
+              <ShoppingCart className="h-6 w-6 terminal-text" />
+              <span className="whitespace-nowrap overflow-hidden font-bold text-lg terminal-text">
                 ShopNerd
               </span>
             </div>
@@ -160,7 +160,7 @@ const DashboardSidebar = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="hidden md:flex text-sidebar-foreground hover:text-sidebar-foreground hover:bg-sidebar-accent"
+            className="hidden md:flex text-muted-foreground hover:text-foreground hover:bg-accent/50"
             onClick={() => setCollapsed(!collapsed)}
           >
             {collapsed ? (
@@ -178,7 +178,7 @@ const DashboardSidebar = () => {
             <div>
               {!collapsed && (
                 <div className="px-4 mb-2">
-                  <p className="text-xs font-semibold text-sidebar-foreground/70 uppercase tracking-wider">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                     MAIN
                   </p>
                 </div>
@@ -191,8 +191,8 @@ const DashboardSidebar = () => {
                       className={cn(
                         "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors",
                         isActive(link.href)
-                          ? "bg-sidebar-primary text-sidebar-primary-foreground"
-                          : "text-sidebar-foreground hover:text-sidebar-primary-foreground hover:bg-white",
+                          ? "bg-black/60 border border-[#00ff00]/40 text-[#00ff00] "
+                          : "text-foreground hover:text-[#00ff00] hover:bg-accent/50",
                         collapsed && "justify-center px-0"
                       )}
                       onClick={() => {
@@ -231,7 +231,7 @@ const DashboardSidebar = () => {
             <div>
               {!collapsed && (
                 <div className="px-4 mb-2">
-                  <p className="text-xs font-semibold text-sidebar-foreground/70 uppercase tracking-wider">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                     ANALYZE
                   </p>
                 </div>
@@ -244,8 +244,8 @@ const DashboardSidebar = () => {
                       className={cn(
                         "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors",
                         isActive(link.href)
-                          ? "bg-sidebar-primary text-sidebar-primary-foreground"
-                          : "text-sidebar-foreground hover:text-sidebar-primary-foreground hover:bg-sidebar-accent",
+                          ? "bg-black/60 border border-[#00ff00]/40 text-[#00ff00] shadow-[0_0_10px_rgba(0,255,0,0.2)]"
+                          : "text-foreground hover:text-[#00ff00] hover:bg-accent/50",
                         collapsed && "justify-center px-0"
                       )}
                       onClick={() => {
@@ -291,8 +291,8 @@ const DashboardSidebar = () => {
                     className={cn(
                       "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors",
                       isActive(link.href)
-                        ? "bg-sidebar-primary text-sidebar-primary-foreground"
-                        : "text-sidebar-foreground hover:text-sidebar-primary-foreground hover:bg-sidebar-accent",
+                        ? "bg-black/60 border border-[#00ff00]/40 text-[#00ff00] shadow-[0_0_10px_rgba(0,255,0,0.2)]"
+                        : "text-foreground hover:text-[#00ff00] hover:bg-accent/50",
                       collapsed && "justify-center px-0"
                     )}
                     onClick={() => {
