@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
@@ -29,7 +28,7 @@ const StatCard: React.FC<StatCardProps> = ({
       <CardContent className="p-6">
         <div className="flex justify-between">
           <div>
-            <p className="text-sm font-medium text-primary terminal-text">{title}</p>
+            <p className="text-sm font-medium terminal-text">{title}</p>
             <h3 className="text-2xl font-bold mt-2">{value}</h3>
             {change && (
               <div className="flex items-center mt-2">
@@ -45,7 +44,9 @@ const StatCard: React.FC<StatCardProps> = ({
                   {Math.abs(change)}%
                 </div>
                 {changeLabel && (
-                  <p className="text-xs text-muted-foreground ml-1">{changeLabel}</p>
+                  <p className="text-xs text-muted-foreground ml-1">
+                    {changeLabel}
+                  </p>
                 )}
               </div>
             )}
