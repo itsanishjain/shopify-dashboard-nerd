@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import {
   BarChart,
@@ -13,6 +14,7 @@ import {
   PieChart,
   Pie,
   Cell,
+  Sector,
 } from "recharts";
 import {
   Calendar,
@@ -44,10 +46,75 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const COLORS = ["#22c55e", "#0891b2", "#4f46e5", "#8b5cf6", "#ec4899"];
+// Modern, vibrant colors for the pie chart
+const COLORS = ["#8b5cf6", "#06b6d4", "#10b981", "#f59e0b", "#ef4444"];
+
+// Custom active shape for the pie chart when hovering
+const renderActiveShape = (props) => {
+  const RADIAN = Math.PI / 180;
+  const {
+    cx,
+    cy,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    startAngle,
+    endAngle,
+    fill,
+    payload,
+    percent,
+    value,
+  } = props;
+  const sin = Math.sin(-RADIAN * midAngle);
+  const cos = Math.cos(-RADIAN * midAngle);
+  const sx = cx + (outerRadius + 10) * cos;
+  const sy = cy + (outerRadius + 10) * sin;
+  const mx = cx + (outerRadius + 30) * cos;
+  const my = cy + (outerRadius + 30) * sin;
+  const ex = mx + (cos >= 0 ? 1 : -1) * 22;
+  const ey = my;
+  const textAnchor = cos >= 0 ? "start" : "end";
+
+  return (
+    <g>
+      <Sector
+        cx={cx}
+        cy={cy}
+        innerRadius={innerRadius}
+        outerRadius={outerRadius}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        fill={fill}
+        className="drop-shadow-lg"
+      />
+      <Sector
+        cx={cx}
+        cy={cy}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        innerRadius={outerRadius + 6}
+        outerRadius={outerRadius + 10}
+        fill={fill}
+      />
+      <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
+      <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
+      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#ccc" className="text-xs">
+        {`${payload.name}`}
+      </text>
+      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999" className="text-xs">
+        {`${value} (${(percent * 100).toFixed(0)}%)`}
+      </text>
+    </g>
+  );
+};
 
 const Dashboard = () => {
   const [dateRange, setDateRange] = useState("last30");
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const onPieEnter = (_, index) => {
+    setActiveIndex(index);
+  };
 
   return (
     <DashboardLayout>
@@ -227,29 +294,34 @@ const Dashboard = () => {
               <ResponsiveContainer width="100%" height={240}>
                 <PieChart>
                   <Pie
+                    activeIndex={activeIndex}
+                    activeShape={renderActiveShape}
                     data={productCategoryData}
                     cx="50%"
                     cy="50%"
-                    labelLine={false}
+                    innerRadius={60}
                     outerRadius={80}
-                    fill="#8884d8"
+                    paddingAngle={5}
                     dataKey="value"
-                    label={({ name, percent }) =>
-                      `${name}: ${(percent * 100).toFixed(0)}%`
-                    }
+                    onMouseEnter={onPieEnter}
                   >
                     {productCategoryData.map((entry, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={COLORS[index % COLORS.length]}
+                      <Cell 
+                        key={`cell-${index}`} 
+                        fill={COLORS[index % COLORS.length]} 
+                        strokeWidth={2}
+                        stroke="rgba(0, 0, 0, 0.2)"
                       />
                     ))}
                   </Pie>
-                  <Tooltip
+                  <Tooltip 
                     contentStyle={{
-                      backgroundColor: "#222",
-                      borderColor: "#333",
-                      color: "#fff",
+                      backgroundColor: "rgba(17, 25, 40, 0.8)",
+                      borderRadius: "8px",
+                      border: "1px solid rgba(255, 255, 255, 0.1)",
+                      backdropFilter: "blur(12px)",
+                      boxShadow: "0 10px 15px rgba(0, 0, 0, 0.3)",
+                      color: "#fff"
                     }}
                   />
                 </PieChart>
