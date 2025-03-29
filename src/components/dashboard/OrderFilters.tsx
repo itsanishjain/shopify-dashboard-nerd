@@ -19,6 +19,7 @@ import {
 import { Order } from "@/data/orderData";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
+import { DateRange } from "react-day-picker";
 
 interface OrderFiltersProps {
   data: Order[];
@@ -26,14 +27,11 @@ interface OrderFiltersProps {
 }
 
 const OrderFilters: React.FC<OrderFiltersProps> = ({ data, onFilterChange }) => {
-  const [dateRange, setDateRange] = useState<{
-    from: Date | undefined;
-    to: Date | undefined;
-  }>({
+  const [dateRange, setDateRange] = useState<DateRange>({
     from: undefined,
     to: undefined,
   });
-  const [statusFilter, setStatusFilter] = useState<string>("");
+  const [statusFilter, setStatusFilter] = useState<string>("all");
   const [minPrice, setMinPrice] = useState<string>("");
   const [maxPrice, setMaxPrice] = useState<string>("");
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
@@ -53,7 +51,7 @@ const OrderFilters: React.FC<OrderFiltersProps> = ({ data, onFilterChange }) => 
     }
 
     // Status filter
-    if (statusFilter) {
+    if (statusFilter && statusFilter !== "all") {
       filteredOrders = filteredOrders.filter(
         (order) => order.status === statusFilter
       );
@@ -76,7 +74,7 @@ const OrderFilters: React.FC<OrderFiltersProps> = ({ data, onFilterChange }) => 
 
   const resetFilters = () => {
     setDateRange({ from: undefined, to: undefined });
-    setStatusFilter("");
+    setStatusFilter("all");
     setMinPrice("");
     setMaxPrice("");
     setActiveFilters([]);
@@ -86,7 +84,7 @@ const OrderFilters: React.FC<OrderFiltersProps> = ({ data, onFilterChange }) => 
     if (filter.startsWith("Date range")) {
       setDateRange({ from: undefined, to: undefined });
     } else if (filter.startsWith("Status")) {
-      setStatusFilter("");
+      setStatusFilter("all");
     } else if (filter.startsWith("Price")) {
       setMinPrice("");
       setMaxPrice("");
@@ -130,6 +128,7 @@ const OrderFilters: React.FC<OrderFiltersProps> = ({ data, onFilterChange }) => 
               selected={dateRange}
               onSelect={setDateRange}
               numberOfMonths={1}
+              className="pointer-events-auto"
             />
           </PopoverContent>
         </Popover>
@@ -143,7 +142,7 @@ const OrderFilters: React.FC<OrderFiltersProps> = ({ data, onFilterChange }) => 
             <SelectValue placeholder="Select status" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Statuses</SelectItem>
+            <SelectItem value="all">All Statuses</SelectItem>
             <SelectItem value="pending">Pending</SelectItem>
             <SelectItem value="processing">Processing</SelectItem>
             <SelectItem value="shipped">Shipped</SelectItem>
