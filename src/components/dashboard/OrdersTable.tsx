@@ -23,6 +23,7 @@ import {
 import { Order } from "@/data/orderData";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { cn } from "@/lib/utils";
 
 interface OrdersTableProps {
   orders: Order[];
