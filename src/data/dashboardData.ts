@@ -58,6 +58,8 @@ export const productPerformanceData = [
     status: "trending" as const,
     inventory: 56,
     conversion: 3.2,
+    profit: "$23,414.00",
+    margin: 45
   },
   {
     id: "2",
@@ -67,6 +69,8 @@ export const productPerformanceData = [
     status: "stable" as const,
     inventory: 124,
     conversion: 2.8,
+    profit: "$7,620.00",
+    margin: 38
   },
   {
     id: "3",
@@ -76,6 +80,8 @@ export const productPerformanceData = [
     status: "trending" as const,
     inventory: 16,
     conversion: 1.9,
+    profit: "$19,320.00",
+    margin: 32
   },
   {
     id: "4",
@@ -85,6 +91,8 @@ export const productPerformanceData = [
     status: "declining" as const,
     inventory: 4,
     conversion: 1.1,
+    profit: "$1,280.00",
+    margin: 16
   },
   {
     id: "5",
@@ -94,6 +102,8 @@ export const productPerformanceData = [
     status: "stable" as const,
     inventory: 32,
     conversion: 2.4,
+    profit: "$13,810.00",
+    margin: 41
   },
 ];
 
