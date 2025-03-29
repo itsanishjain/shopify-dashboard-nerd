@@ -23,7 +23,7 @@ const Products = () => {
           </div>
         </div>
         
-        <Card>
+        <Card className="w-full">
           <CardHeader className="pb-3">
             <CardTitle>Product Performance</CardTitle>
           </CardHeader>

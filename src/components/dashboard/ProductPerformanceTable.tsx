@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface Product {
   id: string;
@@ -296,7 +297,7 @@ const ProductPerformanceTable: React.FC<ProductPerformanceTableProps> = ({
         <CardTitle className="text-md font-medium terminal-text">Product Performance Analytics</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="rounded-md border overflow-x-auto">
+        <div className="w-full">
           <Table>
             <TableHeader>
               {renderTableHeader()}
