@@ -53,10 +53,6 @@ const Dashboard = () => {
     <DashboardLayout>
       <div className="space-y-6 animate-fade-in">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          {/* <h1 className="text-3xl font-bold tracking-tight terminal-text text-glow">
-            Merchant Dashboard
-          </h1> */}
-
           <div className="flex items-center ml-auto gap-4">
             <Select defaultValue={dateRange} onValueChange={setDateRange}>
               <SelectTrigger className="w-[180px]">
