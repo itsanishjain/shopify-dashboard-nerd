@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import {
   BarChart,
@@ -16,7 +15,11 @@ import {
   Cell,
 } from "recharts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getOrderCountsByDay, getOrderStatusDistribution, Order } from "@/data/orderData";
+import {
+  getOrderCountsByDay,
+  getOrderStatusDistribution,
+  Order,
+} from "@/data/orderData";
 
 interface OrdersChartProps {
   data: Order[];
@@ -37,7 +40,7 @@ const OrdersChart: React.FC<OrdersChartProps> = ({ data }) => {
         <TabsTrigger value="trend">Order Trend</TabsTrigger>
         <TabsTrigger value="status">Status Distribution</TabsTrigger>
       </TabsList>
-      
+
       <TabsContent value="daily" className="pt-4">
         <div className="h-[300px] w-full">
           <ResponsiveContainer width="100%" height="100%">
@@ -45,47 +48,76 @@ const OrdersChart: React.FC<OrdersChartProps> = ({ data }) => {
               data={dailyData}
               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
             >
-              <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis dataKey="day" />
-              <YAxis />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: "hsl(var(--background))", 
-                  borderColor: "hsl(var(--border))",
+              <defs>
+                <linearGradient id="colorTotal" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#10b981" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#10b981" stopOpacity={0.2} />
+                </linearGradient>
+                <linearGradient id="colorDelivered" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#10b981" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#10b981" stopOpacity={0.2} />
+                </linearGradient>
+                <linearGradient
+                  id="colorProcessing"
+                  x1="0"
+                  y1="0"
+                  x2="0"
+                  y2="1"
+                >
+                  <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#3b82f6" stopOpacity={0.2} />
+                </linearGradient>
+                <linearGradient id="colorCancelled" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#ef4444" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#ef4444" stopOpacity={0.2} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid
+                strokeDasharray="3 3"
+                vertical={false}
+                stroke="#333"
+              />
+              <XAxis dataKey="day" stroke="#999" />
+              <YAxis stroke="#999" />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "#222",
+                  borderColor: "#333",
+                  color: "#fff",
                   borderRadius: "8px",
-                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)"
+                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
                 }}
               />
               <Legend />
-              <Bar 
-                dataKey="total" 
-                name="Total Orders" 
-                fill="hsl(var(--primary))" 
-                radius={[4, 4, 0, 0]} 
+              <Bar
+                dataKey="total"
+                name="Total Orders"
+                fill="url(#colorTotal)"
+                radius={[4, 4, 0, 0]}
               />
-              <Bar 
-                dataKey="delivered" 
-                name="Delivered" 
-                fill="#10b981" 
-                radius={[4, 4, 0, 0]} 
+              <Bar
+                dataKey="delivered"
+                name="Delivered"
+                fill="url(#colorDelivered)"
+                radius={[4, 4, 0, 0]}
               />
-              <Bar 
-                dataKey="processing" 
-                name="Processing" 
-                fill="#3b82f6" 
-                radius={[4, 4, 0, 0]} 
+              <Bar
+                dataKey="processing"
+                name="Processing"
+                fill="url(#colorProcessing)"
+                radius={[4, 4, 0, 0]}
               />
-              <Bar 
-                dataKey="cancelled" 
-                name="Cancelled" 
-                fill="#ef4444" 
-                radius={[4, 4, 0, 0]} 
+              <Bar
+                dataKey="cancelled"
+                name="Cancelled"
+                fill="url(#colorCancelled)"
+                radius={[4, 4, 0, 0]}
               />
             </BarChart>
           </ResponsiveContainer>
         </div>
       </TabsContent>
-      
+
       <TabsContent value="trend" className="pt-4">
         <div className="h-[300px] w-full">
           <ResponsiveContainer width="100%" height="100%">
@@ -93,40 +125,61 @@ const OrdersChart: React.FC<OrdersChartProps> = ({ data }) => {
               data={dailyData}
               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
             >
-              <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis dataKey="day" />
-              <YAxis />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: "hsl(var(--background))", 
-                  borderColor: "hsl(var(--border))",
+              <defs>
+                <linearGradient id="colorTotalLine" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#10b981" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#10b981" stopOpacity={0.2} />
+                </linearGradient>
+                <linearGradient
+                  id="colorDeliveredLine"
+                  x1="0"
+                  y1="0"
+                  x2="0"
+                  y2="1"
+                >
+                  <stop offset="5%" stopColor="#10b981" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#10b981" stopOpacity={0.2} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid
+                strokeDasharray="3 3"
+                vertical={false}
+                stroke="#333"
+              />
+              <XAxis dataKey="day" stroke="#999" />
+              <YAxis stroke="#999" />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "#222",
+                  borderColor: "#333",
+                  color: "#fff",
                   borderRadius: "8px",
-                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)"
+                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
                 }}
               />
               <Legend />
-              <Line 
-                type="monotone" 
-                dataKey="total" 
-                name="Total Orders" 
-                stroke="hsl(var(--primary))" 
+              <Line
+                type="monotone"
+                dataKey="total"
+                name="Total Orders"
+                stroke="url(#colorTotalLine)"
                 strokeWidth={3}
-                dot={{ r: 4 }}
-                activeDot={{ r: 6 }}
+                dot={{ r: 4, fill: "#10b981" }}
+                activeDot={{ r: 6, fill: "#10b981" }}
               />
-              <Line 
-                type="monotone" 
-                dataKey="delivered" 
-                name="Delivered" 
-                stroke="#10b981" 
+              <Line
+                type="monotone"
+                dataKey="delivered"
+                name="Delivered"
+                stroke="url(#colorDeliveredLine)"
                 strokeWidth={2}
-                dot={{ r: 3 }}
+                dot={{ r: 3, fill: "#10b981" }}
               />
             </LineChart>
           </ResponsiveContainer>
         </div>
       </TabsContent>
-      
+
       <TabsContent value="status" className="pt-4">
         <div className="h-[300px] w-full flex items-center justify-center">
           <ResponsiveContainer width="100%" height="100%">
@@ -139,19 +192,27 @@ const OrdersChart: React.FC<OrdersChartProps> = ({ data }) => {
                 outerRadius={110}
                 fill="#8884d8"
                 dataKey="value"
-                label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                label={({ name, percent }) =>
+                  `${name} ${(percent * 100).toFixed(0)}%`
+                }
               >
                 {statusData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                    strokeWidth={2}
+                    stroke="rgba(0, 0, 0, 0.2)"
+                  />
                 ))}
               </Pie>
-              <Tooltip 
+              <Tooltip
                 formatter={(value) => [`${value} orders`, "Count"]}
-                contentStyle={{ 
-                  backgroundColor: "hsl(var(--background))", 
-                  borderColor: "hsl(var(--border))",
+                contentStyle={{
+                  backgroundColor: "#222",
+                  borderColor: "#333",
+                  color: "#fff",
                   borderRadius: "8px",
-                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)"
+                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
                 }}
               />
               <Legend />
