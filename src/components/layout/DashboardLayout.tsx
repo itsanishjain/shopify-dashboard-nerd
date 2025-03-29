@@ -1,6 +1,6 @@
 
 import React from "react";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import DashboardSidebar from "./DashboardSidebar";
 
 interface DashboardLayoutProps {
@@ -12,11 +12,11 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
         <DashboardSidebar />
-        <main className="flex-1 overflow-auto bg-background">
+        <SidebarInset>
           <div className="container py-6 mx-auto">
             {children}
           </div>
-        </main>
+        </SidebarInset>
       </div>
     </SidebarProvider>
   );
