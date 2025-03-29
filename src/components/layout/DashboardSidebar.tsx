@@ -244,7 +244,7 @@ const DashboardSidebar = () => {
                       className={cn(
                         "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors",
                         isActive(link.href)
-                          ? "bg-black/60 border border-[#00ff00]/40 text-[#00ff00] shadow-[0_0_10px_rgba(0,255,0,0.2)]"
+                          ? "bg-black/60 border border-[#00ff00]/40 text-[#00ff00] "
                           : "text-foreground hover:text-[#00ff00] hover:bg-accent/50",
                         collapsed && "justify-center px-0"
                       )}
