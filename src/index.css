@@ -139,11 +139,23 @@
     animation: data-flow 10s linear infinite;
   }
   
-  /* Dark themed card with gradient for charts/analytics */
+  /* Dark themed card with green gradient for charts/analytics */
   .analytics-card {
-    @apply bg-[#111827] border-[#1f2937] shadow-md;
-    background: linear-gradient(145deg, rgba(17, 24, 39, 1) 0%, rgba(22, 30, 46, 1) 100%);
+    @apply bg-gradient-to-br from-[#0f172a] to-[#0f1f3d] border-[#1f2937] shadow-md;
+    position: relative;
+    overflow: hidden;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  }
+  
+  .analytics-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #10b981, rgba(16, 185, 129, 0.2));
+    z-index: 1;
   }
   
   /* Special styling for card headers in analytics cards */
