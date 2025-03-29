@@ -3,7 +3,6 @@ import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { ArrowDownIcon, ArrowUpIcon } from "lucide-react";
-import { motion } from "framer-motion";
 
 interface StatCardProps {
   title: string;
@@ -26,45 +25,37 @@ const StatCard: React.FC<StatCardProps> = ({
   const isNegative = change && change < 0;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-    >
-      <Card className={cn("overflow-hidden purple-highlight", className)}>
-        <CardContent className="p-5">
-          <div className="flex justify-between items-start">
-            <div className="space-y-3">
-              <div className="flex items-center gap-1.5">
-                <p className="text-sm font-medium text-muted-foreground">{title}</p>
-              </div>
-              <div className="flex items-baseline gap-2">
-                <h3 className="text-2xl font-bold tracking-tight text-glow">{value}</h3>
-                {change && (
-                  <div
-                    className={cn(
-                      "flex items-center text-xs font-medium px-1.5 py-0.5 rounded-full",
-                      isPositive && "bg-success/20 text-success",
-                      isNegative && "bg-destructive/20 text-destructive"
-                    )}
-                  >
-                    {isPositive && <ArrowUpIcon className="h-3 w-3 mr-0.5" />}
-                    {isNegative && <ArrowDownIcon className="h-3 w-3 mr-0.5" />}
-                    {Math.abs(change)}%
-                  </div>
+    <Card className={cn("overflow-hidden", className)}>
+      <CardContent className="p-6">
+        <div className="flex justify-between">
+          <div>
+            <p className="text-sm font-medium text-primary terminal-text">{title}</p>
+            <h3 className="text-2xl font-bold mt-2">{value}</h3>
+            {change && (
+              <div className="flex items-center mt-2">
+                <div
+                  className={cn(
+                    "flex items-center text-xs font-medium",
+                    isPositive && "text-success",
+                    isNegative && "text-destructive"
+                  )}
+                >
+                  {isPositive && <ArrowUpIcon className="h-3 w-3 mr-1" />}
+                  {isNegative && <ArrowDownIcon className="h-3 w-3 mr-1" />}
+                  {Math.abs(change)}%
+                </div>
+                {changeLabel && (
+                  <p className="text-xs text-muted-foreground ml-1">{changeLabel}</p>
                 )}
               </div>
-              {changeLabel && (
-                <p className="text-xs text-muted-foreground">{changeLabel}</p>
-              )}
-            </div>
-            <div className="flex items-center justify-center h-12 w-12 rounded-xl bg-primary/20 text-primary purple-glow">
-              {icon}
-            </div>
+            )}
           </div>
-        </CardContent>
-      </Card>
-    </motion.div>
+          <div className="flex items-center justify-center h-12 w-12 rounded-full bg-accent/60">
+            {icon}
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 
