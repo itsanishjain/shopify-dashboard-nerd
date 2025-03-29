@@ -4,17 +4,19 @@ import DashboardLayout from "@/components/layout/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart, ResponsiveContainer, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts";
 import { salesData } from "@/data/dashboardData";
+import { TrendingUp } from "lucide-react";
+import ChartCard from "@/components/dashboard/ChartCard";
 
 const Sales = () => {
   return (
     <DashboardLayout>
-      <div className="space-y-6">
+      <div className="space-y-6 animate-fade-in">
         <h1 className="text-3xl font-bold tracking-tight">Sales Analytics</h1>
-        <Card>
-          <CardHeader>
-            <CardTitle>Monthly Sales Overview</CardTitle>
-          </CardHeader>
-          <CardContent>
+        
+        <ChartCard
+          title="Monthly Sales Overview"
+          description="Sales performance by month"
+          chart={
             <ResponsiveContainer width="100%" height={400}>
               <BarChart data={salesData} margin={{ top: 20 }}>
                 <defs>
@@ -42,8 +44,8 @@ const Sales = () => {
                 />
               </BarChart>
             </ResponsiveContainer>
-          </CardContent>
-        </Card>
+          }
+        />
       </div>
     </DashboardLayout>
   );
