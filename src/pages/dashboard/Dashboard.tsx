@@ -116,16 +116,6 @@ const Dashboard = () => {
     setActiveIndex(index);
   };
 
-  // Custom renderer for the pie chart legend
-  const renderColorfulLegendText = (value, entry) => {
-    const { color } = entry;
-    return (
-      <span style={{ color: '#ccc', fontSize: '12px', marginLeft: '5px' }}>
-        {value}
-      </span>
-    );
-  };
-
   return (
     <DashboardLayout>
       <div className="space-y-6 animate-fade-in">
@@ -301,7 +291,7 @@ const Dashboard = () => {
             title="Product Categories"
             description="Sales distribution by category"
             chart={
-              <ResponsiveContainer width="100%" height={240}>
+              <ResponsiveContainer width="100%" height={280}>
                 <PieChart>
                   <Pie
                     activeIndex={activeIndex}
@@ -334,27 +324,15 @@ const Dashboard = () => {
                       color: "#fff"
                     }}
                   />
-                  <Legend 
-                    layout="horizontal" 
-                    verticalAlign="bottom" 
-                    align="center"
-                    formatter={renderColorfulLegendText}
-                    iconSize={10}
-                    iconType="circle"
-                    wrapperStyle={{
-                      padding: "10px 5px",
-                      borderRadius: "5px",
-                      backgroundColor: "rgba(17, 25, 40, 0.5)", 
-                      backdropFilter: "blur(8px)",
-                      border: "1px solid rgba(255, 255, 255, 0.1)",
-                    }}
-                  />
                 </PieChart>
               </ResponsiveContainer>
             }
             className="md:col-span-1"
           />
-          <AppEcosystemCard apps={appEcosystemData} className="md:col-span-2" />
+          <AppEcosystemCard apps={appEcosystemData} className="md:col-span-2 lg:col-span-1" />
+          <div className="md:col-span-3 lg:col-span-1">
+            <ProductPerformanceTable products={productPerformanceData.slice(0, 3)} />
+          </div>
         </div>
 
         <div className="grid gap-4">
