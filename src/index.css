@@ -139,6 +139,28 @@
     animation: data-flow 10s linear infinite;
   }
   
+  /* Dark themed card with gradient for charts/analytics */
+  .analytics-card {
+    @apply bg-[#111827] border-[#1f2937] shadow-md;
+    background: linear-gradient(145deg, rgba(17, 24, 39, 1) 0%, rgba(22, 30, 46, 1) 100%);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Special styling for card headers in analytics cards */
+  .analytics-card-header {
+    @apply border-b border-[#1f2937] pb-4 px-6 pt-6;
+  }
+  
+  /* Chart title styling */
+  .chart-title {
+    @apply text-xl font-semibold text-white flex items-center;
+  }
+  
+  /* Chart description styling */
+  .chart-description {
+    @apply text-sm text-gray-400 mt-1;
+  }
+  
   /* Hacker-style glow effects */
   .glow {
     box-shadow: 0 0 5px rgba(16, 185, 129, 0.5),

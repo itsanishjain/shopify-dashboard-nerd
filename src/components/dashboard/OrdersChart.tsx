@@ -32,10 +32,10 @@ const OrdersChart: React.FC<OrdersChartProps> = ({ data }) => {
 
   return (
     <Tabs defaultValue="daily" className="w-full" onValueChange={setActiveTab}>
-      <TabsList className="grid w-full grid-cols-3">
-        <TabsTrigger value="daily">Daily Orders</TabsTrigger>
-        <TabsTrigger value="trend">Order Trend</TabsTrigger>
-        <TabsTrigger value="status">Status Distribution</TabsTrigger>
+      <TabsList className="grid w-full grid-cols-3 bg-[#1f2937] mb-4">
+        <TabsTrigger value="daily" className="data-[state=active]:bg-[#111827] data-[state=active]:text-white">Daily Orders</TabsTrigger>
+        <TabsTrigger value="trend" className="data-[state=active]:bg-[#111827] data-[state=active]:text-white">Order Trend</TabsTrigger>
+        <TabsTrigger value="status" className="data-[state=active]:bg-[#111827] data-[state=active]:text-white">Status Distribution</TabsTrigger>
       </TabsList>
       
       <TabsContent value="daily" className="pt-4">
@@ -45,22 +45,23 @@ const OrdersChart: React.FC<OrdersChartProps> = ({ data }) => {
               data={dailyData}
               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
             >
-              <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis dataKey="day" />
-              <YAxis />
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#334155" opacity={0.5} />
+              <XAxis dataKey="day" stroke="#94a3b8" />
+              <YAxis stroke="#94a3b8" />
               <Tooltip 
                 contentStyle={{ 
-                  backgroundColor: "hsl(var(--background))", 
-                  borderColor: "hsl(var(--border))",
+                  backgroundColor: "#1f2937", 
+                  borderColor: "#334155",
                   borderRadius: "8px",
-                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)"
+                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
+                  color: "white"
                 }}
               />
-              <Legend />
+              <Legend wrapperStyle={{ color: "#94a3b8" }} />
               <Bar 
                 dataKey="total" 
                 name="Total Orders" 
-                fill="hsl(var(--primary))" 
+                fill="#10b981" 
                 radius={[4, 4, 0, 0]} 
               />
               <Bar 
@@ -68,6 +69,7 @@ const OrdersChart: React.FC<OrdersChartProps> = ({ data }) => {
                 name="Delivered" 
                 fill="#10b981" 
                 radius={[4, 4, 0, 0]} 
+                fillOpacity={0.7}
               />
               <Bar 
                 dataKey="processing" 
@@ -93,26 +95,27 @@ const OrdersChart: React.FC<OrdersChartProps> = ({ data }) => {
               data={dailyData}
               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
             >
-              <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis dataKey="day" />
-              <YAxis />
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#334155" opacity={0.5} />
+              <XAxis dataKey="day" stroke="#94a3b8" />
+              <YAxis stroke="#94a3b8" />
               <Tooltip 
                 contentStyle={{ 
-                  backgroundColor: "hsl(var(--background))", 
-                  borderColor: "hsl(var(--border))",
+                  backgroundColor: "#1f2937", 
+                  borderColor: "#334155",
                   borderRadius: "8px",
-                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)"
+                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
+                  color: "white"
                 }}
               />
-              <Legend />
+              <Legend wrapperStyle={{ color: "#94a3b8" }} />
               <Line 
                 type="monotone" 
                 dataKey="total" 
                 name="Total Orders" 
-                stroke="hsl(var(--primary))" 
+                stroke="#10b981" 
                 strokeWidth={3}
-                dot={{ r: 4 }}
-                activeDot={{ r: 6 }}
+                dot={{ r: 4, fill: "#10b981", stroke: "#10b981" }}
+                activeDot={{ r: 6, fill: "#10b981", stroke: "white" }}
               />
               <Line 
                 type="monotone" 
@@ -120,7 +123,8 @@ const OrdersChart: React.FC<OrdersChartProps> = ({ data }) => {
                 name="Delivered" 
                 stroke="#10b981" 
                 strokeWidth={2}
-                dot={{ r: 3 }}
+                strokeOpacity={0.7}
+                dot={{ r: 3, fill: "#10b981", strokeOpacity: 0.7 }}
               />
             </LineChart>
           </ResponsiveContainer>
@@ -148,13 +152,14 @@ const OrdersChart: React.FC<OrdersChartProps> = ({ data }) => {
               <Tooltip 
                 formatter={(value) => [`${value} orders`, "Count"]}
                 contentStyle={{ 
-                  backgroundColor: "hsl(var(--background))", 
-                  borderColor: "hsl(var(--border))",
+                  backgroundColor: "#1f2937", 
+                  borderColor: "#334155",
                   borderRadius: "8px",
-                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)"
+                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
+                  color: "white"
                 }}
               />
-              <Legend />
+              <Legend wrapperStyle={{ color: "#94a3b8" }} />
             </PieChart>
           </ResponsiveContainer>
         </div>
