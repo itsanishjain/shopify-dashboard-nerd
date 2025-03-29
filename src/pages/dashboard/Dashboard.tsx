@@ -95,12 +95,29 @@ const renderActiveShape = (props) => {
         outerRadius={outerRadius + 10}
         fill={fill}
       />
-      <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
+      <path
+        d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
+        stroke={fill}
+        fill="none"
+      />
       <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
-      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#ccc" className="text-xs">
+      <text
+        x={ex + (cos >= 0 ? 1 : -1) * 12}
+        y={ey}
+        textAnchor={textAnchor}
+        fill="#ccc"
+        className="text-xs"
+      >
         {`${payload.name}`}
       </text>
-      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999" className="text-xs">
+      <text
+        x={ex + (cos >= 0 ? 1 : -1) * 12}
+        y={ey}
+        dy={18}
+        textAnchor={textAnchor}
+        fill="#999"
+        className="text-xs"
+      >
         {`${value} (${(percent * 100).toFixed(0)}%)`}
       </text>
     </g>
@@ -305,22 +322,23 @@ const Dashboard = () => {
                     onMouseEnter={onPieEnter}
                   >
                     {productCategoryData.map((entry, index) => (
-                      <Cell 
-                        key={`cell-${index}`} 
-                        fill={COLORS[index % COLORS.length]} 
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={COLORS[index % COLORS.length]}
                         strokeWidth={2}
                         stroke="rgba(0, 0, 0, 0.2)"
                       />
                     ))}
                   </Pie>
-                  <Tooltip 
+                  <Tooltip
                     contentStyle={{
-                      backgroundColor: "rgba(17, 25, 40, 0.8)",
-                      borderRadius: "8px",
-                      border: "1px solid rgba(255, 255, 255, 0.1)",
+                      backgroundColor: "rgba(240, 240, 245, 0.85)",
+                      borderRadius: "4px",
+                      border: "1px solid rgba(200, 200, 220, 0.3)",
                       backdropFilter: "blur(12px)",
-                      boxShadow: "0 10px 15px rgba(0, 0, 0, 0.3)",
-                      color: "#fff"
+                      boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.15)",
+                      color: "#000",
+                      fontWeight: "600",
                     }}
                   />
                 </PieChart>
@@ -328,7 +346,10 @@ const Dashboard = () => {
             }
             className="md:col-span-1"
           />
-          <AppEcosystemCard apps={appEcosystemData} className="md:col-span-2 lg:col-span-2" />
+          <AppEcosystemCard
+            apps={appEcosystemData}
+            className="md:col-span-2 lg:col-span-2"
+          />
         </div>
 
         <div className="grid gap-4">
