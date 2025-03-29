@@ -1,176 +1,321 @@
-
-import React from "react";
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarTrigger,
-  SidebarFooter,
-  useSidebar,
-} from "@/components/ui/sidebar";
-import { 
-  BarChart3, 
-  PackageSearch, 
-  ShoppingCart, 
-  Users, 
-  Settings, 
+  BarChart3,
+  PackageSearch,
+  ShoppingCart,
+  Users,
   Home,
   PuzzleIcon,
   Layers,
   CircleDollarSign,
   TrendingUp,
   Menu,
+  Settings,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+import { useState, useEffect } from "react";
+import { cn } from "@/lib/utils";
+
+import { toast } from "sonner";
+import { motion, AnimatePresence } from "framer-motion";
+
 const DashboardSidebar = () => {
-  const { open, openMobile, setOpenMobile, isMobile } = useSidebar();
-  
+  const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if we're on mobile
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkIfMobile();
+    window.addEventListener("resize", checkIfMobile);
+
+    return () => {
+      window.removeEventListener("resize", checkIfMobile);
+    };
+  }, []);
+
+  const mainLinks = [
+    {
+      href: "/dashboard",
+      label: "Dashboard",
+      icon: <Home className="h-5 w-5" />,
+    },
+    {
+      href: "/dashboard/sales",
+      label: "Sales Analytics",
+      icon: <BarChart3 className="h-5 w-5" />,
+    },
+    {
+      href: "/dashboard/products",
+      label: "Products",
+      icon: <PackageSearch className="h-5 w-5" />,
+    },
+    {
+      href: "/dashboard/orders",
+      label: "Orders",
+      icon: <ShoppingCart className="h-5 w-5" />,
+    },
+    {
+      href: "/dashboard/customers",
+      label: "Customers",
+      icon: <Users className="h-5 w-5" />,
+    },
+  ];
+
+  const analyzeLinks = [
+    {
+      href: "/dashboard/apps",
+      label: "App Ecosystem",
+      icon: <PuzzleIcon className="h-5 w-5" />,
+    },
+    {
+      href: "/dashboard/inventory",
+      label: "Inventory",
+      icon: <Layers className="h-5 w-5" />,
+    },
+    {
+      href: "/dashboard/revenue",
+      label: "Revenue",
+      icon: <CircleDollarSign className="h-5 w-5" />,
+    },
+    {
+      href: "/dashboard/performance",
+      label: "Performance",
+      icon: <TrendingUp className="h-5 w-5" />,
+    },
+  ];
+
+  const settingsLinks = [
+    {
+      href: "/dashboard/settings",
+      label: "Settings",
+      icon: <Settings className="h-5 w-5" />,
+    },
+  ];
+
   return (
     <>
-      {/* Mobile toggle button - only visible when sidebar is closed on mobile */}
-      {isMobile && !openMobile && (
-        <Button
-          variant="ghost"
-          size="icon"
-          className="fixed top-4 left-4 z-50 md:hidden"
-          onClick={() => setOpenMobile(true)}
-        >
-          <Menu className="h-6 w-6" />
-        </Button>
-      )}
-      
-      <Sidebar>
-        <SidebarHeader className="p-4 flex items-center gap-2">
-          <div className="flex items-center justify-between w-full">
-            <div className="flex items-center gap-2">
-              <ShoppingCart className="h-6 w-6 text-primary" />
-              <span className="font-bold text-lg terminal-text">ShopNerd</span>
-            </div>
-            <SidebarTrigger className="p-2 rounded-md hover:bg-accent">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="h-5 w-5"
+      {/* Mobile toggle button - only visible on mobile */}
+      <Button
+        variant="ghost"
+        size="icon"
+        className="fixed top-3 left-3 z-40 flex items-center justify-center md:hidden hover:bg-background/90 shadow-sm"
+        onClick={() => setMobileOpen(!mobileOpen)}
+      >
+        <Menu className="h-6 w-6 text-foreground" />
+      </Button>
+
+      {/* Mobile overlay with animation */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-black/50 z-30 md:hidden"
+            onClick={() => setMobileOpen(false)}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Sidebar with animation */}
+      <motion.div
+        className={cn(
+          "flex flex-col border-r bg-black text-white fixed md:sticky top-0 h-screen z-40 overflow-hidden",
+          collapsed ? "w-[70px]" : "w-[240px]"
+        )}
+        initial={isMobile ? { x: "-100%" } : false}
+        animate={{
+          x: mobileOpen || !isMobile ? 0 : "-100%",
+          width: collapsed ? 70 : 240,
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 400,
+          damping: 30,
+        }}
+      >
+        {/* Logo area */}
+        <div className="flex items-center justify-between h-14 px-4 border-b border-gray-800 flex-shrink-0">
+          <AnimatePresence mode="wait">
+            {!collapsed && (
+              <motion.div
+                key="logo-text"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="flex items-center gap-2"
               >
-                <path d="M18 6h-6"></path>
-                <path d="M6 12h12"></path>
-                <path d="M18 18h-6"></path>
-              </svg>
-            </SidebarTrigger>
+                <ShoppingCart className="h-5 w-5 text-green-500" />
+                <span className="whitespace-nowrap overflow-hidden font-bold text-lg text-green-500">
+                  ShopNerd
+                </span>
+              </motion.div>
+            )}
+          </AnimatePresence>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="hidden md:flex text-gray-400 hover:text-white hover:bg-transparent"
+            onClick={() => setCollapsed(!collapsed)}
+          >
+            {collapsed ? (
+              <ChevronRight className="h-4 w-4" />
+            ) : (
+              <ChevronLeft className="h-4 w-4" />
+            )}
+          </Button>
+        </div>
+
+        {/* Nav links - using flex with space-between to push settings to bottom */}
+        <nav className="flex flex-col justify-between h-[calc(100vh-3.5rem)] py-4 scrollbar-thin">
+          <div className="space-y-4">
+            {/* MAIN section */}
+            <div>
+              {!collapsed && (
+                <div className="px-4 mb-2">
+                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    MAIN
+                  </p>
+                </div>
+              )}
+              <ul className="space-y-1 px-2">
+                {mainLinks.map((link) => (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      className={cn(
+                        "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors text-gray-300 hover:text-white hover:bg-gray-800",
+                        collapsed && "justify-center px-0"
+                      )}
+                      onClick={() => {
+                        if (mobileOpen) setMobileOpen(false);
+                      }}
+                    >
+                      <div
+                        className={cn(
+                          "flex items-center",
+                          collapsed && "justify-center w-full"
+                        )}
+                      >
+                        {link.icon}
+                      </div>
+                      <AnimatePresence mode="wait">
+                        {!collapsed && (
+                          <motion.span
+                            initial={{ opacity: 0, width: 0 }}
+                            animate={{ opacity: 1, width: "auto" }}
+                            exit={{ opacity: 0, width: 0 }}
+                            transition={{ duration: 0.2 }}
+                          >
+                            {link.label}
+                          </motion.span>
+                        )}
+                      </AnimatePresence>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* ANALYZE section */}
+            <div>
+              {!collapsed && (
+                <div className="px-4 mb-2">
+                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    ANALYZE
+                  </p>
+                </div>
+              )}
+              <ul className="space-y-1 px-2">
+                {analyzeLinks.map((link) => (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      className={cn(
+                        "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors text-gray-300 hover:text-white hover:bg-gray-800",
+                        collapsed && "justify-center px-0"
+                      )}
+                      onClick={() => {
+                        if (mobileOpen) setMobileOpen(false);
+                      }}
+                    >
+                      <div
+                        className={cn(
+                          "flex items-center",
+                          collapsed && "justify-center w-full"
+                        )}
+                      >
+                        {link.icon}
+                      </div>
+                      <AnimatePresence mode="wait">
+                        {!collapsed && (
+                          <motion.span
+                            initial={{ opacity: 0, width: 0 }}
+                            animate={{ opacity: 1, width: "auto" }}
+                            exit={{ opacity: 0, width: 0 }}
+                            transition={{ duration: 0.2 }}
+                          >
+                            {link.label}
+                          </motion.span>
+                        )}
+                      </AnimatePresence>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-        </SidebarHeader>
-        <SidebarContent className="p-2">
-          <SidebarGroup>
-            <SidebarGroupLabel className="terminal-text text-xs opacity-70">MAIN</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild tooltip="Dashboard">
-                    <a href="/" className="flex items-center gap-2">
-                      <Home className="h-4 w-4" />
-                      <span>Dashboard</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild tooltip="Sales Analytics">
-                    <a href="/sales" className="flex items-center gap-2">
-                      <BarChart3 className="h-4 w-4" />
-                      <span>Sales Analytics</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild tooltip="Products">
-                    <a href="/products" className="flex items-center gap-2">
-                      <PackageSearch className="h-4 w-4" />
-                      <span>Products</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild tooltip="Orders">
-                    <a href="/orders" className="flex items-center gap-2">
-                      <ShoppingCart className="h-4 w-4" />
-                      <span>Orders</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild tooltip="Customers">
-                    <a href="/customers" className="flex items-center gap-2">
-                      <Users className="h-4 w-4" />
-                      <span>Customers</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-          
-          <SidebarGroup>
-            <SidebarGroupLabel className="terminal-text text-xs opacity-70">ANALYZE</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild tooltip="App Ecosystem">
-                    <a href="/apps" className="flex items-center gap-2">
-                      <PuzzleIcon className="h-4 w-4" />
-                      <span>App Ecosystem</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild tooltip="Inventory">
-                    <a href="/inventory" className="flex items-center gap-2">
-                      <Layers className="h-4 w-4" />
-                      <span>Inventory</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild tooltip="Revenue">
-                    <a href="/revenue" className="flex items-center gap-2">
-                      <CircleDollarSign className="h-4 w-4" />
-                      <span>Revenue</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild tooltip="Performance">
-                    <a href="/performance" className="flex items-center gap-2">
-                      <TrendingUp className="h-4 w-4" />
-                      <span>Performance</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        </SidebarContent>
-        <SidebarFooter className="p-4">
-          <SidebarMenuButton asChild className="w-full" tooltip="Settings">
-            <a href="/settings" className="flex items-center gap-2">
-              <Settings className="h-4 w-4" />
-              <span>Settings</span>
-            </a>
-          </SidebarMenuButton>
-        </SidebarFooter>
-      </Sidebar>
+
+          {/* SETTINGS section - pushed to bottom */}
+          <div className="mt-auto">
+            <ul className="space-y-1 px-2">
+              {settingsLinks.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className={cn(
+                      "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors text-gray-300 hover:text-white hover:bg-gray-800",
+                      collapsed && "justify-center px-0"
+                    )}
+                    onClick={() => {
+                      if (mobileOpen) setMobileOpen(false);
+                    }}
+                  >
+                    <div
+                      className={cn(
+                        "flex items-center",
+                        collapsed && "justify-center w-full"
+                      )}
+                    >
+                      {link.icon}
+                    </div>
+                    <AnimatePresence mode="wait">
+                      {!collapsed && (
+                        <motion.span
+                          initial={{ opacity: 0, width: 0 }}
+                          animate={{ opacity: 1, width: "auto" }}
+                          exit={{ opacity: 0, width: 0 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          {link.label}
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </nav>
+      </motion.div>
     </>
   );
 };
