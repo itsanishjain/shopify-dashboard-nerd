@@ -215,18 +215,20 @@ const DashboardSidebar = () => {
                       >
                         {link.icon}
                       </div>
-                      <AnimatePresence mode="wait">
-                        {!collapsed && (
-                          <motion.span
-                            initial={{ opacity: 0, width: 0 }}
-                            animate={{ opacity: 1, width: "auto" }}
-                            exit={{ opacity: 0, width: 0 }}
-                            transition={{ duration: 0.2 }}
-                          >
-                            {link.label}
-                          </motion.span>
-                        )}
-                      </AnimatePresence>
+                      
+                      {!collapsed && (
+                        <motion.span
+                          layout
+                          className="whitespace-nowrap overflow-hidden"
+                          style={{ display: "inline-block" }}
+                          transition={{ 
+                            duration: 0.15,
+                            ease: "easeOut"
+                          }}
+                        >
+                          {link.label}
+                        </motion.span>
+                      )}
                     </Link>
                   </li>
                 ))}
@@ -266,18 +268,20 @@ const DashboardSidebar = () => {
                       >
                         {link.icon}
                       </div>
-                      <AnimatePresence mode="wait">
-                        {!collapsed && (
-                          <motion.span
-                            initial={{ opacity: 0, width: 0 }}
-                            animate={{ opacity: 1, width: "auto" }}
-                            exit={{ opacity: 0, width: 0 }}
-                            transition={{ duration: 0.2 }}
-                          >
-                            {link.label}
-                          </motion.span>
-                        )}
-                      </AnimatePresence>
+                      
+                      {!collapsed && (
+                        <motion.span
+                          layout
+                          className="whitespace-nowrap overflow-hidden"
+                          style={{ display: "inline-block" }}
+                          transition={{ 
+                            duration: 0.15,
+                            ease: "easeOut"
+                          }}
+                        >
+                          {link.label}
+                        </motion.span>
+                      )}
                     </Link>
                   </li>
                 ))}
@@ -311,18 +315,20 @@ const DashboardSidebar = () => {
                     >
                       {link.icon}
                     </div>
-                    <AnimatePresence mode="wait">
-                      {!collapsed && (
-                        <motion.span
-                          initial={{ opacity: 0, width: 0 }}
-                          animate={{ opacity: 1, width: "auto" }}
-                          exit={{ opacity: 0, width: 0 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          {link.label}
-                        </motion.span>
-                      )}
-                    </AnimatePresence>
+                    
+                    {!collapsed && (
+                      <motion.span
+                        layout
+                        className="whitespace-nowrap overflow-hidden"
+                        style={{ display: "inline-block" }}
+                        transition={{ 
+                          duration: 0.15,
+                          ease: "easeOut"
+                        }}
+                      >
+                        {link.label}
+                      </motion.span>
+                    )}
                   </Link>
                 </li>
               ))}

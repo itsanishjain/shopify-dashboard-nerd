@@ -1,3 +1,4 @@
+
 import React from "react";
 import { useState } from "react";
 import {
@@ -15,7 +16,7 @@ import {
   Pie,
   Cell,
 } from "recharts";
-import { Calendar } from "lucide-react";
+import { Calendar, ShoppingCart, DollarSign, CreditCard, Users } from "lucide-react";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import StatCard from "@/components/dashboard/StatCard";
 import ChartCard from "@/components/dashboard/ChartCard";
@@ -71,24 +72,28 @@ const Dashboard = () => {
           <StatCard
             title="Total Revenue"
             value={statisticsData.totalRevenue.value}
+            icon={<DollarSign className="h-5 w-5" />}
             change={statisticsData.totalRevenue.change}
             changeLabel={statisticsData.totalRevenue.changeLabel}
           />
           <StatCard
             title="Average Order Value"
             value={statisticsData.averageOrderValue.value}
+            icon={<CreditCard className="h-5 w-5" />}
             change={statisticsData.averageOrderValue.change}
             changeLabel={statisticsData.averageOrderValue.changeLabel}
           />
           <StatCard
             title="Conversion Rate"
             value={statisticsData.conversionRate.value}
+            icon={<ShoppingCart className="h-5 w-5" />}
             change={statisticsData.conversionRate.change}
             changeLabel={statisticsData.conversionRate.changeLabel}
           />
           <StatCard
             title="Active Customers"
             value={statisticsData.activeCustomers.value}
+            icon={<Users className="h-5 w-5" />}
             change={statisticsData.activeCustomers.change}
             changeLabel={statisticsData.activeCustomers.changeLabel}
           />
