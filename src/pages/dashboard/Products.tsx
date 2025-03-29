@@ -394,37 +394,80 @@ const Products = () => {
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart
                   data={profitabilityData}
-                  margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                  barGap={8}
+                  barSize={24}
                 >
                   <CartesianGrid
-                    strokeDasharray="3 3"
-                    stroke="#333"
-                    opacity={0.5}
+                    strokeDasharray="4 4"
+                    stroke="rgba(255, 255, 255, 0.1)"
+                    vertical={false}
                   />
-                  <XAxis dataKey="name" tick={false} />
-                  <YAxis yAxisId="left" orientation="left" stroke="#10b981" />
-                  <YAxis yAxisId="right" orientation="right" stroke="#8b5cf6" />
+                  <XAxis
+                    dataKey="name"
+                    axisLine={false}
+                    tickLine={false}
+                    tick={{ fill: "#aaa", fontSize: 12 }}
+                  />
+                  <YAxis
+                    yAxisId="left"
+                    orientation="left"
+                    stroke="#10b981"
+                    axisLine={false}
+                    tickLine={false}
+                    tickFormatter={(value) => `${value}%`}
+                  />
+                  <YAxis
+                    yAxisId="right"
+                    orientation="right"
+                    stroke="#eab308"
+                    axisLine={false}
+                    tickLine={false}
+                    tickFormatter={(value) => `$${value}`}
+                  />
                   <Tooltip
+                    cursor={{ fill: "rgba(255, 255, 255, 0.05)" }}
                     contentStyle={{
-                      backgroundColor: "#222",
-                      borderColor: "#333",
-                      color: "#fff",
+                      backgroundColor: "rgba(240, 240, 245, 0.85)",
+                      borderRadius: "4px",
+                      border: "1px solid rgba(200, 200, 220, 0.3)",
+                      backdropFilter: "blur(12px)",
+                      boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.15)",
+                      color: "#000",
+                      fontWeight: "600",
                     }}
+                    labelStyle={{ color: "#333", fontWeight: "bold" }}
                   />
-                  <Legend />
+                  <Legend
+                    wrapperStyle={{ paddingTop: 10 }}
+                    iconType="circle"
+                    iconSize={8}
+                  />
                   <Bar
                     yAxisId="left"
                     dataKey="margin"
                     name="Profit Margin %"
                     fill="#10b981"
-                    radius={[4, 4, 0, 0]}
-                  />
+                    radius={[6, 6, 0, 0]}
+                    animationDuration={1500}
+                    animationEasing="ease-out"
+                  >
+                    {profitabilityData.map((entry, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={entry.margin > 30 ? "#22c55e" : "#eab308"}
+                      />
+                    ))}
+                  </Bar>
                   <Bar
                     yAxisId="right"
                     dataKey="revenue"
                     name="Revenue ($)"
-                    fill="#8b5cf6"
-                    radius={[4, 4, 0, 0]}
+                    fill="#eab308"
+                    radius={[6, 6, 0, 0]}
+                    animationDuration={1500}
+                    animationEasing="ease-out"
+                    animationBegin={300}
                   />
                 </BarChart>
               </ResponsiveContainer>
