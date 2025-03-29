@@ -19,6 +19,8 @@ import {
   PolarGrid,
   PolarAngleAxis,
   PolarRadiusAxis,
+  Area,
+  AreaChart,
 } from "recharts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -111,8 +113,17 @@ const renderActiveShape = (props) => {
 const OrdersChart: React.FC<OrdersChartProps> = ({ data }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [selectedTab, setSelectedTab] = useState("daily");
+  const [isFirstRender, setIsFirstRender] = useState(true);
   const dailyData = getOrderCountsByDay();
   const statusData = getOrderStatusDistribution();
+
+  // Reset animation state when changing tabs
+  const handleTabChange = (value) => {
+    setSelectedTab(value);
+    // Force recharts to re-render with animations
+    setIsFirstRender(true);
+    setTimeout(() => setIsFirstRender(false), 50);
+  };
 
   // More vibrant, modern colors for status chart
   const COLORS = ["#8b5cf6", "#06b6d4", "#10b981", "#f59e0b", "#ef4444"];
@@ -177,7 +188,7 @@ const OrdersChart: React.FC<OrdersChartProps> = ({ data }) => {
         defaultValue="daily"
         className="w-full"
         orientation="horizontal"
-        onValueChange={(value) => setSelectedTab(value)}
+        onValueChange={handleTabChange}
       >
         <TabsList className="grid w-full grid-cols-3 p-1 mb-4 backdrop-blur-md bg-background/30 rounded-xl">
           <TabsTrigger
@@ -311,6 +322,8 @@ const OrdersChart: React.FC<OrdersChartProps> = ({ data }) => {
                     radius={[8, 8, 0, 0]}
                     animationDuration={1500}
                     animationEasing="ease"
+                    animationBegin={0}
+                    isAnimationActive={true}
                     filter="url(#shadow)"
                   />
                   <Bar
@@ -321,6 +334,7 @@ const OrdersChart: React.FC<OrdersChartProps> = ({ data }) => {
                     animationDuration={1500}
                     animationEasing="ease"
                     animationBegin={150}
+                    isAnimationActive={true}
                   />
                   <Bar
                     dataKey="processing"
@@ -330,6 +344,7 @@ const OrdersChart: React.FC<OrdersChartProps> = ({ data }) => {
                     animationDuration={1500}
                     animationEasing="ease"
                     animationBegin={300}
+                    isAnimationActive={true}
                   />
                   <Bar
                     dataKey="cancelled"
@@ -339,6 +354,7 @@ const OrdersChart: React.FC<OrdersChartProps> = ({ data }) => {
                     animationDuration={1500}
                     animationEasing="ease"
                     animationBegin={450}
+                    isAnimationActive={true}
                   />
                 </BarChart>
               </ResponsiveContainer>
@@ -355,7 +371,7 @@ const OrdersChart: React.FC<OrdersChartProps> = ({ data }) => {
               variants={chartVariants}
             >
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart
+                <AreaChart
                   data={dailyData}
                   margin={{ top: 15, right: 30, left: 20, bottom: 15 }}
                 >
@@ -385,6 +401,20 @@ const OrdersChart: React.FC<OrdersChartProps> = ({ data }) => {
                       <stop
                         offset="95%"
                         stopColor="#10b981"
+                        stopOpacity={0.2}
+                      />
+                    </linearGradient>
+                    <linearGradient
+                      id="colorProcessingLine"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
+                      <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8} />
+                      <stop
+                        offset="95%"
+                        stopColor="#3b82f6"
                         stopOpacity={0.2}
                       />
                     </linearGradient>
@@ -436,42 +466,49 @@ const OrdersChart: React.FC<OrdersChartProps> = ({ data }) => {
                     verticalAlign="top"
                     wrapperStyle={{ paddingBottom: "10px" }}
                   />
-                  <Line
+                  <Area
                     type="monotone"
                     dataKey="total"
                     name="Total Orders"
                     stroke="#10b981"
                     strokeWidth={3}
-                    dot={{
-                      r: 4,
-                      strokeWidth: 2,
-                      fill: "#222",
-                      stroke: "#10b981",
-                    }}
-                    activeDot={{ r: 6, strokeWidth: 0, fill: "#10b981" }}
+                    fill="url(#colorTotalLine)"
+                    fillOpacity={0.8}
                     animationDuration={2000}
                     animationEasing="ease"
+                    animationBegin={0}
+                    isAnimationActive={true}
                     filter="url(#glow)"
                   />
-                  <Line
+                  <Area
                     type="monotone"
                     dataKey="delivered"
                     name="Delivered"
                     stroke="#10b981"
                     strokeWidth={2}
                     strokeOpacity={0.7}
-                    dot={{
-                      r: 3,
-                      strokeWidth: 2,
-                      fill: "#222",
-                      stroke: "#10b981",
-                    }}
-                    activeDot={{ r: 5, strokeWidth: 0, fill: "#10b981" }}
+                    fill="url(#colorDeliveredLine)"
+                    fillOpacity={0.5}
                     animationDuration={2000}
                     animationEasing="ease"
                     animationBegin={500}
+                    isAnimationActive={true}
                   />
-                </LineChart>
+                  <Area
+                    type="monotone"
+                    dataKey="processing"
+                    name="Processing"
+                    stroke="#3b82f6"
+                    strokeWidth={2}
+                    strokeOpacity={0.7}
+                    fill="url(#colorProcessingLine)"
+                    fillOpacity={0.5}
+                    animationDuration={2000}
+                    animationEasing="ease"
+                    animationBegin={1000}
+                    isAnimationActive={true}
+                  />
+                </AreaChart>
               </ResponsiveContainer>
             </motion.div>
           </TabsContent>
@@ -516,9 +553,13 @@ const OrdersChart: React.FC<OrdersChartProps> = ({ data }) => {
                     activeIndex={activeIndex}
                     activeShape={renderActiveShape}
                     onMouseEnter={onPieEnter}
-                    animationDuration={1800}
+                    animationDuration={2000}
                     animationEasing="ease"
+                    isAnimationActive={true}
+                    animationBegin={0}
                     filter="url(#glow-pie)"
+                    startAngle={0}
+                    endAngle={360}
                   >
                     {statusData.map((entry, index) => (
                       <Cell
