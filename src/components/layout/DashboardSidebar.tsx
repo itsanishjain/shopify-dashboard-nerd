@@ -17,8 +17,6 @@ import { Button } from "@/components/ui/button";
 
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-
-import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 
 const DashboardSidebar = () => {
