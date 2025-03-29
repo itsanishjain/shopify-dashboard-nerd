@@ -1,3 +1,4 @@
+
 import {
   BarChart3,
   PackageSearch,
@@ -132,7 +133,7 @@ const DashboardSidebar = () => {
       {/* Sidebar with animation */}
       <motion.div
         className={cn(
-          "flex flex-col border-r bg-black text-white fixed md:sticky top-0 h-screen z-40 overflow-hidden",
+          "flex flex-col border-r bg-sidebar fixed md:sticky top-0 h-screen z-40 overflow-hidden",
           collapsed ? "w-[70px]" : "w-[240px]"
         )}
         initial={isMobile ? { x: "-100%" } : false}
@@ -147,11 +148,11 @@ const DashboardSidebar = () => {
         }}
       >
         {/* Logo area */}
-        <div className="flex items-center justify-between h-14 px-4 border-b border-gray-800 flex-shrink-0">
+        <div className="flex items-center justify-between h-14 px-4 border-b border-sidebar-border flex-shrink-0">
           {!collapsed && (
             <div className="flex items-center gap-2">
-              <ShoppingCart className="h-5 w-5 text-green-500" />
-              <span className="whitespace-nowrap overflow-hidden font-bold text-lg text-green-500">
+              <ShoppingCart className="h-5 w-5 text-primary" />
+              <span className="whitespace-nowrap overflow-hidden font-bold text-lg text-primary">
                 ShopNerd
               </span>
             </div>
@@ -160,7 +161,7 @@ const DashboardSidebar = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="hidden md:flex text-gray-400 hover:text-white hover:bg-transparent"
+            className="hidden md:flex text-sidebar-foreground hover:text-sidebar-foreground hover:bg-sidebar-accent"
             onClick={() => setCollapsed(!collapsed)}
           >
             {collapsed ? (
@@ -178,7 +179,7 @@ const DashboardSidebar = () => {
             <div>
               {!collapsed && (
                 <div className="px-4 mb-2">
-                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  <p className="text-xs font-semibold text-sidebar-foreground/70 uppercase tracking-wider">
                     MAIN
                   </p>
                 </div>
@@ -191,8 +192,8 @@ const DashboardSidebar = () => {
                       className={cn(
                         "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors",
                         isActive(link.href)
-                          ? "bg-gray-800 text-white"
-                          : "text-gray-300 hover:text-white hover:bg-gray-800",
+                          ? "bg-sidebar-primary text-sidebar-primary-foreground"
+                          : "text-sidebar-foreground hover:text-sidebar-primary-foreground hover:bg-sidebar-accent",
                         collapsed && "justify-center px-0"
                       )}
                       onClick={() => {
@@ -231,7 +232,7 @@ const DashboardSidebar = () => {
             <div>
               {!collapsed && (
                 <div className="px-4 mb-2">
-                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  <p className="text-xs font-semibold text-sidebar-foreground/70 uppercase tracking-wider">
                     ANALYZE
                   </p>
                 </div>
@@ -244,8 +245,8 @@ const DashboardSidebar = () => {
                       className={cn(
                         "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors",
                         isActive(link.href)
-                          ? "bg-gray-800 text-white"
-                          : "text-gray-300 hover:text-white hover:bg-gray-800",
+                          ? "bg-sidebar-primary text-sidebar-primary-foreground"
+                          : "text-sidebar-foreground hover:text-sidebar-primary-foreground hover:bg-sidebar-accent",
                         collapsed && "justify-center px-0"
                       )}
                       onClick={() => {
@@ -291,8 +292,8 @@ const DashboardSidebar = () => {
                     className={cn(
                       "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors",
                       isActive(link.href)
-                        ? "bg-gray-800 text-white"
-                        : "text-gray-300 hover:text-white hover:bg-gray-800",
+                        ? "bg-sidebar-primary text-sidebar-primary-foreground"
+                        : "text-sidebar-foreground hover:text-sidebar-primary-foreground hover:bg-sidebar-accent",
                       collapsed && "justify-center px-0"
                     )}
                     onClick={() => {
