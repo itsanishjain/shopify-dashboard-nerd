@@ -136,34 +136,45 @@ const Orders = () => {
 
         {/* Chart and Filters */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <ChartCard
-            title="Order Analytics"
-            description="Daily order performance"
-            chart={<OrdersChart data={orderData} />}
-            className="lg:col-span-2"
-          />
+          <div className="lg:col-span-2">
+            <Card className="matrix-flow">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-md font-medium terminal-text">
+                  Order Analytics
+                </CardTitle>
+                <p className="text-sm text-muted-foreground">
+                  Daily order performance
+                </p>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <OrdersChart data={orderData} />
+              </CardContent>
+            </Card>
+          </div>
 
-          <ChartCard
-            title="Filter Orders"
-            description="Refine your order list"
-            chart={
-              <OrderFilters
-                data={orderData}
-                onFilterChange={(data) => setFilteredData(data)}
-              />
-            }
-          />
+          <div>
+            <Card className="matrix-flow">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-md font-medium terminal-text">
+                  Filter Orders
+                </CardTitle>
+                <p className="text-sm text-muted-foreground">
+                  Refine your order list
+                </p>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <OrderFilters
+                  data={orderData}
+                  onFilterChange={(data) => setFilteredData(data)}
+                />
+              </CardContent>
+            </Card>
+          </div>
         </div>
 
         {/* Orders Table */}
-        <Card
-          className={cn(
-            "w-full matrix-flow relative",
-            "bg-gradient-to-b from-[#10b981]/10 to-[#10b981]/5",
-            "before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:to-background/80 before:z-0"
-          )}
-        >
-          <CardHeader className="pb-3 relative z-10">
+        <Card className="matrix-flow">
+          <CardHeader className="pb-3">
             <div className="flex justify-between items-center">
               <CardTitle className="text-md font-medium terminal-text">
                 Recent Orders
@@ -173,7 +184,7 @@ const Orders = () => {
               </Badge>
             </div>
           </CardHeader>
-          <CardContent className="relative z-10">
+          <CardContent>
             <OrdersTable orders={filteredData} />
           </CardContent>
         </Card>

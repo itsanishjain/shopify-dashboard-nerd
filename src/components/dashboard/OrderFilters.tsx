@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -26,7 +25,10 @@ interface OrderFiltersProps {
   onFilterChange: (filteredData: Order[]) => void;
 }
 
-const OrderFilters: React.FC<OrderFiltersProps> = ({ data, onFilterChange }) => {
+const OrderFilters: React.FC<OrderFiltersProps> = ({
+  data,
+  onFilterChange,
+}) => {
   const [dateRange, setDateRange] = useState<DateRange>({
     from: undefined,
     to: undefined,
@@ -92,7 +94,7 @@ const OrderFilters: React.FC<OrderFiltersProps> = ({ data, onFilterChange }) => 
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 relative z-10">
       {/* Date Range Picker */}
       <div className="space-y-2">
         <label className="text-sm font-medium">Date Range</label>
@@ -120,7 +122,7 @@ const OrderFilters: React.FC<OrderFiltersProps> = ({ data, onFilterChange }) => 
               )}
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
+          <PopoverContent className="w-auto p-0 z-50" align="start">
             <Calendar
               initialFocus
               mode="range"
@@ -128,7 +130,6 @@ const OrderFilters: React.FC<OrderFiltersProps> = ({ data, onFilterChange }) => 
               selected={dateRange}
               onSelect={setDateRange}
               numberOfMonths={1}
-              className="pointer-events-auto"
             />
           </PopoverContent>
         </Popover>
@@ -138,10 +139,10 @@ const OrderFilters: React.FC<OrderFiltersProps> = ({ data, onFilterChange }) => 
       <div className="space-y-2">
         <label className="text-sm font-medium">Status</label>
         <Select value={statusFilter} onValueChange={setStatusFilter}>
-          <SelectTrigger>
+          <SelectTrigger className="z-20">
             <SelectValue placeholder="Select status" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="z-50">
             <SelectItem value="all">All Statuses</SelectItem>
             <SelectItem value="pending">Pending</SelectItem>
             <SelectItem value="processing">Processing</SelectItem>
@@ -159,7 +160,7 @@ const OrderFilters: React.FC<OrderFiltersProps> = ({ data, onFilterChange }) => 
           <input
             type="number"
             placeholder="Min"
-            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 z-10"
             value={minPrice}
             onChange={(e) => setMinPrice(e.target.value)}
           />
@@ -167,7 +168,7 @@ const OrderFilters: React.FC<OrderFiltersProps> = ({ data, onFilterChange }) => 
           <input
             type="number"
             placeholder="Max"
-            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 z-10"
             value={maxPrice}
             onChange={(e) => setMaxPrice(e.target.value)}
           />
@@ -182,7 +183,7 @@ const OrderFilters: React.FC<OrderFiltersProps> = ({ data, onFilterChange }) => 
             <Button
               variant="ghost"
               size="sm"
-              className="h-8 px-2 text-xs"
+              className="h-8 px-2 text-xs z-10"
               onClick={resetFilters}
             >
               Clear all
@@ -190,7 +191,7 @@ const OrderFilters: React.FC<OrderFiltersProps> = ({ data, onFilterChange }) => 
           </div>
           <div className="flex flex-wrap gap-2">
             {activeFilters.map((filter, index) => (
-              <Badge key={index} variant="secondary" className="gap-1">
+              <Badge key={index} variant="secondary" className="gap-1 z-10">
                 {filter}
                 <button
                   className="ml-1 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2"
@@ -206,7 +207,10 @@ const OrderFilters: React.FC<OrderFiltersProps> = ({ data, onFilterChange }) => 
       )}
 
       {/* Apply Button */}
-      <Button className="w-full" onClick={() => onFilterChange(data)}>
+      <Button
+        className="w-full relative z-10"
+        onClick={() => onFilterChange(data)}
+      >
         Apply Filters
       </Button>
     </div>
