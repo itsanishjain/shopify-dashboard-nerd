@@ -9,9 +9,16 @@ const Products = () => {
   return (
     <DashboardLayout>
       <div className="space-y-6">
-        <h1 className="text-3xl font-bold tracking-tight">Products</h1>
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <h1 className="text-3xl font-bold tracking-tight">Products</h1>
+          
+          <div className="flex items-center gap-2">
+            {/* Add any product-specific controls here if needed */}
+          </div>
+        </div>
+        
         <Card>
-          <CardHeader>
+          <CardHeader className="pb-3">
             <CardTitle>Product Performance</CardTitle>
           </CardHeader>
           <CardContent>

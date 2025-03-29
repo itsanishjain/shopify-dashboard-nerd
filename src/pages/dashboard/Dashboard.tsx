@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useState } from "react";
 import {
@@ -72,28 +71,24 @@ const Dashboard = () => {
           <StatCard
             title="Total Revenue"
             value={statisticsData.totalRevenue.value}
-            icon={statisticsData.totalRevenue.icon}
             change={statisticsData.totalRevenue.change}
             changeLabel={statisticsData.totalRevenue.changeLabel}
           />
           <StatCard
             title="Average Order Value"
             value={statisticsData.averageOrderValue.value}
-            icon={statisticsData.averageOrderValue.icon}
             change={statisticsData.averageOrderValue.change}
             changeLabel={statisticsData.averageOrderValue.changeLabel}
           />
           <StatCard
             title="Conversion Rate"
             value={statisticsData.conversionRate.value}
-            icon={statisticsData.conversionRate.icon}
             change={statisticsData.conversionRate.change}
             changeLabel={statisticsData.conversionRate.changeLabel}
           />
           <StatCard
             title="Active Customers"
             value={statisticsData.activeCustomers.value}
-            icon={statisticsData.activeCustomers.icon}
             change={statisticsData.activeCustomers.change}
             changeLabel={statisticsData.activeCustomers.changeLabel}
           />
