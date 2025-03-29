@@ -25,12 +25,12 @@ const StatCard: React.FC<StatCardProps> = ({
   const isNegative = change && change < 0;
 
   return (
-    <Card className={cn("overflow-hidden matrix-flow", className)}>
+    <Card className={cn("overflow-hidden", className)}>
       <CardContent className="p-6">
         <div className="flex justify-between">
           <div>
-            <p className="text-sm font-medium text-muted-foreground terminal-text">{title}</p>
-            <h3 className="text-2xl font-bold mt-2 text-glow animate-pulse-glow">{value}</h3>
+            <p className="text-sm font-medium text-primary terminal-text">{title}</p>
+            <h3 className="text-2xl font-bold mt-2">{value}</h3>
             {change && (
               <div className="flex items-center mt-2">
                 <div
@@ -50,7 +50,9 @@ const StatCard: React.FC<StatCardProps> = ({
               </div>
             )}
           </div>
-          <div className="p-2 rounded-full bg-accent">{icon}</div>
+          <div className="flex items-center justify-center h-12 w-12 rounded-full bg-accent/60">
+            {icon}
+          </div>
         </div>
       </CardContent>
     </Card>

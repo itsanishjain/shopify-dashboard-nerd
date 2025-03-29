@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import {
   BarChart,
@@ -80,7 +79,6 @@ const Index = () => {
             icon={<DollarSign className="h-5 w-5 text-primary" />}
             change={statisticsData.totalRevenue.change}
             changeLabel={statisticsData.totalRevenue.changeLabel}
-            className="animate-float"
           />
           <StatCard
             title="Average Order Value"
@@ -88,7 +86,6 @@ const Index = () => {
             icon={<CreditCard className="h-5 w-5 text-primary" />}
             change={statisticsData.averageOrderValue.change}
             changeLabel={statisticsData.averageOrderValue.changeLabel}
-            className="animate-float [animation-delay:0.2s]"
           />
           <StatCard
             title="Conversion Rate"
@@ -96,7 +93,6 @@ const Index = () => {
             icon={<ShoppingCart className="h-5 w-5 text-primary" />}
             change={statisticsData.conversionRate.change}
             changeLabel={statisticsData.conversionRate.changeLabel}
-            className="animate-float [animation-delay:0.4s]"
           />
           <StatCard
             title="Active Customers"
@@ -104,7 +100,6 @@ const Index = () => {
             icon={<Users className="h-5 w-5 text-primary" />}
             change={statisticsData.activeCustomers.change}
             changeLabel={statisticsData.activeCustomers.changeLabel}
-            className="animate-float [animation-delay:0.6s]"
           />
         </div>
 
