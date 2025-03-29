@@ -13,6 +13,7 @@ import { TrendingUp, TrendingDown, Minus, ArrowUpDown, ChevronDown, ChevronUp } 
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface Product {
   id: string;
@@ -37,6 +38,7 @@ const ProductPerformanceTable: React.FC<ProductPerformanceTableProps> = ({
 }) => {
   const [sortField, setSortField] = useState<keyof Product>("sales");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
+  const isMobile = useIsMobile();
 
   const getStatusIcon = (status: Product["status"]) => {
     switch (status) {
@@ -113,123 +115,194 @@ const ProductPerformanceTable: React.FC<ProductPerformanceTableProps> = ({
       <ChevronDown className="h-3 w-3 ml-1" />;
   };
 
+  // Define which columns to show based on screen size
+  const renderTableHeader = () => {
+    if (isMobile) {
+      return (
+        <TableRow>
+          <TableHead>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={() => handleSort("name")}
+              className="flex items-center font-medium text-xs"
+            >
+              Product {getSortIcon("name")}
+            </Button>
+          </TableHead>
+          <TableHead>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={() => handleSort("price")}
+              className="flex items-center font-medium text-xs"
+            >
+              Price {getSortIcon("price")}
+            </Button>
+          </TableHead>
+          <TableHead>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={() => handleSort("status")}
+              className="flex items-center font-medium text-xs"
+            >
+              Status {getSortIcon("status")}
+            </Button>
+          </TableHead>
+        </TableRow>
+      );
+    }
+
+    return (
+      <TableRow>
+        <TableHead>
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            onClick={() => handleSort("name")}
+            className="flex items-center font-medium text-xs"
+          >
+            Product {getSortIcon("name")}
+          </Button>
+        </TableHead>
+        <TableHead>
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            onClick={() => handleSort("price")}
+            className="flex items-center font-medium text-xs"
+          >
+            Price {getSortIcon("price")}
+          </Button>
+        </TableHead>
+        <TableHead>
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            onClick={() => handleSort("sales")}
+            className="flex items-center font-medium text-xs"
+          >
+            Sales {getSortIcon("sales")}
+          </Button>
+        </TableHead>
+        <TableHead>
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            onClick={() => handleSort("status")}
+            className="flex items-center font-medium text-xs"
+          >
+            Status {getSortIcon("status")}
+          </Button>
+        </TableHead>
+        <TableHead>
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            onClick={() => handleSort("inventory")}
+            className="flex items-center font-medium text-xs"
+          >
+            Inventory {getSortIcon("inventory")}
+          </Button>
+        </TableHead>
+        <TableHead>
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            onClick={() => handleSort("conversion")}
+            className="flex items-center font-medium text-xs"
+          >
+            Conversion {getSortIcon("conversion")}
+          </Button>
+        </TableHead>
+        <TableHead>
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            onClick={() => handleSort("margin")}
+            className="flex items-center font-medium text-xs"
+          >
+            Profit Margin {getSortIcon("margin")}
+          </Button>
+        </TableHead>
+      </TableRow>
+    );
+  };
+
+  const renderTableRow = (product: Product) => {
+    if (isMobile) {
+      return (
+        <TableRow key={product.id} className="hover:bg-accent/50 transition-colors cursor-pointer">
+          <TableCell className="font-medium">{product.name}</TableCell>
+          <TableCell>{product.price}</TableCell>
+          <TableCell>
+            <div className="flex items-center gap-1">
+              {getStatusIcon(product.status)}
+              <span
+                className={cn(
+                  product.status === "trending" && "text-success",
+                  product.status === "declining" && "text-destructive",
+                  product.status === "stable" && "text-muted-foreground"
+                )}
+              >
+                {product.status.charAt(0).toUpperCase() + product.status.slice(1)}
+              </span>
+            </div>
+          </TableCell>
+        </TableRow>
+      );
+    }
+
+    return (
+      <TableRow key={product.id} className="hover:bg-accent/50 transition-colors cursor-pointer">
+        <TableCell className="font-medium">{product.name}</TableCell>
+        <TableCell>{product.price}</TableCell>
+        <TableCell>{product.sales}</TableCell>
+        <TableCell>
+          <div className="flex items-center gap-1">
+            {getStatusIcon(product.status)}
+            <span
+              className={cn(
+                product.status === "trending" && "text-success",
+                product.status === "declining" && "text-destructive",
+                product.status === "stable" && "text-muted-foreground"
+              )}
+            >
+              {product.status.charAt(0).toUpperCase() + product.status.slice(1)}
+            </span>
+          </div>
+        </TableCell>
+        <TableCell>{getInventoryStatus(product.inventory)}</TableCell>
+        <TableCell>{product.conversion}%</TableCell>
+        <TableCell>
+          {product.margin ? (
+            <span className={cn(
+              product.margin > 40 && "text-success", 
+              product.margin < 20 && "text-destructive",
+              "font-medium"
+            )}>
+              {product.margin}%
+            </span>
+          ) : "N/A"}
+        </TableCell>
+      </TableRow>
+    );
+  };
+
   return (
     <Card className={cn("animate-fade-in", className)}>
       <CardHeader className="pb-2">
         <CardTitle className="text-md font-medium terminal-text">Product Performance Analytics</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="rounded-md border">
+        <div className="rounded-md border overflow-x-auto">
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    onClick={() => handleSort("name")}
-                    className="flex items-center font-medium text-xs"
-                  >
-                    Product {getSortIcon("name")}
-                  </Button>
-                </TableHead>
-                <TableHead>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    onClick={() => handleSort("price")}
-                    className="flex items-center font-medium text-xs"
-                  >
-                    Price {getSortIcon("price")}
-                  </Button>
-                </TableHead>
-                <TableHead>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    onClick={() => handleSort("sales")}
-                    className="flex items-center font-medium text-xs"
-                  >
-                    Sales {getSortIcon("sales")}
-                  </Button>
-                </TableHead>
-                <TableHead>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    onClick={() => handleSort("status")}
-                    className="flex items-center font-medium text-xs"
-                  >
-                    Status {getSortIcon("status")}
-                  </Button>
-                </TableHead>
-                <TableHead>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    onClick={() => handleSort("inventory")}
-                    className="flex items-center font-medium text-xs"
-                  >
-                    Inventory {getSortIcon("inventory")}
-                  </Button>
-                </TableHead>
-                <TableHead>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    onClick={() => handleSort("conversion")}
-                    className="flex items-center font-medium text-xs"
-                  >
-                    Conversion {getSortIcon("conversion")}
-                  </Button>
-                </TableHead>
-                <TableHead>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    onClick={() => handleSort("margin")}
-                    className="flex items-center font-medium text-xs"
-                  >
-                    Profit Margin {getSortIcon("margin")}
-                  </Button>
-                </TableHead>
-              </TableRow>
+              {renderTableHeader()}
             </TableHeader>
             <TableBody className="text-sm">
-              {getSortedProducts().map((product) => (
-                <TableRow key={product.id} className="hover:bg-accent/50 transition-colors cursor-pointer">
-                  <TableCell className="font-medium">{product.name}</TableCell>
-                  <TableCell>{product.price}</TableCell>
-                  <TableCell>{product.sales}</TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-1">
-                      {getStatusIcon(product.status)}
-                      <span
-                        className={cn(
-                          product.status === "trending" && "text-success",
-                          product.status === "declining" && "text-destructive",
-                          product.status === "stable" && "text-muted-foreground"
-                        )}
-                      >
-                        {product.status.charAt(0).toUpperCase() + product.status.slice(1)}
-                      </span>
-                    </div>
-                  </TableCell>
-                  <TableCell>{getInventoryStatus(product.inventory)}</TableCell>
-                  <TableCell>{product.conversion}%</TableCell>
-                  <TableCell>
-                    {product.margin ? (
-                      <span className={cn(
-                        product.margin > 40 && "text-success", 
-                        product.margin < 20 && "text-destructive",
-                        "font-medium"
-                      )}>
-                        {product.margin}%
-                      </span>
-                    ) : "N/A"}
-                  </TableCell>
-                </TableRow>
-              ))}
+              {getSortedProducts().map((product) => renderTableRow(product))}
             </TableBody>
           </Table>
         </div>
