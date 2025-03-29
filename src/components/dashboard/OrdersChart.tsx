@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BarChart,
   Bar,
@@ -13,6 +13,12 @@ import {
   PieChart,
   Pie,
   Cell,
+  Sector,
+  Radar,
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
 } from "recharts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -20,224 +26,519 @@ import {
   getOrderStatusDistribution,
   Order,
 } from "@/data/orderData";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface OrdersChartProps {
   data: Order[];
 }
 
+// Custom active shape for the pie chart when hovering
+const renderActiveShape = (props) => {
+  const RADIAN = Math.PI / 180;
+  const {
+    cx,
+    cy,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    startAngle,
+    endAngle,
+    fill,
+    payload,
+    percent,
+    value,
+  } = props;
+  const sin = Math.sin(-RADIAN * midAngle);
+  const cos = Math.cos(-RADIAN * midAngle);
+  const sx = cx + (outerRadius + 10) * cos;
+  const sy = cy + (outerRadius + 10) * sin;
+  const mx = cx + (outerRadius + 30) * cos;
+  const my = cy + (outerRadius + 30) * sin;
+  const ex = mx + (cos >= 0 ? 1 : -1) * 22;
+  const ey = my;
+  const textAnchor = cos >= 0 ? "start" : "end";
+
+  return (
+    <g>
+      <Sector
+        cx={cx}
+        cy={cy}
+        innerRadius={innerRadius}
+        outerRadius={outerRadius}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        fill={fill}
+        className="drop-shadow-lg"
+      />
+      <Sector
+        cx={cx}
+        cy={cy}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        innerRadius={outerRadius + 6}
+        outerRadius={outerRadius + 10}
+        fill={fill}
+      />
+      <path
+        d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
+        stroke={fill}
+        fill="none"
+      />
+      <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
+      <text
+        x={ex + (cos >= 0 ? 1 : -1) * 12}
+        y={ey}
+        textAnchor={textAnchor}
+        fill="#ccc"
+        className="text-xs"
+      >
+        {`${payload.name}`}
+      </text>
+      <text
+        x={ex + (cos >= 0 ? 1 : -1) * 12}
+        y={ey}
+        dy={18}
+        textAnchor={textAnchor}
+        fill="#999"
+        className="text-xs"
+      >
+        {`${value} orders (${(percent * 100).toFixed(0)}%)`}
+      </text>
+    </g>
+  );
+};
+
 const OrdersChart: React.FC<OrdersChartProps> = ({ data }) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [selectedTab, setSelectedTab] = useState("daily");
   const dailyData = getOrderCountsByDay();
   const statusData = getOrderStatusDistribution();
 
-  // Colors for status chart
-  const COLORS = ["#f59e0b", "#3b82f6", "#6366f1", "#10b981", "#ef4444"];
+  // More vibrant, modern colors for status chart
+  const COLORS = ["#8b5cf6", "#06b6d4", "#10b981", "#f59e0b", "#ef4444"];
+
+  const onPieEnter = (_, index) => {
+    setActiveIndex(index);
+  };
+
+  const createGradients = () => {
+    return (
+      <defs>
+        {COLORS.map((color, index) => (
+          <linearGradient
+            key={`gradient-${index}`}
+            id={`colorStatus${index}`}
+            x1="0"
+            y1="0"
+            x2="0"
+            y2="1"
+          >
+            <stop offset="0%" stopColor={color} stopOpacity={0.9} />
+            <stop offset="100%" stopColor={color} stopOpacity={0.6} />
+          </linearGradient>
+        ))}
+      </defs>
+    );
+  };
+
+  // Animation variants for charts
+  const chartVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: [0.22, 1, 0.36, 1], // Apple-like cubic-bezier easing
+      },
+    },
+    exit: {
+      opacity: 0,
+      y: -20,
+      transition: {
+        duration: 0.3,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  };
+
+  // Variables for elegant glassmorphism effect
+  const glassStyle = {
+    backgroundColor: "rgba(17, 25, 40, 0.75)",
+    borderRadius: "16px",
+    border: "1px solid rgba(255, 255, 255, 0.125)",
+    backdropFilter: "blur(16px)",
+    boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.37)",
+  };
 
   return (
     <div className="w-full">
-      <Tabs defaultValue="daily" className="w-full" orientation="horizontal">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="daily">Daily Orders</TabsTrigger>
-          <TabsTrigger value="trend">Order Trend</TabsTrigger>
-          <TabsTrigger value="status">Status Distribution</TabsTrigger>
+      <Tabs
+        defaultValue="daily"
+        className="w-full"
+        orientation="horizontal"
+        onValueChange={(value) => setSelectedTab(value)}
+      >
+        <TabsList className="grid w-full grid-cols-3 p-1 mb-4 backdrop-blur-md bg-background/30 rounded-xl">
+          <TabsTrigger
+            value="daily"
+            className="data-[state=active]:bg-primary/20 data-[state=active]:text-primary data-[state=active]:shadow-glow transition-all duration-300"
+          >
+            Daily Orders
+          </TabsTrigger>
+          <TabsTrigger
+            value="trend"
+            className="data-[state=active]:bg-primary/20 data-[state=active]:text-primary data-[state=active]:shadow-glow transition-all duration-300"
+          >
+            Order Trend
+          </TabsTrigger>
+          <TabsTrigger
+            value="status"
+            className="data-[state=active]:bg-primary/20 data-[state=active]:text-primary data-[state=active]:shadow-glow transition-all duration-300"
+          >
+            Status Distribution
+          </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="daily" className="mt-4">
-          <div className="h-[300px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                data={dailyData}
-                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-              >
-                <defs>
-                  <linearGradient id="colorTotal" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#10b981" stopOpacity={0.2} />
-                  </linearGradient>
-                  <linearGradient
-                    id="colorDelivered"
-                    x1="0"
-                    y1="0"
-                    x2="0"
-                    y2="1"
-                  >
-                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#10b981" stopOpacity={0.2} />
-                  </linearGradient>
-                  <linearGradient
-                    id="colorProcessing"
-                    x1="0"
-                    y1="0"
-                    x2="0"
-                    y2="1"
-                  >
-                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0.2} />
-                  </linearGradient>
-                  <linearGradient
-                    id="colorCancelled"
-                    x1="0"
-                    y1="0"
-                    x2="0"
-                    y2="1"
-                  >
-                    <stop offset="5%" stopColor="#ef4444" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#ef4444" stopOpacity={0.2} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid
-                  strokeDasharray="3 3"
-                  vertical={false}
-                  stroke="#333"
-                />
-                <XAxis dataKey="day" stroke="#999" />
-                <YAxis stroke="#999" />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "#222",
-                    borderColor: "#333",
-                    color: "#fff",
-                    borderRadius: "8px",
-                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-                  }}
-                />
-                <Legend />
-                <Bar
-                  dataKey="total"
-                  name="Total Orders"
-                  fill="url(#colorTotal)"
-                  radius={[4, 4, 0, 0]}
-                />
-                <Bar
-                  dataKey="delivered"
-                  name="Delivered"
-                  fill="url(#colorDelivered)"
-                  radius={[4, 4, 0, 0]}
-                />
-                <Bar
-                  dataKey="processing"
-                  name="Processing"
-                  fill="url(#colorProcessing)"
-                  radius={[4, 4, 0, 0]}
-                />
-                <Bar
-                  dataKey="cancelled"
-                  name="Cancelled"
-                  fill="url(#colorCancelled)"
-                  radius={[4, 4, 0, 0]}
-                />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="trend" className="mt-4">
-          <div className="h-[300px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart
-                data={dailyData}
-                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-              >
-                <defs>
-                  <linearGradient
-                    id="colorTotalLine"
-                    x1="0"
-                    y1="0"
-                    x2="0"
-                    y2="1"
-                  >
-                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#10b981" stopOpacity={0.2} />
-                  </linearGradient>
-                  <linearGradient
-                    id="colorDeliveredLine"
-                    x1="0"
-                    y1="0"
-                    x2="0"
-                    y2="1"
-                  >
-                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#10b981" stopOpacity={0.2} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid
-                  strokeDasharray="3 3"
-                  vertical={false}
-                  stroke="#333"
-                />
-                <XAxis dataKey="day" stroke="#999" />
-                <YAxis stroke="#999" />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "#222",
-                    borderColor: "#333",
-                    color: "#fff",
-                    borderRadius: "8px",
-                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-                  }}
-                />
-                <Legend />
-                <Line
-                  type="monotone"
-                  dataKey="total"
-                  name="Total Orders"
-                  stroke="url(#colorTotalLine)"
-                  strokeWidth={3}
-                  dot={{ r: 4, fill: "#10b981" }}
-                  activeDot={{ r: 6, fill: "#10b981" }}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="delivered"
-                  name="Delivered"
-                  stroke="url(#colorDeliveredLine)"
-                  strokeWidth={2}
-                  dot={{ r: 3, fill: "#10b981" }}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="status" className="mt-4">
-          <div className="h-[300px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={statusData}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  outerRadius={110}
-                  fill="#8884d8"
-                  dataKey="value"
-                  label={({ name, percent }) =>
-                    `${name} ${(percent * 100).toFixed(0)}%`
-                  }
+        <AnimatePresence mode="wait">
+          <TabsContent value="daily" className="relative">
+            <motion.div
+              className="h-[300px]"
+              key="daily"
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={chartVariants}
+            >
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={dailyData}
+                  margin={{ top: 15, right: 30, left: 20, bottom: 15 }}
                 >
-                  {statusData.map((entry, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={COLORS[index % COLORS.length]}
-                      strokeWidth={2}
-                      stroke="rgba(0, 0, 0, 0.2)"
+                  <defs>
+                    <linearGradient id="colorTotal" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#10b981" stopOpacity={0.8} />
+                      <stop
+                        offset="95%"
+                        stopColor="#10b981"
+                        stopOpacity={0.2}
+                      />
+                    </linearGradient>
+                    <linearGradient
+                      id="colorDelivered"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
+                      <stop offset="5%" stopColor="#10b981" stopOpacity={0.8} />
+                      <stop
+                        offset="95%"
+                        stopColor="#10b981"
+                        stopOpacity={0.2}
+                      />
+                    </linearGradient>
+                    <linearGradient
+                      id="colorProcessing"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
+                      <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8} />
+                      <stop
+                        offset="95%"
+                        stopColor="#3b82f6"
+                        stopOpacity={0.2}
+                      />
+                    </linearGradient>
+                    <linearGradient
+                      id="colorCancelled"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
+                      <stop offset="5%" stopColor="#ef4444" stopOpacity={0.8} />
+                      <stop
+                        offset="95%"
+                        stopColor="#ef4444"
+                        stopOpacity={0.2}
+                      />
+                    </linearGradient>
+                    <filter id="shadow" height="200%">
+                      <feDropShadow
+                        dx="0"
+                        dy="4"
+                        stdDeviation="8"
+                        floodColor="#10b981"
+                        floodOpacity="0.2"
+                      />
+                    </filter>
+                  </defs>
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    vertical={false}
+                    stroke="#333"
+                    opacity={0.2}
+                  />
+                  <XAxis
+                    dataKey="day"
+                    stroke="#999"
+                    axisLine={false}
+                    tickLine={false}
+                    dy={10}
+                  />
+                  <YAxis
+                    stroke="#999"
+                    axisLine={false}
+                    tickLine={false}
+                    dx={-10}
+                  />
+                  <Tooltip
+                    contentStyle={glassStyle}
+                    cursor={{ fill: "rgba(255, 255, 255, 0.05)" }}
+                    animationDuration={300}
+                  />
+                  <Legend
+                    verticalAlign="top"
+                    wrapperStyle={{ paddingBottom: "10px" }}
+                  />
+                  <Bar
+                    dataKey="total"
+                    name="Total Orders"
+                    fill="url(#colorTotal)"
+                    radius={[8, 8, 0, 0]}
+                    animationDuration={1500}
+                    animationEasing="ease"
+                    filter="url(#shadow)"
+                  />
+                  <Bar
+                    dataKey="delivered"
+                    name="Delivered"
+                    fill="url(#colorDelivered)"
+                    radius={[8, 8, 0, 0]}
+                    animationDuration={1500}
+                    animationEasing="ease"
+                    animationBegin={150}
+                  />
+                  <Bar
+                    dataKey="processing"
+                    name="Processing"
+                    fill="url(#colorProcessing)"
+                    radius={[8, 8, 0, 0]}
+                    animationDuration={1500}
+                    animationEasing="ease"
+                    animationBegin={300}
+                  />
+                  <Bar
+                    dataKey="cancelled"
+                    name="Cancelled"
+                    fill="url(#colorCancelled)"
+                    radius={[8, 8, 0, 0]}
+                    animationDuration={1500}
+                    animationEasing="ease"
+                    animationBegin={450}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </motion.div>
+          </TabsContent>
+
+          <TabsContent value="trend" className="relative">
+            <motion.div
+              className="h-[300px]"
+              key="trend"
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={chartVariants}
+            >
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart
+                  data={dailyData}
+                  margin={{ top: 15, right: 30, left: 20, bottom: 15 }}
+                >
+                  <defs>
+                    <linearGradient
+                      id="colorTotalLine"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
+                      <stop offset="5%" stopColor="#10b981" stopOpacity={0.8} />
+                      <stop
+                        offset="95%"
+                        stopColor="#10b981"
+                        stopOpacity={0.2}
+                      />
+                    </linearGradient>
+                    <linearGradient
+                      id="colorDeliveredLine"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
+                      <stop offset="5%" stopColor="#10b981" stopOpacity={0.8} />
+                      <stop
+                        offset="95%"
+                        stopColor="#10b981"
+                        stopOpacity={0.2}
+                      />
+                    </linearGradient>
+                    <filter id="glow" height="200%">
+                      <feGaussianBlur stdDeviation="2.5" result="blur" />
+                      <feFlood
+                        floodColor="#10b981"
+                        floodOpacity="0.5"
+                        result="color"
+                      />
+                      <feComposite
+                        in="color"
+                        in2="blur"
+                        operator="in"
+                        result="shadow"
+                      />
+                      <feComposite
+                        in="SourceGraphic"
+                        in2="shadow"
+                        operator="over"
+                      />
+                    </filter>
+                  </defs>
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    vertical={false}
+                    stroke="#333"
+                    opacity={0.2}
+                  />
+                  <XAxis
+                    dataKey="day"
+                    stroke="#999"
+                    axisLine={false}
+                    tickLine={false}
+                    dy={10}
+                  />
+                  <YAxis
+                    stroke="#999"
+                    axisLine={false}
+                    tickLine={false}
+                    dx={-10}
+                  />
+                  <Tooltip
+                    contentStyle={glassStyle}
+                    cursor={{ stroke: "rgba(255, 255, 255, 0.2)" }}
+                    animationDuration={300}
+                  />
+                  <Legend
+                    verticalAlign="top"
+                    wrapperStyle={{ paddingBottom: "10px" }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="total"
+                    name="Total Orders"
+                    stroke="#10b981"
+                    strokeWidth={3}
+                    dot={{
+                      r: 4,
+                      strokeWidth: 2,
+                      fill: "#222",
+                      stroke: "#10b981",
+                    }}
+                    activeDot={{ r: 6, strokeWidth: 0, fill: "#10b981" }}
+                    animationDuration={2000}
+                    animationEasing="ease"
+                    filter="url(#glow)"
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="delivered"
+                    name="Delivered"
+                    stroke="#10b981"
+                    strokeWidth={2}
+                    strokeOpacity={0.7}
+                    dot={{
+                      r: 3,
+                      strokeWidth: 2,
+                      fill: "#222",
+                      stroke: "#10b981",
+                    }}
+                    activeDot={{ r: 5, strokeWidth: 0, fill: "#10b981" }}
+                    animationDuration={2000}
+                    animationEasing="ease"
+                    animationBegin={500}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </motion.div>
+          </TabsContent>
+
+          <TabsContent value="status" className="relative">
+            <motion.div
+              className="h-[300px]"
+              key="status"
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={chartVariants}
+            >
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  {createGradients()}
+                  <filter id="glow-pie">
+                    <feGaussianBlur stdDeviation="3.5" result="blur" />
+                    <feFlood floodOpacity="0.3" result="color" />
+                    <feComposite
+                      in="color"
+                      in2="blur"
+                      operator="in"
+                      result="shadow"
                     />
-                  ))}
-                </Pie>
-                <Tooltip
-                  formatter={(value) => [`${value} orders`, "Count"]}
-                  contentStyle={{
-                    backgroundColor: "#222",
-                    borderColor: "#333",
-                    color: "#fff",
-                    borderRadius: "8px",
-                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-                  }}
-                />
-                <Legend />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-        </TabsContent>
+                    <feComposite
+                      in="SourceGraphic"
+                      in2="shadow"
+                      operator="over"
+                    />
+                  </filter>
+                  <Pie
+                    data={statusData}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    innerRadius={60}
+                    outerRadius={80}
+                    paddingAngle={5}
+                    fill="#8884d8"
+                    dataKey="value"
+                    activeIndex={activeIndex}
+                    activeShape={renderActiveShape}
+                    onMouseEnter={onPieEnter}
+                    animationDuration={1800}
+                    animationEasing="ease"
+                    filter="url(#glow-pie)"
+                  >
+                    {statusData.map((entry, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={`url(#colorStatus${index})`}
+                        strokeWidth={1}
+                        stroke="rgba(255, 255, 255, 0.2)"
+                        className="cursor-pointer"
+                      />
+                    ))}
+                  </Pie>
+                  <Tooltip
+                    formatter={(value) => [`${value} orders`, "Count"]}
+                    contentStyle={glassStyle}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+            </motion.div>
+          </TabsContent>
+        </AnimatePresence>
       </Tabs>
     </div>
   );
