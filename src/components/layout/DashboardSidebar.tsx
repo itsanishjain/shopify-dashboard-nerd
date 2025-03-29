@@ -41,7 +41,7 @@ const DashboardSidebar = () => {
 
   const mainLinks = [
     {
-      href: "/dashboard",
+      href: "/",
       label: "Dashboard",
       icon: <Home className="h-5 w-5" />,
     },

@@ -1,5 +1,3 @@
-
-import React from "react";
 import { useState } from "react";
 import {
   BarChart,
@@ -16,7 +14,13 @@ import {
   Pie,
   Cell,
 } from "recharts";
-import { Calendar, ShoppingCart, DollarSign, CreditCard, Users } from "lucide-react";
+import {
+  Calendar,
+  ShoppingCart,
+  DollarSign,
+  CreditCard,
+  Users,
+} from "lucide-react";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import StatCard from "@/components/dashboard/StatCard";
 import ChartCard from "@/components/dashboard/ChartCard";
@@ -30,9 +34,15 @@ import {
   revenueData,
   statisticsData,
 } from "@/data/dashboardData";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const COLORS = ["#22c55e", "#0891b2", "#4f46e5", "#8b5cf6", "#ec4899"];
 
@@ -41,13 +51,13 @@ const Dashboard = () => {
 
   return (
     <DashboardLayout>
-      <div className="space-y-6">
+      <div className="space-y-6 animate-fade-in">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <h1 className="text-3xl font-bold tracking-tight">
+          {/* <h1 className="text-3xl font-bold tracking-tight terminal-text text-glow">
             Merchant Dashboard
-          </h1>
-          
-          <div className="flex items-center gap-2">
+          </h1> */}
+
+          <div className="flex items-center ml-auto gap-4">
             <Select defaultValue={dateRange} onValueChange={setDateRange}>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Select date range" />
@@ -67,33 +77,33 @@ const Dashboard = () => {
             </Button>
           </div>
         </div>
-        
+
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <StatCard
             title="Total Revenue"
             value={statisticsData.totalRevenue.value}
-            icon={<DollarSign className="h-5 w-5" />}
+            icon={<DollarSign className="h-5 w-5 text-primary" />}
             change={statisticsData.totalRevenue.change}
             changeLabel={statisticsData.totalRevenue.changeLabel}
           />
           <StatCard
             title="Average Order Value"
             value={statisticsData.averageOrderValue.value}
-            icon={<CreditCard className="h-5 w-5" />}
+            icon={<CreditCard className="h-5 w-5 text-primary" />}
             change={statisticsData.averageOrderValue.change}
             changeLabel={statisticsData.averageOrderValue.changeLabel}
           />
           <StatCard
             title="Conversion Rate"
             value={statisticsData.conversionRate.value}
-            icon={<ShoppingCart className="h-5 w-5" />}
+            icon={<ShoppingCart className="h-5 w-5 text-primary" />}
             change={statisticsData.conversionRate.change}
             changeLabel={statisticsData.conversionRate.changeLabel}
           />
           <StatCard
             title="Active Customers"
             value={statisticsData.activeCustomers.value}
-            icon={<Users className="h-5 w-5" />}
+            icon={<Users className="h-5 w-5 text-primary" />}
             change={statisticsData.activeCustomers.change}
             changeLabel={statisticsData.activeCustomers.changeLabel}
           />
@@ -109,10 +119,18 @@ const Dashboard = () => {
                   <defs>
                     <linearGradient id="colorSales" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="5%" stopColor="#10b981" stopOpacity={0.8} />
-                      <stop offset="95%" stopColor="#10b981" stopOpacity={0.2} />
+                      <stop
+                        offset="95%"
+                        stopColor="#10b981"
+                        stopOpacity={0.2}
+                      />
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#333" />
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    vertical={false}
+                    stroke="#333"
+                  />
                   <XAxis dataKey="name" stroke="#999" />
                   <YAxis stroke="#999" />
                   <Tooltip
@@ -141,16 +159,40 @@ const Dashboard = () => {
               <ResponsiveContainer width="100%" height={300}>
                 <AreaChart data={revenueData} margin={{ top: 20 }}>
                   <defs>
-                    <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
+                    <linearGradient
+                      id="colorRevenue"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
                       <stop offset="5%" stopColor="#10b981" stopOpacity={0.8} />
-                      <stop offset="95%" stopColor="#10b981" stopOpacity={0.2} />
+                      <stop
+                        offset="95%"
+                        stopColor="#10b981"
+                        stopOpacity={0.2}
+                      />
                     </linearGradient>
-                    <linearGradient id="colorExpenses" x1="0" y1="0" x2="0" y2="1">
+                    <linearGradient
+                      id="colorExpenses"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
                       <stop offset="5%" stopColor="#ef4444" stopOpacity={0.8} />
-                      <stop offset="95%" stopColor="#ef4444" stopOpacity={0.2} />
+                      <stop
+                        offset="95%"
+                        stopColor="#ef4444"
+                        stopOpacity={0.2}
+                      />
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#333" />
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    vertical={false}
+                    stroke="#333"
+                  />
                   <XAxis dataKey="name" stroke="#999" />
                   <YAxis stroke="#999" />
                   <Tooltip
@@ -219,10 +261,7 @@ const Dashboard = () => {
             }
             className="md:col-span-1"
           />
-          <AppEcosystemCard
-            apps={appEcosystemData}
-            className="md:col-span-2"
-          />
+          <AppEcosystemCard apps={appEcosystemData} className="md:col-span-2" />
         </div>
 
         <div className="grid gap-4">
