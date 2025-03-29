@@ -8,7 +8,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TrendingUp, TrendingDown, Minus, ArrowUpDown, ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -26,6 +25,12 @@ interface Product {
   conversion: number;
   profit?: string;
   margin?: number;
+  cost?: string;
+  stockDays?: number;
+  totalValue?: string;
+  turnoverRate?: number;
+  variants?: number;
+  category?: string;
 }
 
 interface ProductPerformanceTableProps {
@@ -58,13 +63,13 @@ const ProductPerformanceTable: React.FC<ProductPerformanceTableProps> = ({
     if (inventory <= 5) {
       return (
         <Badge variant="destructive" className="text-xs">
-          Low
+          Critical
         </Badge>
       );
     } else if (inventory <= 20) {
       return (
         <Badge variant="outline" className="text-xs text-amber-500">
-          Medium
+          Low
         </Badge>
       );
     } else {
@@ -93,7 +98,7 @@ const ProductPerformanceTable: React.FC<ProductPerformanceTableProps> = ({
       // Handle string values for proper comparison
       if (typeof aValue === 'string' && typeof bValue === 'string') {
         // If it's a price string, convert to number
-        if (sortField === 'price' || sortField === 'profit') {
+        if (sortField === 'price' || sortField === 'profit' || sortField === 'cost' || sortField === 'totalValue') {
           aValue = parseFloat((aValue as string).replace(/[^0-9.-]+/g, ""));
           bValue = parseFloat((bValue as string).replace(/[^0-9.-]+/g, ""));
         } else {
@@ -135,10 +140,10 @@ const ProductPerformanceTable: React.FC<ProductPerformanceTableProps> = ({
             <Button 
               variant="ghost" 
               size="sm" 
-              onClick={() => handleSort("price")}
+              onClick={() => handleSort("sales")}
               className="flex items-center font-medium text-xs"
             >
-              Price {getSortIcon("price")}
+              Sales {getSortIcon("sales")}
             </Button>
           </TableHead>
           <TableHead>
@@ -171,10 +176,30 @@ const ProductPerformanceTable: React.FC<ProductPerformanceTableProps> = ({
           <Button 
             variant="ghost" 
             size="sm" 
+            onClick={() => handleSort("category")}
+            className="flex items-center font-medium text-xs"
+          >
+            Category {getSortIcon("category")}
+          </Button>
+        </TableHead>
+        <TableHead>
+          <Button 
+            variant="ghost" 
+            size="sm" 
             onClick={() => handleSort("price")}
             className="flex items-center font-medium text-xs"
           >
             Price {getSortIcon("price")}
+          </Button>
+        </TableHead>
+        <TableHead>
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            onClick={() => handleSort("cost")}
+            className="flex items-center font-medium text-xs"
+          >
+            Cost {getSortIcon("cost")}
           </Button>
         </TableHead>
         <TableHead>
@@ -211,10 +236,10 @@ const ProductPerformanceTable: React.FC<ProductPerformanceTableProps> = ({
           <Button 
             variant="ghost" 
             size="sm" 
-            onClick={() => handleSort("conversion")}
+            onClick={() => handleSort("turnoverRate")}
             className="flex items-center font-medium text-xs"
           >
-            Conversion {getSortIcon("conversion")}
+            Turnover {getSortIcon("turnoverRate")}
           </Button>
         </TableHead>
         <TableHead>
@@ -224,7 +249,7 @@ const ProductPerformanceTable: React.FC<ProductPerformanceTableProps> = ({
             onClick={() => handleSort("margin")}
             className="flex items-center font-medium text-xs"
           >
-            Profit Margin {getSortIcon("margin")}
+            Margin {getSortIcon("margin")}
           </Button>
         </TableHead>
       </TableRow>
@@ -236,7 +261,7 @@ const ProductPerformanceTable: React.FC<ProductPerformanceTableProps> = ({
       return (
         <TableRow key={product.id} className="hover:bg-accent/50 transition-colors cursor-pointer">
           <TableCell className="font-medium">{product.name}</TableCell>
-          <TableCell>{product.price}</TableCell>
+          <TableCell>{product.sales}</TableCell>
           <TableCell>
             <div className="flex items-center gap-1">
               {getStatusIcon(product.status)}
@@ -258,7 +283,9 @@ const ProductPerformanceTable: React.FC<ProductPerformanceTableProps> = ({
     return (
       <TableRow key={product.id} className="hover:bg-accent/50 transition-colors cursor-pointer">
         <TableCell className="font-medium">{product.name}</TableCell>
+        <TableCell>{product.category || "Uncategorized"}</TableCell>
         <TableCell>{product.price}</TableCell>
+        <TableCell>{product.cost || "N/A"}</TableCell>
         <TableCell>{product.sales}</TableCell>
         <TableCell>
           <div className="flex items-center gap-1">
@@ -274,8 +301,23 @@ const ProductPerformanceTable: React.FC<ProductPerformanceTableProps> = ({
             </span>
           </div>
         </TableCell>
-        <TableCell>{getInventoryStatus(product.inventory)}</TableCell>
-        <TableCell>{product.conversion}%</TableCell>
+        <TableCell>
+          <div className="flex items-center gap-2">
+            <span>{product.inventory}</span>
+            {getInventoryStatus(product.inventory)}
+          </div>
+        </TableCell>
+        <TableCell>
+          {product.turnoverRate ? (
+            <span className={cn(
+              product.turnoverRate > 10 && "text-success", 
+              product.turnoverRate < 3 && "text-destructive",
+              "font-medium"
+            )}>
+              {product.turnoverRate.toFixed(1)}x
+            </span>
+          ) : "N/A"}
+        </TableCell>
         <TableCell>
           {product.margin ? (
             <span className={cn(
@@ -292,23 +334,18 @@ const ProductPerformanceTable: React.FC<ProductPerformanceTableProps> = ({
   };
 
   return (
-    <Card className={cn("animate-fade-in", className)}>
-      <CardHeader className="pb-2">
-        <CardTitle className="text-md font-medium terminal-text">Product Performance Analytics</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="w-full">
-          <Table>
-            <TableHeader>
-              {renderTableHeader()}
-            </TableHeader>
-            <TableBody className="text-sm">
-              {getSortedProducts().map((product) => renderTableRow(product))}
-            </TableBody>
-          </Table>
-        </div>
-      </CardContent>
-    </Card>
+    <div className="w-full">
+      <ScrollArea className="h-[400px]">
+        <Table>
+          <TableHeader>
+            {renderTableHeader()}
+          </TableHeader>
+          <TableBody className="text-sm">
+            {getSortedProducts().map((product) => renderTableRow(product))}
+          </TableBody>
+        </Table>
+      </ScrollArea>
+    </div>
   );
 };
 
