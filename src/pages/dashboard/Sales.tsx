@@ -440,7 +440,7 @@ const Sales = () => {
             <ChartCard
               title="Sales by Location"
               chart={
-                <div className="h-[380px] flex flex-col">
+                <div className="h-[415px] flex flex-col">
                   <SalesMapChart data={salesByLocation} />
                   <div className="mt-auto">
                     <Button
