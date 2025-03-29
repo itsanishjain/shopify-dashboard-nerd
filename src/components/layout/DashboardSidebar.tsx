@@ -1,3 +1,4 @@
+
 import {
   BarChart3,
   PackageSearch,
@@ -14,12 +15,13 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
+import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 
 const DashboardSidebar = () => {
+  const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -96,6 +98,11 @@ const DashboardSidebar = () => {
       icon: <Settings className="h-5 w-5" />,
     },
   ];
+
+  // Check if a link is active
+  const isActive = (href: string) => {
+    return location.pathname === href;
+  };
 
   return (
     <>
@@ -187,10 +194,13 @@ const DashboardSidebar = () => {
               <ul className="space-y-1 px-2">
                 {mainLinks.map((link) => (
                   <li key={link.href}>
-                    <a
-                      href={link.href}
+                    <Link
+                      to={link.href}
                       className={cn(
-                        "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors text-gray-300 hover:text-white hover:bg-gray-800",
+                        "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors",
+                        isActive(link.href) 
+                          ? "bg-gray-800 text-white" 
+                          : "text-gray-300 hover:text-white hover:bg-gray-800",
                         collapsed && "justify-center px-0"
                       )}
                       onClick={() => {
@@ -217,7 +227,7 @@ const DashboardSidebar = () => {
                           </motion.span>
                         )}
                       </AnimatePresence>
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -235,10 +245,13 @@ const DashboardSidebar = () => {
               <ul className="space-y-1 px-2">
                 {analyzeLinks.map((link) => (
                   <li key={link.href}>
-                    <a
-                      href={link.href}
+                    <Link
+                      to={link.href}
                       className={cn(
-                        "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors text-gray-300 hover:text-white hover:bg-gray-800",
+                        "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors",
+                        isActive(link.href) 
+                          ? "bg-gray-800 text-white" 
+                          : "text-gray-300 hover:text-white hover:bg-gray-800",
                         collapsed && "justify-center px-0"
                       )}
                       onClick={() => {
@@ -265,7 +278,7 @@ const DashboardSidebar = () => {
                           </motion.span>
                         )}
                       </AnimatePresence>
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -277,10 +290,13 @@ const DashboardSidebar = () => {
             <ul className="space-y-1 px-2">
               {settingsLinks.map((link) => (
                 <li key={link.href}>
-                  <a
-                    href={link.href}
+                  <Link
+                    to={link.href}
                     className={cn(
-                      "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors text-gray-300 hover:text-white hover:bg-gray-800",
+                      "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors",
+                      isActive(link.href) 
+                        ? "bg-gray-800 text-white" 
+                        : "text-gray-300 hover:text-white hover:bg-gray-800",
                       collapsed && "justify-center px-0"
                     )}
                     onClick={() => {
@@ -307,7 +323,7 @@ const DashboardSidebar = () => {
                         </motion.span>
                       )}
                     </AnimatePresence>
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
