@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { TrendingUp, TrendingDown } from "lucide-react";
+import { TrendingUp, TrendingDown, Minus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 
@@ -32,12 +32,14 @@ const ProductPerformanceTable: React.FC<ProductPerformanceTableProps> = ({
   products,
   className,
 }) => {
-  const getStatusIcon = (status: string) => {
+  const getStatusIcon = (status: Product["status"]) => {
     switch (status) {
       case "trending":
         return <TrendingUp className="h-4 w-4 text-success" />;
       case "declining":
         return <TrendingDown className="h-4 w-4 text-destructive" />;
+      case "stable":
+        return <Minus className="h-4 w-4 text-muted-foreground" />;
       default:
         return null;
     }
@@ -52,7 +54,7 @@ const ProductPerformanceTable: React.FC<ProductPerformanceTableProps> = ({
       );
     } else if (inventory <= 20) {
       return (
-        <Badge variant="outline" className="text-xs text-warning">
+        <Badge variant="outline" className="text-xs text-amber-500">
           Medium
         </Badge>
       );
@@ -66,7 +68,7 @@ const ProductPerformanceTable: React.FC<ProductPerformanceTableProps> = ({
   };
 
   return (
-    <Card className={cn("matrix-flow", className)}>
+    <Card className={cn("animate-fade-in", className)}>
       <CardHeader className="pb-2">
         <CardTitle className="text-md font-medium terminal-text">Product Performance</CardTitle>
       </CardHeader>
@@ -95,7 +97,8 @@ const ProductPerformanceTable: React.FC<ProductPerformanceTableProps> = ({
                       <span
                         className={cn(
                           product.status === "trending" && "text-success",
-                          product.status === "declining" && "text-destructive"
+                          product.status === "declining" && "text-destructive",
+                          product.status === "stable" && "text-muted-foreground"
                         )}
                       >
                         {product.status.charAt(0).toUpperCase() + product.status.slice(1)}

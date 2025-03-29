@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 import {
   BarChart,
   ResponsiveContainer,
@@ -20,6 +20,7 @@ import {
   DollarSign,
   CreditCard,
   Users,
+  Calendar,
 } from "lucide-react";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import StatCard from "@/components/dashboard/StatCard";
@@ -34,16 +35,43 @@ import {
   revenueData,
   statisticsData,
 } from "@/data/dashboardData";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const COLORS = ["#22c55e", "#0891b2", "#4f46e5", "#8b5cf6", "#ec4899"];
 
 const Index = () => {
+  const [dateRange, setDateRange] = useState("last30");
+
   return (
     <DashboardLayout>
       <div className="space-y-6 animate-fade-in">
-        <h1 className="text-3xl font-bold tracking-tight terminal-text text-glow">
-          Dashboard
-        </h1>
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <h1 className="text-3xl font-bold tracking-tight terminal-text text-glow">
+            Merchant Dashboard
+          </h1>
+          
+          <div className="flex items-center gap-2">
+            <Select defaultValue={dateRange} onValueChange={setDateRange}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select date range" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="today">Today</SelectItem>
+                <SelectItem value="yesterday">Yesterday</SelectItem>
+                <SelectItem value="last7">Last 7 days</SelectItem>
+                <SelectItem value="last30">Last 30 days</SelectItem>
+                <SelectItem value="month">Month to date</SelectItem>
+                <SelectItem value="year">Year to date</SelectItem>
+              </SelectContent>
+            </Select>
+            <Button variant="outline" size="sm" className="gap-2">
+              <Calendar className="h-4 w-4" />
+              <span>Compare</span>
+            </Button>
+          </div>
+        </div>
         
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <StatCard

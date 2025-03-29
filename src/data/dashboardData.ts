@@ -1,4 +1,3 @@
-
 export const salesData = [
   { name: "Jan", value: 4000 },
   { name: "Feb", value: 3000 },
@@ -53,49 +52,49 @@ export const weeklyProductSales = [
 export const productPerformanceData = [
   {
     id: "1",
-    name: "Premium T-Shirt",
-    price: "$29.99",
-    sales: 258,
-    status: "trending",
-    inventory: 45,
-    conversion: 5.2
+    name: "Ergonomic Keyboard",
+    price: "$129.99",
+    sales: 432,
+    status: "trending" as const,
+    inventory: 56,
+    conversion: 3.2,
   },
   {
     id: "2",
-    name: "Designer Jeans",
-    price: "$79.99",
-    sales: 187,
-    status: "stable",
-    inventory: 32,
-    conversion: 4.7
+    name: "Wireless Mouse",
+    price: "$59.99",
+    sales: 287,
+    status: "stable" as const,
+    inventory: 124,
+    conversion: 2.8,
   },
   {
     id: "3",
-    name: "Wireless Headphones",
-    price: "$129.99",
-    sales: 152,
-    status: "trending",
-    inventory: 18,
-    conversion: 6.3
+    name: "4K Monitor",
+    price: "$349.99",
+    sales: 156,
+    status: "trending" as const,
+    inventory: 16,
+    conversion: 1.9,
   },
   {
     id: "4",
-    name: "Smartwatch Pro",
-    price: "$249.99",
-    sales: 124,
-    status: "declining",
-    inventory: 5,
-    conversion: 2.8
+    name: "USB-C Hub",
+    price: "$79.99",
+    sales: 76,
+    status: "declining" as const,
+    inventory: 4,
+    conversion: 1.1,
   },
   {
     id: "5",
-    name: "Cotton Hoodie",
-    price: "$49.99",
-    sales: 96,
-    status: "stable",
-    inventory: 27,
-    conversion: 3.5
-  }
+    name: "Mechanical Keyboard",
+    price: "$149.99",
+    sales: 203,
+    status: "stable" as const,
+    inventory: 32,
+    conversion: 2.4,
+  },
 ];
 
 export const appEcosystemData = [
