@@ -1,4 +1,3 @@
-
 import {
   BarChart3,
   PackageSearch,
@@ -193,7 +192,7 @@ const DashboardSidebar = () => {
                         "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors",
                         isActive(link.href)
                           ? "bg-sidebar-primary text-sidebar-primary-foreground"
-                          : "text-sidebar-foreground hover:text-sidebar-primary-foreground hover:bg-sidebar-accent",
+                          : "text-sidebar-foreground hover:text-sidebar-primary-foreground hover:bg-white",
                         collapsed && "justify-center px-0"
                       )}
                       onClick={() => {
