@@ -1,20 +1,20 @@
 
 import React from "react";
 import DashboardLayout from "@/components/layout/DashboardLayout";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AreaChart, ResponsiveContainer, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
 import { revenueData } from "@/data/dashboardData";
-import ChartCard from "@/components/dashboard/ChartCard";
 
 const Revenue = () => {
   return (
     <DashboardLayout>
-      <div className="space-y-6 animate-fade-in">
+      <div className="space-y-6">
         <h1 className="text-3xl font-bold tracking-tight">Revenue</h1>
-        
-        <ChartCard
-          title="Revenue vs Expenses"
-          description="Monthly financial overview"
-          chart={
+        <Card>
+          <CardHeader>
+            <CardTitle>Revenue vs Expenses</CardTitle>
+          </CardHeader>
+          <CardContent>
             <ResponsiveContainer width="100%" height={400}>
               <AreaChart data={revenueData} margin={{ top: 20 }}>
                 <defs>
@@ -54,8 +54,8 @@ const Revenue = () => {
                 />
               </AreaChart>
             </ResponsiveContainer>
-          }
-        />
+          </CardContent>
+        </Card>
       </div>
     </DashboardLayout>
   );

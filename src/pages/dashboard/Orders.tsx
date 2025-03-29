@@ -125,26 +125,26 @@ const Orders = () => {
 
         {/* Chart and Filters */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <Card className="lg:col-span-2 analytics-card">
-            <CardHeader className="analytics-card-header">
-              <CardTitle className="chart-title">
+          <Card className="lg:col-span-2">
+            <CardHeader className="pb-2">
+              <CardTitle className="flex items-center">
                 <TrendingUp className="mr-2 h-5 w-5 text-primary" />
                 Order Analytics
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-4 pt-0">
+            <CardContent>
               <OrdersChart data={orderData} />
             </CardContent>
           </Card>
           
-          <Card className="analytics-card">
-            <CardHeader className="analytics-card-header">
-              <CardTitle className="chart-title">
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="flex items-center">
                 <Filter className="mr-2 h-5 w-5 text-primary" />
                 Filter Orders
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-4 pt-0">
+            <CardContent>
               <OrderFilters 
                 data={orderData} 
                 onFilterChange={(data) => setFilteredData(data)} 
@@ -154,16 +154,16 @@ const Orders = () => {
         </div>
 
         {/* Orders Table */}
-        <Card className="w-full analytics-card">
-          <CardHeader className="analytics-card-header">
+        <Card className="w-full">
+          <CardHeader className="pb-3">
             <div className="flex justify-between items-center">
-              <CardTitle className="chart-title">Recent Orders</CardTitle>
-              <Badge variant="outline" className="ml-2 border-[#334155] text-white">
+              <CardTitle>Recent Orders</CardTitle>
+              <Badge variant="outline" className="ml-2">
                 {filteredData.length} orders
               </Badge>
             </div>
           </CardHeader>
-          <CardContent className="p-4 pt-0">
+          <CardContent>
             <OrdersTable orders={filteredData} />
           </CardContent>
         </Card>

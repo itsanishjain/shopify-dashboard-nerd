@@ -139,40 +139,6 @@
     animation: data-flow 10s linear infinite;
   }
   
-  /* Dark themed card with green gradient for charts/analytics */
-  .analytics-card {
-    @apply bg-gradient-to-br from-[#0f172a] to-[#0f1f3d] border-[#1f2937] shadow-md;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-  }
-  
-  .analytics-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #10b981, rgba(16, 185, 129, 0.2));
-    z-index: 1;
-  }
-  
-  /* Special styling for card headers in analytics cards */
-  .analytics-card-header {
-    @apply border-b border-[#1f2937] pb-4 px-6 pt-6;
-  }
-  
-  /* Chart title styling */
-  .chart-title {
-    @apply text-xl font-semibold text-white flex items-center;
-  }
-  
-  /* Chart description styling */
-  .chart-description {
-    @apply text-sm text-gray-400 mt-1;
-  }
-  
   /* Hacker-style glow effects */
   .glow {
     box-shadow: 0 0 5px rgba(16, 185, 129, 0.5),

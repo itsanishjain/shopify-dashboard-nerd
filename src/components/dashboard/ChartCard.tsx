@@ -8,7 +8,6 @@ interface ChartCardProps {
   description?: string;
   chart: React.ReactNode;
   className?: string;
-  icon?: React.ReactNode;
 }
 
 const ChartCard: React.FC<ChartCardProps> = ({
@@ -16,20 +15,16 @@ const ChartCard: React.FC<ChartCardProps> = ({
   description,
   chart,
   className,
-  icon,
 }) => {
   return (
-    <Card className={cn("analytics-card", className)}>
-      <CardHeader className="analytics-card-header">
-        <CardTitle className="chart-title">
-          {icon && <span className="mr-2">{icon}</span>}
-          {title}
-        </CardTitle>
+    <Card className={cn("matrix-flow", className)}>
+      <CardHeader className="pb-2">
+        <CardTitle className="text-md font-medium terminal-text">{title}</CardTitle>
         {description && (
-          <p className="chart-description">{description}</p>
+          <p className="text-sm text-muted-foreground">{description}</p>
         )}
       </CardHeader>
-      <CardContent className="p-4 pt-0">{chart}</CardContent>
+      <CardContent className="pt-0">{chart}</CardContent>
     </Card>
   );
 };
