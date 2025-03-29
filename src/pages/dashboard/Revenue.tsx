@@ -2,10 +2,23 @@
 import React from "react";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { AreaChart, ResponsiveContainer, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Legend } from "recharts";
 import { revenueData } from "@/data/dashboardData";
+import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from "@/components/ui/chart";
 
 const Revenue = () => {
+  // Chart config for shadcn/ui chart
+  const revenueChartConfig = {
+    revenue: {
+      label: "Revenue",
+      theme: { light: "#10b981", dark: "#10b981" }
+    },
+    expenses: {
+      label: "Expenses",
+      theme: { light: "#ef4444", dark: "#ef4444" }
+    }
+  };
+
   return (
     <DashboardLayout>
       <div className="space-y-6">
@@ -15,45 +28,33 @@ const Revenue = () => {
             <CardTitle>Revenue vs Expenses</CardTitle>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={400}>
-              <AreaChart data={revenueData} margin={{ top: 20 }}>
-                <defs>
-                  <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#10b981" stopOpacity={0.2} />
-                  </linearGradient>
-                  <linearGradient id="colorExpenses" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#ef4444" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#ef4444" stopOpacity={0.2} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#333" />
-                <XAxis dataKey="name" stroke="#999" />
-                <YAxis stroke="#999" />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "#222",
-                    borderColor: "#333",
-                    color: "#fff",
-                  }}
-                />
-                <Legend />
-                <Area
-                  type="monotone"
-                  dataKey="revenue"
-                  stroke="#10b981"
-                  fillOpacity={1}
-                  fill="url(#colorRevenue)"
-                />
-                <Area
-                  type="monotone"
-                  dataKey="expenses"
-                  stroke="#ef4444"
-                  fillOpacity={1}
-                  fill="url(#colorExpenses)"
-                />
-              </AreaChart>
-            </ResponsiveContainer>
+            <div className="h-[400px]">
+              <ChartContainer config={revenueChartConfig} className="h-full">
+                <AreaChart data={revenueData} margin={{ top: 20 }}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <ChartTooltip>
+                    <ChartTooltipContent />
+                  </ChartTooltip>
+                  <ChartLegend>
+                    <ChartLegendContent />
+                  </ChartLegend>
+                  <Area
+                    type="monotone"
+                    dataKey="revenue"
+                    name="revenue"
+                    fillOpacity={1}
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="expenses"
+                    name="expenses"
+                    fillOpacity={1}
+                  />
+                </AreaChart>
+              </ChartContainer>
+            </div>
           </CardContent>
         </Card>
       </div>

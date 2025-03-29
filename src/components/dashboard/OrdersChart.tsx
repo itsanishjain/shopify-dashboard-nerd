@@ -17,6 +17,14 @@ import {
 } from "recharts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getOrderCountsByDay, getOrderStatusDistribution, Order } from "@/data/orderData";
+import { 
+  ChartContainer, 
+  ChartTooltip, 
+  ChartTooltipContent,
+  ChartLegend,
+  ChartLegendContent 
+} from "@/components/ui/chart";
+import { cn } from "@/lib/utils";
 
 interface OrdersChartProps {
   data: Order[];
@@ -26,6 +34,26 @@ const OrdersChart: React.FC<OrdersChartProps> = ({ data }) => {
   const [activeTab, setActiveTab] = useState("daily");
   const dailyData = getOrderCountsByDay();
   const statusData = getOrderStatusDistribution();
+
+  // Chart configs for shadcn/ui charts
+  const orderChartConfig = {
+    total: {
+      label: "Total Orders",
+      theme: { light: "hsl(var(--primary))", dark: "hsl(var(--primary))" }
+    },
+    delivered: {
+      label: "Delivered",
+      theme: { light: "#10b981", dark: "#10b981" }
+    },
+    processing: {
+      label: "Processing",
+      theme: { light: "#3b82f6", dark: "#3b82f6" }
+    },
+    cancelled: {
+      label: "Cancelled",
+      theme: { light: "#ef4444", dark: "#ef4444" }
+    }
+  };
 
   // Colors for status chart
   const COLORS = ["#f59e0b", "#3b82f6", "#6366f1", "#10b981", "#ef4444"];
@@ -40,7 +68,7 @@ const OrdersChart: React.FC<OrdersChartProps> = ({ data }) => {
       
       <TabsContent value="daily" className="pt-4">
         <div className="h-[300px] w-full">
-          <ResponsiveContainer width="100%" height="100%">
+          <ChartContainer config={orderChartConfig} className="h-full">
             <BarChart
               data={dailyData}
               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
@@ -48,47 +76,40 @@ const OrdersChart: React.FC<OrdersChartProps> = ({ data }) => {
               <CartesianGrid strokeDasharray="3 3" vertical={false} />
               <XAxis dataKey="day" />
               <YAxis />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: "hsl(var(--background))", 
-                  borderColor: "hsl(var(--border))",
-                  borderRadius: "8px",
-                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)"
-                }}
-              />
-              <Legend />
+              <ChartTooltip>
+                <ChartTooltipContent />
+              </ChartTooltip>
+              <ChartLegend>
+                <ChartLegendContent />
+              </ChartLegend>
               <Bar 
                 dataKey="total" 
-                name="Total Orders" 
-                fill="hsl(var(--primary))" 
+                name="total" 
                 radius={[4, 4, 0, 0]} 
               />
               <Bar 
                 dataKey="delivered" 
-                name="Delivered" 
-                fill="#10b981" 
+                name="delivered" 
                 radius={[4, 4, 0, 0]} 
               />
               <Bar 
                 dataKey="processing" 
-                name="Processing" 
-                fill="#3b82f6" 
+                name="processing"  
                 radius={[4, 4, 0, 0]} 
               />
               <Bar 
                 dataKey="cancelled" 
-                name="Cancelled" 
-                fill="#ef4444" 
+                name="cancelled" 
                 radius={[4, 4, 0, 0]} 
               />
             </BarChart>
-          </ResponsiveContainer>
+          </ChartContainer>
         </div>
       </TabsContent>
       
       <TabsContent value="trend" className="pt-4">
         <div className="h-[300px] w-full">
-          <ResponsiveContainer width="100%" height="100%">
+          <ChartContainer config={orderChartConfig} className="h-full">
             <LineChart
               data={dailyData}
               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
@@ -96,20 +117,16 @@ const OrdersChart: React.FC<OrdersChartProps> = ({ data }) => {
               <CartesianGrid strokeDasharray="3 3" vertical={false} />
               <XAxis dataKey="day" />
               <YAxis />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: "hsl(var(--background))", 
-                  borderColor: "hsl(var(--border))",
-                  borderRadius: "8px",
-                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)"
-                }}
-              />
-              <Legend />
+              <ChartTooltip>
+                <ChartTooltipContent />
+              </ChartTooltip>
+              <ChartLegend>
+                <ChartLegendContent />
+              </ChartLegend>
               <Line 
                 type="monotone" 
                 dataKey="total" 
-                name="Total Orders" 
-                stroke="hsl(var(--primary))" 
+                name="total" 
                 strokeWidth={3}
                 dot={{ r: 4 }}
                 activeDot={{ r: 6 }}
@@ -117,19 +134,24 @@ const OrdersChart: React.FC<OrdersChartProps> = ({ data }) => {
               <Line 
                 type="monotone" 
                 dataKey="delivered" 
-                name="Delivered" 
-                stroke="#10b981" 
+                name="delivered" 
                 strokeWidth={2}
                 dot={{ r: 3 }}
               />
             </LineChart>
-          </ResponsiveContainer>
+          </ChartContainer>
         </div>
       </TabsContent>
       
       <TabsContent value="status" className="pt-4">
         <div className="h-[300px] w-full flex items-center justify-center">
-          <ResponsiveContainer width="100%" height="100%">
+          <ChartContainer config={statusData.reduce((config, item, index) => {
+            config[item.name] = {
+              label: item.name,
+              theme: { light: COLORS[index % COLORS.length], dark: COLORS[index % COLORS.length] }
+            };
+            return config;
+          }, {})} className="h-full">
             <PieChart>
               <Pie
                 data={statusData}
@@ -139,24 +161,21 @@ const OrdersChart: React.FC<OrdersChartProps> = ({ data }) => {
                 outerRadius={110}
                 fill="#8884d8"
                 dataKey="value"
+                nameKey="name"
                 label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
               >
                 {statusData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
-              <Tooltip 
-                formatter={(value) => [`${value} orders`, "Count"]}
-                contentStyle={{ 
-                  backgroundColor: "hsl(var(--background))", 
-                  borderColor: "hsl(var(--border))",
-                  borderRadius: "8px",
-                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)"
-                }}
-              />
-              <Legend />
+              <ChartTooltip>
+                <ChartTooltipContent />
+              </ChartTooltip>
+              <ChartLegend>
+                <ChartLegendContent />
+              </ChartLegend>
             </PieChart>
-          </ResponsiveContainer>
+          </ChartContainer>
         </div>
       </TabsContent>
     </Tabs>
