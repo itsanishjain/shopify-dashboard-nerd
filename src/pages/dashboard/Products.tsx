@@ -434,7 +434,9 @@ const Products = () => {
 
         <Card className="w-full matrix-flow">
           <CardHeader className="pb-3">
-            <CardTitle className="terminal-text">Product Performance</CardTitle>
+            <CardTitle className="terminal-text font-normal">
+              Product Performance
+            </CardTitle>
             <CardDescription>
               Detailed analysis of all products with metrics on sales,
               inventory, and profitability
