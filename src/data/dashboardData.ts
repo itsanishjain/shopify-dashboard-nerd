@@ -10,7 +10,7 @@ export const salesData = [
   { name: "Sep", value: 5000 },
   { name: "Oct", value: 6000 },
   { name: "Nov", value: 7000 },
-  { name: "Dec", value: 9000 }
+  { name: "Dec", value: 9000 },
 ];
 
 export const revenueData = [
@@ -20,7 +20,7 @@ export const revenueData = [
   { name: "Apr", revenue: 2780, expenses: 3908 },
   { name: "May", revenue: 1890, expenses: 4800 },
   { name: "Jun", revenue: 2390, expenses: 3800 },
-  { name: "Jul", revenue: 3490, expenses: 4300 }
+  { name: "Jul", revenue: 3490, expenses: 4300 },
 ];
 
 export const productCategoryData = [
@@ -28,7 +28,7 @@ export const productCategoryData = [
   { name: "Electronics", value: 300 },
   { name: "Home Goods", value: 300 },
   { name: "Beauty", value: 200 },
-  { name: "Accessories", value: 100 }
+  { name: "Accessories", value: 100 },
 ];
 
 export const customerAcquisitionData = [
@@ -36,7 +36,131 @@ export const customerAcquisitionData = [
   { name: "Social", value: 300 },
   { name: "Referral", value: 200 },
   { name: "Search", value: 278 },
-  { name: "Email", value: 189 }
+  { name: "Email", value: 189 },
+];
+
+export const trafficSourcesData = [
+  {
+    source: "Organic Search",
+    visitors: 28456,
+    sessions: 35621,
+    conversionRate: 3.2,
+    revenue: 42830,
+    bounceRate: 42.3,
+    avgTimeOnSite: 184,
+    trend: 12.5,
+  },
+  {
+    source: "Direct",
+    visitors: 19854,
+    sessions: 24632,
+    conversionRate: 4.5,
+    revenue: 58430,
+    bounceRate: 38.1,
+    avgTimeOnSite: 251,
+    trend: 3.8,
+  },
+  {
+    source: "Social",
+    visitors: 15284,
+    sessions: 18943,
+    conversionRate: 2.8,
+    revenue: 28937,
+    bounceRate: 51.6,
+    avgTimeOnSite: 142,
+    trend: 28.4,
+  },
+  {
+    source: "Email",
+    visitors: 8623,
+    sessions: 9284,
+    conversionRate: 5.7,
+    revenue: 36428,
+    bounceRate: 22.4,
+    avgTimeOnSite: 318,
+    trend: 8.9,
+  },
+  {
+    source: "Referral",
+    visitors: 7456,
+    sessions: 8329,
+    conversionRate: 3.9,
+    revenue: 21834,
+    bounceRate: 34.8,
+    avgTimeOnSite: 226,
+    trend: -2.3,
+  },
+  {
+    source: "Paid Search",
+    visitors: 6238,
+    sessions: 7129,
+    conversionRate: 4.2,
+    revenue: 26935,
+    bounceRate: 40.2,
+    avgTimeOnSite: 194,
+    trend: 15.7,
+  },
+];
+
+export const conversionFunnelData = [
+  { stage: "Visitors", value: 85911, percentage: 100 },
+  { stage: "Product Views", value: 54832, percentage: 63.8 },
+  { stage: "Add to Cart", value: 18321, percentage: 21.3 },
+  { stage: "Checkout", value: 9843, percentage: 11.5 },
+  { stage: "Purchases", value: 6274, percentage: 7.3 },
+];
+
+export const campaignPerformanceData = [
+  {
+    name: "Summer Collection",
+    impressions: 124832,
+    clicks: 6241,
+    ctr: 5.0,
+    conversions: 842,
+    convRate: 13.5,
+    revenue: 42386,
+    roas: 6.2,
+  },
+  {
+    name: "Flash Sale",
+    impressions: 86421,
+    clicks: 5894,
+    ctr: 6.8,
+    conversions: 973,
+    convRate: 16.5,
+    revenue: 38942,
+    roas: 7.8,
+  },
+  {
+    name: "New Arrivals",
+    impressions: 64382,
+    clicks: 3241,
+    ctr: 5.0,
+    conversions: 386,
+    convRate: 11.9,
+    revenue: 24682,
+    roas: 5.4,
+  },
+  {
+    name: "Loyalty Program",
+    impressions: 42156,
+    clicks: 2189,
+    ctr: 5.2,
+    conversions: 427,
+    convRate: 19.5,
+    revenue: 31845,
+    roas: 9.2,
+  },
+  {
+    name: "Holiday Special",
+    impressions: 38921,
+    clicks: 1943,
+    ctr: 5.0,
+    conversions: 284,
+    convRate: 14.6,
+    revenue: 18426,
+    roas: 6.8,
+  },
 ];
 
 export const weeklyProductSales = [
@@ -46,7 +170,7 @@ export const weeklyProductSales = [
   { name: "Thu", shirts: 27, pants: 39, hoodies: 40 },
   { name: "Fri", shirts: 18, pants: 48, hoodies: 35 },
   { name: "Sat", shirts: 23, pants: 38, hoodies: 42 },
-  { name: "Sun", shirts: 34, pants: 43, hoodies: 28 }
+  { name: "Sun", shirts: 34, pants: 43, hoodies: 28 },
 ];
 
 export const productPerformanceData = [
@@ -65,7 +189,7 @@ export const productPerformanceData = [
     totalValue: "$7,256.44",
     turnoverRate: 8.4,
     variants: 3,
-    category: "Electronics"
+    category: "Electronics",
   },
   {
     id: "2",
@@ -82,7 +206,7 @@ export const productPerformanceData = [
     totalValue: "$4,611.56",
     turnoverRate: 3.8,
     variants: 4,
-    category: "Electronics"
+    category: "Electronics",
   },
   {
     id: "3",
@@ -99,7 +223,7 @@ export const productPerformanceData = [
     totalValue: "$3,807.84",
     turnoverRate: 16.2,
     variants: 2,
-    category: "Electronics"
+    category: "Electronics",
   },
   {
     id: "4",
@@ -116,7 +240,7 @@ export const productPerformanceData = [
     totalValue: "$268.76",
     turnoverRate: 31.5,
     variants: 1,
-    category: "Accessories"
+    category: "Accessories",
   },
   {
     id: "5",
@@ -133,7 +257,7 @@ export const productPerformanceData = [
     totalValue: "$2,831.68",
     turnoverRate: 10.5,
     variants: 6,
-    category: "Electronics"
+    category: "Electronics",
   },
   {
     id: "6",
@@ -150,7 +274,7 @@ export const productPerformanceData = [
     totalValue: "$3,325.63",
     turnoverRate: 11.9,
     variants: 3,
-    category: "Audio"
+    category: "Audio",
   },
   {
     id: "7",
@@ -167,7 +291,7 @@ export const productPerformanceData = [
     totalValue: "$1,780.52",
     turnoverRate: 17.3,
     variants: 2,
-    category: "Gaming"
+    category: "Gaming",
   },
   {
     id: "8",
@@ -184,7 +308,7 @@ export const productPerformanceData = [
     totalValue: "$2,847.11",
     turnoverRate: 3.3,
     variants: 1,
-    category: "Accessories"
+    category: "Accessories",
   },
   {
     id: "9",
@@ -201,7 +325,7 @@ export const productPerformanceData = [
     totalValue: "$4,128.57",
     turnoverRate: 0.7,
     variants: 1,
-    category: "Accessories"
+    category: "Accessories",
   },
   {
     id: "10",
@@ -218,7 +342,7 @@ export const productPerformanceData = [
     totalValue: "$999.99",
     turnoverRate: 12.7,
     variants: 2,
-    category: "Accessories"
+    category: "Accessories",
   },
   {
     id: "11",
@@ -235,7 +359,7 @@ export const productPerformanceData = [
     totalValue: "$2,735.76",
     turnoverRate: 13.8,
     variants: 4,
-    category: "Wearables"
+    category: "Wearables",
   },
   {
     id: "12",
@@ -252,17 +376,37 @@ export const productPerformanceData = [
     totalValue: "$2,732.93",
     turnoverRate: 2.8,
     variants: 3,
-    category: "Home Office"
-  }
+    category: "Home Office",
+  },
 ];
 
 export const productOutOfStock = [
-  { id: "101", name: "Wireless Keyboard", category: "Electronics", lastAvailable: "3 days ago", estimatedArrival: "2 weeks" },
-  { id: "102", name: "Noise Cancelling Headphones", category: "Audio", lastAvailable: "1 week ago", estimatedArrival: "5 days" },
-  { id: "103", name: "Portable SSD", category: "Storage", lastAvailable: "2 weeks ago", estimatedArrival: "unknown" }
+  {
+    id: "101",
+    name: "Wireless Keyboard",
+    category: "Electronics",
+    lastAvailable: "3 days ago",
+    estimatedArrival: "2 weeks",
+  },
+  {
+    id: "102",
+    name: "Noise Cancelling Headphones",
+    category: "Audio",
+    lastAvailable: "1 week ago",
+    estimatedArrival: "5 days",
+  },
+  {
+    id: "103",
+    name: "Portable SSD",
+    category: "Storage",
+    lastAvailable: "2 weeks ago",
+    estimatedArrival: "unknown",
+  },
 ];
 
-export const lowStockProducts = productPerformanceData.filter(product => product.inventory <= 20);
+export const lowStockProducts = productPerformanceData.filter(
+  (product) => product.inventory <= 20
+);
 
 export const productInventoryValue = {
   totalCost: "$38,127.37",
@@ -270,7 +414,7 @@ export const productInventoryValue = {
   averageMargin: 36,
   totalProducts: 801,
   totalVariants: 42,
-  averageTurnover: 8.9
+  averageTurnover: 8.9,
 };
 
 export const productSeasonalityData = [
@@ -285,7 +429,7 @@ export const productSeasonalityData = [
   { month: "Sep", tshirts: 76, hoodies: 24, sunglasses: 62, swimwear: 45 },
   { month: "Oct", tshirts: 58, hoodies: 52, sunglasses: 35, swimwear: 16 },
   { month: "Nov", tshirts: 47, hoodies: 73, sunglasses: 21, swimwear: 8 },
-  { month: "Dec", tshirts: 52, hoodies: 91, sunglasses: 18, swimwear: 7 }
+  { month: "Dec", tshirts: 52, hoodies: 91, sunglasses: 18, swimwear: 7 },
 ];
 
 export const appEcosystemData = [
@@ -295,7 +439,7 @@ export const appEcosystemData = [
     cost: "$29.99/mo",
     costValue: 29.99,
     revenue: "$780/mo",
-    roi: 2500
+    roi: 2500,
   },
   {
     id: "2",
@@ -303,7 +447,7 @@ export const appEcosystemData = [
     cost: "$59.99/mo",
     costValue: 59.99,
     revenue: "$350/mo",
-    roi: 480
+    roi: 480,
   },
   {
     id: "3",
@@ -311,7 +455,7 @@ export const appEcosystemData = [
     cost: "$39.99/mo",
     costValue: 39.99,
     revenue: "$190/mo",
-    roi: 375
+    roi: 375,
   },
   {
     id: "4",
@@ -319,7 +463,7 @@ export const appEcosystemData = [
     cost: "$24.99/mo",
     costValue: 24.99,
     revenue: "$520/mo",
-    roi: 1980
+    roi: 1980,
   },
   {
     id: "5",
@@ -327,8 +471,8 @@ export const appEcosystemData = [
     cost: "$19.99/mo",
     costValue: 19.99,
     revenue: "$10/mo",
-    roi: -50
-  }
+    roi: -50,
+  },
 ];
 
 export const salesOverTimeData = {
@@ -336,13 +480,13 @@ export const salesOverTimeData = {
   datasets: [
     {
       name: "This Week",
-      data: [31, 40, 28, 51, 42, 109, 100]
+      data: [31, 40, 28, 51, 42, 109, 100],
     },
     {
       name: "Last Week",
-      data: [11, 32, 45, 32, 34, 52, 41]
-    }
-  ]
+      data: [11, 32, 45, 32, 34, 52, 41],
+    },
+  ],
 };
 
 export const topCustomers = [
@@ -352,7 +496,7 @@ export const topCustomers = [
     email: "john.doe@example.com",
     orders: 12,
     spent: "$1,245.89",
-    lastPurchase: "2 days ago"
+    lastPurchase: "2 days ago",
   },
   {
     id: "2",
@@ -360,7 +504,7 @@ export const topCustomers = [
     email: "jane.smith@example.com",
     orders: 8,
     spent: "$876.32",
-    lastPurchase: "1 week ago"
+    lastPurchase: "1 week ago",
   },
   {
     id: "3",
@@ -368,29 +512,29 @@ export const topCustomers = [
     email: "robert.j@example.com",
     orders: 6,
     spent: "$654.18",
-    lastPurchase: "3 days ago"
-  }
+    lastPurchase: "3 days ago",
+  },
 ];
 
 export const statisticsData = {
   totalRevenue: {
     value: "$56,789.45",
     change: 12.5,
-    changeLabel: "vs last month"
+    changeLabel: "vs last month",
   },
   averageOrderValue: {
     value: "$127.89",
     change: 3.2,
-    changeLabel: "vs last month"
+    changeLabel: "vs last month",
   },
   conversionRate: {
     value: "4.5%",
     change: 1.8,
-    changeLabel: "vs last month"
+    changeLabel: "vs last month",
   },
   activeCustomers: {
     value: "1,234",
     change: -2.3,
-    changeLabel: "vs last month"
-  }
+    changeLabel: "vs last month",
+  },
 };

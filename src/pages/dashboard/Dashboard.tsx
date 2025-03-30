@@ -29,6 +29,7 @@ import StatCard from "@/components/dashboard/StatCard";
 import ChartCard from "@/components/dashboard/ChartCard";
 import ProductPerformanceTable from "@/components/dashboard/ProductPerformanceTable";
 import AppEcosystemCard from "@/components/dashboard/AppEcosystemCard";
+import TrafficAcquisitionInsights from "@/components/dashboard/TrafficAcquisitionInsights";
 import {
   salesData,
   productCategoryData,
@@ -370,6 +371,8 @@ const Dashboard = () => {
             }
           />
         </div>
+
+        <TrafficAcquisitionInsights />
 
         <div className="grid gap-4 md:grid-cols-3">
           <ChartCard
