@@ -51,6 +51,14 @@ import {
   campaignPerformanceData,
 } from "@/data/dashboardData";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 // Define types for the funnel chart data
 interface FunnelData {
   stage: string;
@@ -128,26 +136,59 @@ const TrafficAcquisitionInsights = () => {
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="traffic" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-6 bg-emerald-900/10 border border-emerald-800/20">
-            <TabsTrigger
-              value="traffic"
-              className="data-[state=active]:bg-emerald-600 data-[state=active]:text-white"
-            >
-              Traffic Sources
-            </TabsTrigger>
-            <TabsTrigger
-              value="funnel"
-              className="data-[state=active]:bg-emerald-600 data-[state=active]:text-white"
-            >
-              Conversion Funnel
-            </TabsTrigger>
-            <TabsTrigger
-              value="campaigns"
-              className="data-[state=active]:bg-emerald-600 data-[state=active]:text-white"
-            >
-              Campaign Performance
-            </TabsTrigger>
-          </TabsList>
+          <div className="mb-6">
+            {/* Mobile view - dropdown */}
+            <div className="md:hidden">
+              <Select
+                defaultValue="traffic"
+                onValueChange={(value) => {
+                  // Find the corresponding tab trigger and programmatically click it
+                  const tabTrigger = document.querySelector(
+                    `[data-value="${value}"]`
+                  );
+                  if (tabTrigger) {
+                    (tabTrigger as HTMLElement).click();
+                  }
+                }}
+              >
+                <SelectTrigger className="w-full bg-emerald-900/10 border border-emerald-800/20">
+                  <SelectValue placeholder="Select view" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="traffic">Traffic Sources</SelectItem>
+                  <SelectItem value="funnel">Conversion Funnel</SelectItem>
+                  <SelectItem value="campaigns">
+                    Campaign Performance
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Desktop view - tabs */}
+            <TabsList className="hidden md:grid w-full grid-cols-3 bg-emerald-900/10 border border-emerald-800/20">
+              <TabsTrigger
+                value="traffic"
+                data-value="traffic"
+                className="data-[state=active]:bg-emerald-600 data-[state=active]:text-white"
+              >
+                Traffic Sources
+              </TabsTrigger>
+              <TabsTrigger
+                value="funnel"
+                data-value="funnel"
+                className="data-[state=active]:bg-emerald-600 data-[state=active]:text-white"
+              >
+                Conversion Funnel
+              </TabsTrigger>
+              <TabsTrigger
+                value="campaigns"
+                data-value="campaigns"
+                className="data-[state=active]:bg-emerald-600 data-[state=active]:text-white"
+              >
+                Campaign Performance
+              </TabsTrigger>
+            </TabsList>
+          </div>
 
           {/* Traffic Sources Tab */}
           <TabsContent value="traffic" className="space-y-4">
