@@ -15,13 +15,20 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 
-const DashboardSidebar = () => {
+interface DashboardSidebarProps {
+  collapsed: boolean;
+  setCollapsed: Dispatch<SetStateAction<boolean>>;
+}
+
+const DashboardSidebar = ({
+  collapsed,
+  setCollapsed,
+}: DashboardSidebarProps) => {
   const location = useLocation();
-  const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -148,14 +155,14 @@ const DashboardSidebar = () => {
       >
         {/* Logo area */}
         <div className="flex items-center justify-between h-14 px-4 border-b border-border flex-shrink-0">
-          {!collapsed && (
-            <div className="flex items-center gap-2 justify-center">
-              <ShoppingCart className="h-6 w-6 terminal-text" />
+          <div className="flex items-center gap-2 justify-center">
+            <ShoppingCart className="h-6 w-6 terminal-text" />
+            {!collapsed && (
               <span className="whitespace-nowrap overflow-hidden font-bold text-lg terminal-text">
                 ShopNerd
               </span>
-            </div>
-          )}
+            )}
+          </div>
 
           <Button
             variant="ghost"
@@ -196,6 +203,8 @@ const DashboardSidebar = () => {
                         collapsed && "justify-center px-0"
                       )}
                       onClick={() => {
+                        // Only close the mobile sidebar when on mobile
+                        // Desktop sidebar state is controlled by the arrow button only
                         if (mobileOpen) setMobileOpen(false);
                       }}
                     >
@@ -249,6 +258,8 @@ const DashboardSidebar = () => {
                         collapsed && "justify-center px-0"
                       )}
                       onClick={() => {
+                        // Only close the mobile sidebar when on mobile
+                        // Desktop sidebar state is controlled by the arrow button only
                         if (mobileOpen) setMobileOpen(false);
                       }}
                     >
@@ -296,6 +307,8 @@ const DashboardSidebar = () => {
                       collapsed && "justify-center px-0"
                     )}
                     onClick={() => {
+                      // Only close the mobile sidebar when on mobile
+                      // Desktop sidebar state is controlled by the arrow button only
                       if (mobileOpen) setMobileOpen(false);
                     }}
                   >
