@@ -14,6 +14,8 @@ import {
   Pie,
   Cell,
   Sector,
+  ReferenceLine,
+  LabelList,
 } from "recharts";
 import {
   Calendar,
@@ -236,7 +238,10 @@ const Dashboard = () => {
             description="Monthly financial overview"
             chart={
               <ResponsiveContainer width="100%" height={300}>
-                <AreaChart data={revenueData} margin={{ top: 20 }}>
+                <AreaChart
+                  data={revenueData}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                >
                   <defs>
                     <linearGradient
                       id="colorRevenue"
@@ -245,11 +250,11 @@ const Dashboard = () => {
                       x2="0"
                       y2="1"
                     >
-                      <stop offset="5%" stopColor="#10b981" stopOpacity={0.8} />
+                      <stop offset="5%" stopColor="#6366f1" stopOpacity={0.8} />
                       <stop
                         offset="95%"
-                        stopColor="#10b981"
-                        stopOpacity={0.2}
+                        stopColor="#6366f1"
+                        stopOpacity={0.1}
                       />
                     </linearGradient>
                     <linearGradient
@@ -259,42 +264,106 @@ const Dashboard = () => {
                       x2="0"
                       y2="1"
                     >
-                      <stop offset="5%" stopColor="#ef4444" stopOpacity={0.8} />
+                      <stop offset="5%" stopColor="#f43f5e" stopOpacity={0.8} />
                       <stop
                         offset="95%"
-                        stopColor="#ef4444"
-                        stopOpacity={0.2}
+                        stopColor="#f43f5e"
+                        stopOpacity={0.1}
                       />
                     </linearGradient>
+                    <filter id="shadow" height="200%">
+                      <feDropShadow
+                        dx="0"
+                        dy="4"
+                        stdDeviation="8"
+                        floodOpacity="0.2"
+                      />
+                    </filter>
                   </defs>
                   <CartesianGrid
                     strokeDasharray="3 3"
                     vertical={false}
-                    stroke="#333"
+                    stroke="rgba(255,255,255,0.1)"
+                    strokeWidth={0.5}
                   />
-                  <XAxis dataKey="name" stroke="#999" />
-                  <YAxis stroke="#999" />
+                  <XAxis
+                    dataKey="name"
+                    stroke="#999"
+                    tickLine={false}
+                    axisLine={{ stroke: "rgba(255,255,255,0.15)" }}
+                    dy={10}
+                  />
+                  <YAxis
+                    stroke="#999"
+                    tickLine={false}
+                    axisLine={{ stroke: "rgba(255,255,255,0.15)" }}
+                    tickFormatter={(value) => `$${value}k`}
+                  />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: "#222",
-                      borderColor: "#333",
+                      backgroundColor: "rgba(17, 24, 39, 0.8)",
+                      borderColor: "rgba(107, 114, 128, 0.3)",
+                      borderRadius: "0.5rem",
+                      boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.2)",
                       color: "#fff",
+                      backdropFilter: "blur(8px)",
                     }}
+                    itemStyle={{ color: "#fff" }}
+                    formatter={(value) => [`$${value}k`, undefined]}
+                    labelStyle={{ fontWeight: "bold", marginBottom: "0.5rem" }}
                   />
-                  <Legend />
+                  <Legend
+                    verticalAlign="top"
+                    height={36}
+                    iconType="circle"
+                    iconSize={8}
+                    formatter={(value) => (
+                      <span style={{ color: "#ccc", fontSize: "0.875rem" }}>
+                        {value}
+                      </span>
+                    )}
+                  />
+                  <ReferenceLine
+                    y={0}
+                    stroke="rgba(255,255,255,0.2)"
+                    strokeWidth={1}
+                  />
                   <Area
                     type="monotone"
                     dataKey="revenue"
-                    stroke="#10b981"
+                    name="Revenue"
+                    stroke="#6366f1"
+                    strokeWidth={2}
                     fillOpacity={1}
                     fill="url(#colorRevenue)"
+                    activeDot={{
+                      r: 6,
+                      stroke: "#6366f1",
+                      strokeWidth: 2,
+                      fill: "#fff",
+                      filter: "url(#shadow)",
+                    }}
+                    animationDuration={1500}
+                    animationEasing="ease-out"
                   />
                   <Area
                     type="monotone"
                     dataKey="expenses"
-                    stroke="#ef4444"
+                    name="Expenses"
+                    stroke="#f43f5e"
+                    strokeWidth={2}
                     fillOpacity={1}
                     fill="url(#colorExpenses)"
+                    activeDot={{
+                      r: 6,
+                      stroke: "#f43f5e",
+                      strokeWidth: 2,
+                      fill: "#fff",
+                      filter: "url(#shadow)",
+                    }}
+                    animationDuration={1500}
+                    animationEasing="ease-out"
+                    animationBegin={300}
                   />
                 </AreaChart>
               </ResponsiveContainer>
