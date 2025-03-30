@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -197,7 +196,15 @@ const taxFeeData = [
 ];
 
 // Color schemes
-const COLORS = ["#10b981", "#0ea5e9", "#8b5cf6", "#ec4899", "#f97316", "#f59e0b", "#6366f1"];
+const COLORS = [
+  "#10b981",
+  "#0ea5e9",
+  "#8b5cf6",
+  "#ec4899",
+  "#f97316",
+  "#f59e0b",
+  "#6366f1",
+];
 const PIE_COLORS = ["#10b981", "#0ea5e9", "#8b5cf6", "#ec4899", "#f97316"];
 
 const Revenue = () => {
@@ -242,30 +249,30 @@ const Revenue = () => {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 mb-6">
+          <TabsList className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 mb-6 overflow-auto gap-1 p-1">
             <TabsTrigger value="overview" className="flex items-center gap-2">
               <DollarSign className="h-4 w-4" />
-              <span className="hidden md:inline">Overview</span>
+              <span className="hidden sm:inline">Overview</span>
             </TabsTrigger>
             <TabsTrigger value="breakdown" className="flex items-center gap-2">
               <ChartPie className="h-4 w-4" />
-              <span className="hidden md:inline">Breakdown</span>
+              <span className="hidden sm:inline">Breakdown</span>
             </TabsTrigger>
             <TabsTrigger value="growth" className="flex items-center gap-2">
               <TrendingUp className="h-4 w-4" />
-              <span className="hidden md:inline">Growth</span>
+              <span className="hidden sm:inline">Growth</span>
             </TabsTrigger>
             <TabsTrigger value="products" className="flex items-center gap-2">
               <ShoppingCart className="h-4 w-4" />
-              <span className="hidden md:inline">Products</span>
+              <span className="hidden sm:inline">Products</span>
             </TabsTrigger>
             <TabsTrigger value="customers" className="flex items-center gap-2">
               <Users className="h-4 w-4" />
-              <span className="hidden md:inline">Customers</span>
+              <span className="hidden sm:inline">Customers</span>
             </TabsTrigger>
             <TabsTrigger value="advanced" className="flex items-center gap-2">
               <Receipt className="h-4 w-4" />
-              <span className="hidden md:inline">Advanced</span>
+              <span className="hidden sm:inline">Advanced</span>
             </TabsTrigger>
           </TabsList>
 
@@ -292,7 +299,7 @@ const Revenue = () => {
                   </div>
                 </CardContent>
               </Card>
-              
+
               <Card className="bg-gradient-to-b from-[#0ea5e9]/10 to-[#0ea5e9]/5 border matrix-flow shadow-glow-sm">
                 <CardContent className="p-6">
                   <div className="flex flex-col gap-2">
@@ -314,7 +321,7 @@ const Revenue = () => {
                   </div>
                 </CardContent>
               </Card>
-              
+
               <Card className="bg-gradient-to-b from-[#8b5cf6]/10 to-[#8b5cf6]/5 border matrix-flow shadow-glow-sm">
                 <CardContent className="p-6">
                   <div className="flex flex-col gap-2">
@@ -336,7 +343,7 @@ const Revenue = () => {
                   </div>
                 </CardContent>
               </Card>
-              
+
               <Card className="bg-gradient-to-b from-[#f97316]/10 to-[#f97316]/5 border matrix-flow shadow-glow-sm">
                 <CardContent className="p-6">
                   <div className="flex flex-col gap-2">
@@ -368,9 +375,23 @@ const Revenue = () => {
                 <ResponsiveContainer width="100%" height={400}>
                   <AreaChart data={revenueData} margin={{ top: 20 }}>
                     <defs>
-                      <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#10b981" stopOpacity={0.8} />
-                        <stop offset="95%" stopColor="#10b981" stopOpacity={0.2} />
+                      <linearGradient
+                        id="colorRevenue"
+                        x1="0"
+                        y1="0"
+                        x2="0"
+                        y2="1"
+                      >
+                        <stop
+                          offset="5%"
+                          stopColor="#10b981"
+                          stopOpacity={0.8}
+                        />
+                        <stop
+                          offset="95%"
+                          stopColor="#10b981"
+                          stopOpacity={0.2}
+                        />
                       </linearGradient>
                       <linearGradient
                         id="colorExpenses"
@@ -379,8 +400,16 @@ const Revenue = () => {
                         x2="0"
                         y2="1"
                       >
-                        <stop offset="5%" stopColor="#ef4444" stopOpacity={0.8} />
-                        <stop offset="95%" stopColor="#ef4444" stopOpacity={0.2} />
+                        <stop
+                          offset="5%"
+                          stopColor="#ef4444"
+                          stopOpacity={0.8}
+                        />
+                        <stop
+                          offset="95%"
+                          stopColor="#ef4444"
+                          stopOpacity={0.2}
+                        />
                       </linearGradient>
                     </defs>
                     <CartesianGrid
@@ -425,16 +454,49 @@ const Revenue = () => {
                   <ResponsiveContainer width="100%" height={300}>
                     <LineChart data={forecastData} margin={{ top: 20 }}>
                       <defs>
-                        <linearGradient id="colorActual" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#10b981" stopOpacity={0.8} />
-                          <stop offset="95%" stopColor="#10b981" stopOpacity={0.2} />
+                        <linearGradient
+                          id="colorActual"
+                          x1="0"
+                          y1="0"
+                          x2="0"
+                          y2="1"
+                        >
+                          <stop
+                            offset="5%"
+                            stopColor="#10b981"
+                            stopOpacity={0.8}
+                          />
+                          <stop
+                            offset="95%"
+                            stopColor="#10b981"
+                            stopOpacity={0.2}
+                          />
                         </linearGradient>
-                        <linearGradient id="colorForecast" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.8} />
-                          <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0.2} />
+                        <linearGradient
+                          id="colorForecast"
+                          x1="0"
+                          y1="0"
+                          x2="0"
+                          y2="1"
+                        >
+                          <stop
+                            offset="5%"
+                            stopColor="#8b5cf6"
+                            stopOpacity={0.8}
+                          />
+                          <stop
+                            offset="95%"
+                            stopColor="#8b5cf6"
+                            stopOpacity={0.2}
+                          />
                         </linearGradient>
                       </defs>
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#333" opacity={0.2} />
+                      <CartesianGrid
+                        strokeDasharray="3 3"
+                        vertical={false}
+                        stroke="#333"
+                        opacity={0.2}
+                      />
                       <XAxis dataKey="name" stroke="#999" />
                       <YAxis stroke="#999" />
                       <Tooltip
@@ -445,21 +507,21 @@ const Revenue = () => {
                         }}
                       />
                       <Legend />
-                      <Line 
-                        type="monotone" 
-                        dataKey="actual" 
+                      <Line
+                        type="monotone"
+                        dataKey="actual"
                         name="Actual Revenue"
-                        stroke="#10b981" 
+                        stroke="#10b981"
                         strokeWidth={2}
                         dot={{ r: 4 }}
                         activeDot={{ r: 6 }}
                       />
-                      <Line 
-                        type="monotone" 
-                        dataKey="forecast" 
+                      <Line
+                        type="monotone"
+                        dataKey="forecast"
                         name="Forecast"
-                        stroke="#8b5cf6" 
-                        strokeWidth={2} 
+                        stroke="#8b5cf6"
+                        strokeWidth={2}
                         strokeDasharray="5 5"
                         dot={{ r: 4 }}
                         activeDot={{ r: 6 }}
@@ -476,12 +538,31 @@ const Revenue = () => {
                   <ResponsiveContainer width="100%" height={300}>
                     <AreaChart data={seasonalData} margin={{ top: 20 }}>
                       <defs>
-                        <linearGradient id="colorSeasonal" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#f97316" stopOpacity={0.8} />
-                          <stop offset="95%" stopColor="#f97316" stopOpacity={0.2} />
+                        <linearGradient
+                          id="colorSeasonal"
+                          x1="0"
+                          y1="0"
+                          x2="0"
+                          y2="1"
+                        >
+                          <stop
+                            offset="5%"
+                            stopColor="#f97316"
+                            stopOpacity={0.8}
+                          />
+                          <stop
+                            offset="95%"
+                            stopColor="#f97316"
+                            stopOpacity={0.2}
+                          />
                         </linearGradient>
                       </defs>
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#333" opacity={0.2} />
+                      <CartesianGrid
+                        strokeDasharray="3 3"
+                        vertical={false}
+                        stroke="#333"
+                        opacity={0.2}
+                      />
                       <XAxis dataKey="name" stroke="#999" />
                       <YAxis stroke="#999" />
                       <Tooltip
@@ -522,10 +603,15 @@ const Revenue = () => {
                         outerRadius={100}
                         fill="#8884d8"
                         dataKey="value"
-                        label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                        label={({ name, percent }) =>
+                          `${name}: ${(percent * 100).toFixed(0)}%`
+                        }
                       >
                         {productCategoryData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
+                          <Cell
+                            key={`cell-${index}`}
+                            fill={PIE_COLORS[index % PIE_COLORS.length]}
+                          />
                         ))}
                       </Pie>
                       <Tooltip
@@ -554,10 +640,15 @@ const Revenue = () => {
                         outerRadius={100}
                         fill="#8884d8"
                         dataKey="value"
-                        label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                        label={({ name, percent }) =>
+                          `${name}: ${(percent * 100).toFixed(0)}%`
+                        }
                       >
                         {marketingChannelData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                          <Cell
+                            key={`cell-${index}`}
+                            fill={COLORS[index % COLORS.length]}
+                          />
                         ))}
                       </Pie>
                       <Tooltip
@@ -586,10 +677,15 @@ const Revenue = () => {
                         outerRadius={100}
                         fill="#8884d8"
                         dataKey="value"
-                        label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                        label={({ name, percent }) =>
+                          `${name}: ${(percent * 100).toFixed(0)}%`
+                        }
                       >
                         {customerSegmentData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
+                          <Cell
+                            key={`cell-${index}`}
+                            fill={PIE_COLORS[index % PIE_COLORS.length]}
+                          />
                         ))}
                       </Pie>
                       <Tooltip
@@ -620,7 +716,9 @@ const Revenue = () => {
                         outerRadius={100}
                         fill="#8884d8"
                         dataKey="value"
-                        label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                        label={({ name, percent }) =>
+                          `${name}: ${(percent * 100).toFixed(0)}%`
+                        }
                       >
                         <Cell fill="#10b981" />
                         <Cell fill="#f97316" />
@@ -651,10 +749,15 @@ const Revenue = () => {
                         outerRadius={100}
                         fill="#8884d8"
                         dataKey="value"
-                        label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                        label={({ name, percent }) =>
+                          `${name}: ${(percent * 100).toFixed(0)}%`
+                        }
                       >
                         {taxFeeData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                          <Cell
+                            key={`cell-${index}`}
+                            fill={COLORS[index % COLORS.length]}
+                          />
                         ))}
                       </Pie>
                       <Tooltip
@@ -670,15 +773,34 @@ const Revenue = () => {
               />
             </div>
 
-            <ChartCard
-              title="Geographic Revenue Distribution"
-              description="Revenue by location"
-              chart={
-                <div className="h-[400px]">
-                  <SalesMapChart data={salesByLocation} />
+            <Card>
+              <CardHeader>
+                <CardTitle>Geographic Revenue Distribution</CardTitle>
+              </CardHeader>
+              <CardContent className="h-[400px]">
+                <div className="flex items-center justify-center h-full flex-col gap-4 text-muted-foreground">
+                  <Map className="h-16 w-16 opacity-40" />
+                  <p>Interactive map view is being updated</p>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-2xl mt-4">
+                    {salesByLocation.slice(0, 4).map((location, index) => (
+                      <Card
+                        key={index}
+                        className="bg-background/40 backdrop-blur-md"
+                      >
+                        <CardContent className="p-4">
+                          <div className="text-sm font-medium">
+                            {location.name}
+                          </div>
+                          <div className="text-lg font-bold">
+                            ${location.value.toLocaleString()}
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
                 </div>
-              }
-            />
+              </CardContent>
+            </Card>
           </TabsContent>
 
           <TabsContent value="growth" className="space-y-6">
@@ -689,16 +811,49 @@ const Revenue = () => {
                 <ResponsiveContainer width="100%" height={400}>
                   <BarChart data={revenueGrowthData} margin={{ top: 20 }}>
                     <defs>
-                      <linearGradient id="colorThisYear" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#10b981" stopOpacity={0.8} />
-                        <stop offset="95%" stopColor="#10b981" stopOpacity={0.2} />
+                      <linearGradient
+                        id="colorThisYear"
+                        x1="0"
+                        y1="0"
+                        x2="0"
+                        y2="1"
+                      >
+                        <stop
+                          offset="5%"
+                          stopColor="#10b981"
+                          stopOpacity={0.8}
+                        />
+                        <stop
+                          offset="95%"
+                          stopColor="#10b981"
+                          stopOpacity={0.2}
+                        />
                       </linearGradient>
-                      <linearGradient id="colorLastYear" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#0ea5e9" stopOpacity={0.8} />
-                        <stop offset="95%" stopColor="#0ea5e9" stopOpacity={0.2} />
+                      <linearGradient
+                        id="colorLastYear"
+                        x1="0"
+                        y1="0"
+                        x2="0"
+                        y2="1"
+                      >
+                        <stop
+                          offset="5%"
+                          stopColor="#0ea5e9"
+                          stopOpacity={0.8}
+                        />
+                        <stop
+                          offset="95%"
+                          stopColor="#0ea5e9"
+                          stopOpacity={0.2}
+                        />
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#333" opacity={0.2} />
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      vertical={false}
+                      stroke="#333"
+                      opacity={0.2}
+                    />
                     <XAxis dataKey="name" stroke="#999" />
                     <YAxis stroke="#999" />
                     <Tooltip
@@ -709,16 +864,16 @@ const Revenue = () => {
                       }}
                     />
                     <Legend />
-                    <Bar 
-                      dataKey="thisYear" 
-                      name="This Year" 
-                      fill="url(#colorThisYear)" 
+                    <Bar
+                      dataKey="thisYear"
+                      name="This Year"
+                      fill="url(#colorThisYear)"
                       radius={[4, 4, 0, 0]}
                     />
-                    <Bar 
-                      dataKey="lastYear" 
-                      name="Last Year" 
-                      fill="url(#colorLastYear)" 
+                    <Bar
+                      dataKey="lastYear"
+                      name="Last Year"
+                      fill="url(#colorLastYear)"
                       radius={[4, 4, 0, 0]}
                     />
                   </BarChart>
@@ -734,12 +889,31 @@ const Revenue = () => {
                   <ResponsiveContainer width="100%" height={300}>
                     <LineChart data={profitMarginData} margin={{ top: 20 }}>
                       <defs>
-                        <linearGradient id="colorMargin" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.8} />
-                          <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0.2} />
+                        <linearGradient
+                          id="colorMargin"
+                          x1="0"
+                          y1="0"
+                          x2="0"
+                          y2="1"
+                        >
+                          <stop
+                            offset="5%"
+                            stopColor="#8b5cf6"
+                            stopOpacity={0.8}
+                          />
+                          <stop
+                            offset="95%"
+                            stopColor="#8b5cf6"
+                            stopOpacity={0.2}
+                          />
                         </linearGradient>
                       </defs>
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#333" opacity={0.2} />
+                      <CartesianGrid
+                        strokeDasharray="3 3"
+                        vertical={false}
+                        stroke="#333"
+                        opacity={0.2}
+                      />
                       <XAxis dataKey="name" stroke="#999" />
                       <YAxis stroke="#999" />
                       <Tooltip
@@ -750,11 +924,11 @@ const Revenue = () => {
                         }}
                         formatter={(value) => [`${value}%`, "Profit Margin"]}
                       />
-                      <Line 
-                        type="monotone" 
-                        dataKey="margin" 
-                        name="Profit Margin" 
-                        stroke="#8b5cf6" 
+                      <Line
+                        type="monotone"
+                        dataKey="margin"
+                        name="Profit Margin"
+                        stroke="#8b5cf6"
                         strokeWidth={2}
                         dot={{ r: 4 }}
                         activeDot={{ r: 6 }}
@@ -771,16 +945,49 @@ const Revenue = () => {
                   <ResponsiveContainer width="100%" height={300}>
                     <AreaChart data={retentionData} margin={{ top: 20 }}>
                       <defs>
-                        <linearGradient id="colorRetained" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#10b981" stopOpacity={0.8} />
-                          <stop offset="95%" stopColor="#10b981" stopOpacity={0.2} />
+                        <linearGradient
+                          id="colorRetained"
+                          x1="0"
+                          y1="0"
+                          x2="0"
+                          y2="1"
+                        >
+                          <stop
+                            offset="5%"
+                            stopColor="#10b981"
+                            stopOpacity={0.8}
+                          />
+                          <stop
+                            offset="95%"
+                            stopColor="#10b981"
+                            stopOpacity={0.2}
+                          />
                         </linearGradient>
-                        <linearGradient id="colorChurned" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#ef4444" stopOpacity={0.8} />
-                          <stop offset="95%" stopColor="#ef4444" stopOpacity={0.2} />
+                        <linearGradient
+                          id="colorChurned"
+                          x1="0"
+                          y1="0"
+                          x2="0"
+                          y2="1"
+                        >
+                          <stop
+                            offset="5%"
+                            stopColor="#ef4444"
+                            stopOpacity={0.8}
+                          />
+                          <stop
+                            offset="95%"
+                            stopColor="#ef4444"
+                            stopOpacity={0.2}
+                          />
                         </linearGradient>
                       </defs>
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#333" opacity={0.2} />
+                      <CartesianGrid
+                        strokeDasharray="3 3"
+                        vertical={false}
+                        stroke="#333"
+                        opacity={0.2}
+                      />
                       <XAxis dataKey="name" stroke="#999" />
                       <YAxis stroke="#999" />
                       <Tooltip
@@ -833,14 +1040,23 @@ const Revenue = () => {
                   <TableBody>
                     {topProducts.map((product, index) => (
                       <TableRow key={product.id}>
-                        <TableCell className="font-medium">{index + 1}</TableCell>
+                        <TableCell className="font-medium">
+                          {index + 1}
+                        </TableCell>
                         <TableCell>{product.name}</TableCell>
                         <TableCell className="text-right">
                           ${product.revenue.toLocaleString()}
                         </TableCell>
                         <TableCell className="text-right">
-                          <span className={product.growth >= 0 ? "text-green-500" : "text-red-500"}>
-                            {product.growth >= 0 ? "+" : ""}{product.growth}%
+                          <span
+                            className={
+                              product.growth >= 0
+                                ? "text-green-500"
+                                : "text-red-500"
+                            }
+                          >
+                            {product.growth >= 0 ? "+" : ""}
+                            {product.growth}%
                           </span>
                         </TableCell>
                       </TableRow>
@@ -864,10 +1080,15 @@ const Revenue = () => {
                       outerRadius={100}
                       fill="#8884d8"
                       dataKey="value"
-                      label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                      label={({ name, percent }) =>
+                        `${name}: ${(percent * 100).toFixed(0)}%`
+                      }
                     >
                       {paymentMethodData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={COLORS[index % COLORS.length]}
+                        />
                       ))}
                     </Pie>
                     <Tooltip
@@ -893,12 +1114,31 @@ const Revenue = () => {
                   <ResponsiveContainer width="100%" height={300}>
                     <LineChart data={arpuData} margin={{ top: 20 }}>
                       <defs>
-                        <linearGradient id="colorArpu" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.8} />
-                          <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0.2} />
+                        <linearGradient
+                          id="colorArpu"
+                          x1="0"
+                          y1="0"
+                          x2="0"
+                          y2="1"
+                        >
+                          <stop
+                            offset="5%"
+                            stopColor="#8b5cf6"
+                            stopOpacity={0.8}
+                          />
+                          <stop
+                            offset="95%"
+                            stopColor="#8b5cf6"
+                            stopOpacity={0.2}
+                          />
                         </linearGradient>
                       </defs>
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#333" opacity={0.2} />
+                      <CartesianGrid
+                        strokeDasharray="3 3"
+                        vertical={false}
+                        stroke="#333"
+                        opacity={0.2}
+                      />
                       <XAxis dataKey="name" stroke="#999" />
                       <YAxis stroke="#999" />
                       <Tooltip
@@ -909,11 +1149,11 @@ const Revenue = () => {
                         }}
                         formatter={(value) => [`$${value}`, "ARPU"]}
                       />
-                      <Line 
-                        type="monotone" 
-                        dataKey="value" 
-                        name="ARPU" 
-                        stroke="#8b5cf6" 
+                      <Line
+                        type="monotone"
+                        dataKey="value"
+                        name="ARPU"
+                        stroke="#8b5cf6"
                         strokeWidth={2}
                         dot={{ r: 4 }}
                         activeDot={{ r: 6 }}
@@ -937,10 +1177,15 @@ const Revenue = () => {
                         outerRadius={100}
                         fill="#8884d8"
                         dataKey="value"
-                        label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                        label={({ name, percent }) =>
+                          `${name}: ${(percent * 100).toFixed(0)}%`
+                        }
                       >
                         {customerSegmentData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
+                          <Cell
+                            key={`cell-${index}`}
+                            fill={PIE_COLORS[index % PIE_COLORS.length]}
+                          />
                         ))}
                       </Pie>
                       <Tooltip
@@ -966,11 +1211,24 @@ const Revenue = () => {
                   <AreaChart data={mrrData} margin={{ top: 20 }}>
                     <defs>
                       <linearGradient id="colorMrr" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#0ea5e9" stopOpacity={0.8} />
-                        <stop offset="95%" stopColor="#0ea5e9" stopOpacity={0.2} />
+                        <stop
+                          offset="5%"
+                          stopColor="#0ea5e9"
+                          stopOpacity={0.8}
+                        />
+                        <stop
+                          offset="95%"
+                          stopColor="#0ea5e9"
+                          stopOpacity={0.2}
+                        />
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#333" opacity={0.2} />
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      vertical={false}
+                      stroke="#333"
+                      opacity={0.2}
+                    />
                     <XAxis dataKey="name" stroke="#999" />
                     <YAxis stroke="#999" />
                     <Tooltip
@@ -979,7 +1237,10 @@ const Revenue = () => {
                         borderColor: "#333",
                         color: "#fff",
                       }}
-                      formatter={(value) => [`$${value.toLocaleString()}`, "MRR"]}
+                      formatter={(value) => [
+                        `$${value.toLocaleString()}`,
+                        "MRR",
+                      ]}
                     />
                     <Area
                       type="monotone"
