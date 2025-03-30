@@ -47,6 +47,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Card, CardContent } from "@/components/ui/card";
 
 // Modern, vibrant colors for the pie chart
 const COLORS = ["#8b5cf6", "#06b6d4", "#10b981", "#f59e0b", "#ef4444"];
@@ -372,7 +373,13 @@ const Dashboard = () => {
           />
         </div>
 
-        <TrafficAcquisitionInsights />
+        <div className="grid gap-4">
+          <Card className="col-span-12 shadow-glow-sm border-emerald-700/20 bg-emerald-800/5">
+            <CardContent className="p-6">
+              <TrafficAcquisitionInsights />
+            </CardContent>
+          </Card>
+        </div>
 
         <div className="grid gap-4 md:grid-cols-3">
           <ChartCard
