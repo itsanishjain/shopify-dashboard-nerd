@@ -1,4 +1,3 @@
-
 import React from "react";
 import { motion } from "framer-motion";
 import DashboardLayout from "@/components/layout/DashboardLayout";
@@ -27,10 +26,13 @@ import {
   HelpCircle,
   Info,
   Save,
+  BarChart3,
+  Users,
+  Package,
+  ShoppingCart,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// Mock user data
 const userData = {
   name: "Jane Cooper",
   email: "jane.cooper@example.com",
@@ -681,7 +683,7 @@ const Settings = () => {
                         <div className="space-y-4">
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <Button variant="outline">
-                              <BarChartIcon className="h-4 w-4 mr-2" />
+                              <BarChart3 className="h-4 w-4 mr-2" />
                               Export Analytics
                             </Button>
                             <Button variant="outline">
