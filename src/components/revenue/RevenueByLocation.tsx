@@ -35,13 +35,15 @@ const RevenueByLocation: React.FC<RevenueByLocationProps> = ({ data }) => {
           <CardTitle className="terminal-text">Revenue by Location</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="h-[280px] flex flex-col">
-            <SalesMapChart data={data} />
-            <div className="mt-auto">
+          <div className="h-[350px] flex flex-col">
+            <div className="flex-1 mb-4">
+              <SalesMapChart data={data} />
+            </div>
+            <div className="flex flex-col gap-2">
               <Button
                 variant="outline"
                 size="sm"
-                className="w-full mt-2 backdrop-blur-sm bg-background/40 hover:bg-background/60 transition-all"
+                className="w-full backdrop-blur-sm bg-background/40 hover:bg-background/60 transition-all shadow-glow-sm hover:shadow-glow-md"
               >
                 <MapPin className="mr-2 h-4 w-4" />
                 View Full Map
