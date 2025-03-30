@@ -26,11 +26,12 @@ const CustomerSegment: React.FC<CustomerSegmentProps> = ({ data }) => {
 
   // Glass morphism style for tooltips
   const glassStyle = {
-    backgroundColor: "rgba(17, 25, 40, 0.75)",
+    backgroundColor: "rgba(17, 25, 40, 0.85)",
     borderRadius: "16px",
     border: "1px solid rgba(255, 255, 255, 0.125)",
     backdropFilter: "blur(16px)",
     boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.37)",
+    color: "#e2e8f0",
   };
 
   return (
@@ -62,13 +63,13 @@ const CustomerSegment: React.FC<CustomerSegmentProps> = ({ data }) => {
             >
               <defs>
                 <linearGradient id="colorSegment" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#8b5cf6" stopOpacity={0.8} />
-                  <stop offset="100%" stopColor="#ec4899" stopOpacity={0.8} />
+                  <stop offset="0%" stopColor="#0ea5e9" stopOpacity={0.8} />
+                  <stop offset="100%" stopColor="#06b6d4" stopOpacity={0.8} />
                 </linearGradient>
                 <filter id="glow-segment" height="200%">
                   <feGaussianBlur stdDeviation="2.5" result="blur" />
                   <feFlood
-                    floodColor="#8b5cf6"
+                    floodColor="#0ea5e9"
                     floodOpacity="0.5"
                     result="color"
                   />
@@ -109,6 +110,7 @@ const CustomerSegment: React.FC<CustomerSegmentProps> = ({ data }) => {
               <Tooltip
                 formatter={(value) => [`$${value.toLocaleString()}`, "Revenue"]}
                 contentStyle={glassStyle}
+                cursor={{ fill: "rgba(14, 165, 233, 0.1)" }}
               />
               <Bar
                 dataKey="value"
