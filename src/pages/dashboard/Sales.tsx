@@ -156,7 +156,9 @@ const Sales = () => {
           className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
           variants={itemVariants}
         >
-          <h1 className="text-3xl font-bold tracking-tight">Sales Analytics</h1>
+          <h1 className="text-3xl font-bold tracking-tight terminal-text">
+            Sales Analytics
+          </h1>
 
           <Tabs
             defaultValue={timeframe}

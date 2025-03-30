@@ -358,7 +358,7 @@ const Products = () => {
         transition={{ duration: 0.3 }}
       >
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <h1 className="text-3xl font-bold tracking-tight">
+          <h1 className="text-3xl font-bold tracking-tight terminal-text">
             Product Analytics
           </h1>
 

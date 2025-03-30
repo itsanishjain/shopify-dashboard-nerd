@@ -1,11 +1,34 @@
-
 import React from "react";
 import { motion } from "framer-motion";
 import DashboardLayout from "@/components/layout/DashboardLayout";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } from "recharts";
-import { Database, TrendingUp, BarChart2, ArrowUpRight, PieChart, Users } from "lucide-react";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  LineChart,
+  Line,
+} from "recharts";
+import {
+  Database,
+  TrendingUp,
+  BarChart2,
+  ArrowUpRight,
+  PieChart,
+  Users,
+} from "lucide-react";
 import StatCard from "@/components/dashboard/StatCard";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -52,7 +75,9 @@ const Performance = () => {
         transition={{ duration: 0.3 }}
       >
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <h1 className="text-3xl font-bold tracking-tight">Performance Metrics</h1>
+          <h1 className="text-3xl font-bold tracking-tight terminal-text">
+            Performance Metrics
+          </h1>
           <div className="flex items-center gap-2">
             <Badge className="bg-green-500 hover:bg-green-600">
               <TrendingUp className="h-3 w-3 mr-1" />
@@ -105,7 +130,11 @@ const Performance = () => {
                 data={dailyPerformanceData}
                 margin={{ top: 20, right: 30, left: 0, bottom: 0 }}
               >
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.1)" />
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  vertical={false}
+                  stroke="rgba(255,255,255,0.1)"
+                />
                 <XAxis dataKey="day" stroke="#888888" />
                 <YAxis stroke="#888888" />
                 <Tooltip
@@ -149,7 +178,13 @@ const Performance = () => {
                     <stop offset="5%" stopColor="#10b981" stopOpacity={0.8} />
                     <stop offset="95%" stopColor="#10b981" stopOpacity={0.2} />
                   </linearGradient>
-                  <linearGradient id="colorConversions" x1="0" y1="0" x2="0" y2="1">
+                  <linearGradient
+                    id="colorConversions"
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2="1"
+                  >
                     <stop offset="5%" stopColor="#6366f1" stopOpacity={0.8} />
                     <stop offset="95%" stopColor="#6366f1" stopOpacity={0.2} />
                   </linearGradient>
@@ -186,7 +221,11 @@ const Performance = () => {
                     data={performanceData}
                     margin={{ top: 20, right: 30, left: 0, bottom: 0 }}
                   >
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.1)" />
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      vertical={false}
+                      stroke="rgba(255,255,255,0.1)"
+                    />
                     <XAxis dataKey="month" stroke="#888888" />
                     <YAxis stroke="#888888" />
                     <Tooltip
@@ -230,13 +269,19 @@ const Performance = () => {
                     />
                   </LineChart>
                 </ResponsiveContainer>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                  <Card className={cn("bg-gradient-to-b from-green-500/10 to-green-500/5 border-green-500/20")}>
+                  <Card
+                    className={cn(
+                      "bg-gradient-to-b from-green-500/10 to-green-500/5 border-green-500/20"
+                    )}
+                  >
                     <CardContent className="p-4">
                       <div className="flex items-center justify-between">
                         <div>
-                          <p className="text-sm font-medium text-green-500">Total Revenue</p>
+                          <p className="text-sm font-medium text-green-500">
+                            Total Revenue
+                          </p>
                           <h3 className="text-2xl font-bold mt-1">$248,000</h3>
                         </div>
                         <div className="flex items-center text-green-500">
@@ -246,11 +291,17 @@ const Performance = () => {
                       </div>
                     </CardContent>
                   </Card>
-                  <Card className={cn("bg-gradient-to-b from-purple-500/10 to-purple-500/5 border-purple-500/20")}>
+                  <Card
+                    className={cn(
+                      "bg-gradient-to-b from-purple-500/10 to-purple-500/5 border-purple-500/20"
+                    )}
+                  >
                     <CardContent className="p-4">
                       <div className="flex items-center justify-between">
                         <div>
-                          <p className="text-sm font-medium text-purple-500">Total Profit</p>
+                          <p className="text-sm font-medium text-purple-500">
+                            Total Profit
+                          </p>
                           <h3 className="text-2xl font-bold mt-1">$90,000</h3>
                         </div>
                         <div className="flex items-center text-purple-500">
@@ -260,11 +311,17 @@ const Performance = () => {
                       </div>
                     </CardContent>
                   </Card>
-                  <Card className={cn("bg-gradient-to-b from-orange-500/10 to-orange-500/5 border-orange-500/20")}>
+                  <Card
+                    className={cn(
+                      "bg-gradient-to-b from-orange-500/10 to-orange-500/5 border-orange-500/20"
+                    )}
+                  >
                     <CardContent className="p-4">
                       <div className="flex items-center justify-between">
                         <div>
-                          <p className="text-sm font-medium text-orange-500">Profit Margin</p>
+                          <p className="text-sm font-medium text-orange-500">
+                            Profit Margin
+                          </p>
                           <h3 className="text-2xl font-bold mt-1">36.3%</h3>
                         </div>
                         <div className="flex items-center text-orange-500">
@@ -303,7 +360,9 @@ const Performance = () => {
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <h3 className="text-lg font-medium mb-4">Competitive Position</h3>
+                <h3 className="text-lg font-medium mb-4">
+                  Competitive Position
+                </h3>
                 <div className="space-y-4">
                   <div>
                     <div className="flex justify-between mb-1">
@@ -311,7 +370,10 @@ const Performance = () => {
                       <span className="text-sm font-medium">28%</span>
                     </div>
                     <div className="w-full bg-secondary h-2 rounded-full">
-                      <div className="bg-primary h-2 rounded-full" style={{ width: "28%" }}></div>
+                      <div
+                        className="bg-primary h-2 rounded-full"
+                        style={{ width: "28%" }}
+                      ></div>
                     </div>
                   </div>
                   <div>
@@ -320,7 +382,10 @@ const Performance = () => {
                       <span className="text-sm font-medium">34%</span>
                     </div>
                     <div className="w-full bg-secondary h-2 rounded-full">
-                      <div className="bg-purple-500 h-2 rounded-full" style={{ width: "34%" }}></div>
+                      <div
+                        className="bg-purple-500 h-2 rounded-full"
+                        style={{ width: "34%" }}
+                      ></div>
                     </div>
                   </div>
                   <div>
@@ -329,7 +394,10 @@ const Performance = () => {
                       <span className="text-sm font-medium">22%</span>
                     </div>
                     <div className="w-full bg-secondary h-2 rounded-full">
-                      <div className="bg-blue-500 h-2 rounded-full" style={{ width: "22%" }}></div>
+                      <div
+                        className="bg-blue-500 h-2 rounded-full"
+                        style={{ width: "22%" }}
+                      ></div>
                     </div>
                   </div>
                   <div>
@@ -338,21 +406,30 @@ const Performance = () => {
                       <span className="text-sm font-medium">16%</span>
                     </div>
                     <div className="w-full bg-secondary h-2 rounded-full">
-                      <div className="bg-orange-500 h-2 rounded-full" style={{ width: "16%" }}></div>
+                      <div
+                        className="bg-orange-500 h-2 rounded-full"
+                        style={{ width: "16%" }}
+                      ></div>
                     </div>
                   </div>
                 </div>
               </div>
               <div>
-                <h3 className="text-lg font-medium mb-4">Growth Compared to Market</h3>
+                <h3 className="text-lg font-medium mb-4">
+                  Growth Compared to Market
+                </h3>
                 <div className="p-4 bg-gradient-to-b from-green-500/10 to-green-500/5 rounded-xl border border-green-500/20">
                   <div className="grid grid-cols-2 gap-4">
                     <div className="text-center">
-                      <p className="text-sm text-muted-foreground">Your Growth</p>
+                      <p className="text-sm text-muted-foreground">
+                        Your Growth
+                      </p>
                       <p className="text-3xl font-bold text-green-500">+24%</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-sm text-muted-foreground">Market Growth</p>
+                      <p className="text-sm text-muted-foreground">
+                        Market Growth
+                      </p>
                       <p className="text-3xl font-bold">+16%</p>
                     </div>
                     <div className="text-center">
@@ -360,7 +437,9 @@ const Performance = () => {
                       <p className="text-3xl font-bold text-green-500">$128</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-sm text-muted-foreground">Market AOV</p>
+                      <p className="text-sm text-muted-foreground">
+                        Market AOV
+                      </p>
                       <p className="text-3xl font-bold">$98</p>
                     </div>
                   </div>

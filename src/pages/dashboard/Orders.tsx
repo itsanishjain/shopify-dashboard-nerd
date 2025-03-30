@@ -73,7 +73,9 @@ const Orders = () => {
         transition={{ duration: 0.3 }}
       >
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <h1 className="text-3xl font-bold tracking-tight">Orders</h1>
+          <h1 className="text-3xl font-bold tracking-tight terminal-text">
+            Orders
+          </h1>
 
           <div className="flex items-center gap-2 w-full md:w-auto">
             <div className="relative w-full md:w-64">

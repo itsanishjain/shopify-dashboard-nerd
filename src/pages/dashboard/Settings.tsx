@@ -1,14 +1,27 @@
 import React from "react";
 import { motion } from "framer-motion";
 import DashboardLayout from "@/components/layout/DashboardLayout";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardFooter,
+} from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -41,25 +54,21 @@ const userData = {
   plan: "Advanced",
   timezone: "America/New_York",
   currency: "USD",
-  logo: "/placeholder.svg"
+  logo: "/placeholder.svg",
 };
 
 const SettingsTab = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <div className="space-y-6">
-      {children}
-    </div>
-  );
+  return <div className="space-y-6">{children}</div>;
 };
 
-const FormRow = ({ 
-  label, 
+const FormRow = ({
+  label,
   required = false,
-  children 
-}: { 
-  label: string; 
+  children,
+}: {
+  label: string;
   required?: boolean;
-  children: React.ReactNode 
+  children: React.ReactNode;
 }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-start">
@@ -84,13 +93,19 @@ const Settings = () => {
         transition={{ duration: 0.3 }}
       >
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <h1 className="text-3xl font-bold tracking-tight">Settings</h1>
+          <h1 className="text-3xl font-bold tracking-tight terminal-text">
+            Settings
+          </h1>
         </div>
 
         <Card className="matrix-flow">
           <CardHeader>
-            <CardTitle className="text-lg font-medium terminal-text">Account Settings</CardTitle>
-            <CardDescription>Manage your store settings and preferences</CardDescription>
+            <CardTitle className="text-lg font-medium terminal-text">
+              Account Settings
+            </CardTitle>
+            <CardDescription>
+              Manage your store settings and preferences
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="profile" className="w-full">
@@ -142,27 +157,45 @@ const Settings = () => {
                 </div>
               ) : (
                 <TabsList className="grid grid-cols-2 md:grid-cols-6 mb-6">
-                  <TabsTrigger value="profile" className="flex items-center gap-1">
+                  <TabsTrigger
+                    value="profile"
+                    className="flex items-center gap-1"
+                  >
                     <User className="h-4 w-4 md:mr-1" />
                     <span className="hidden md:inline">Profile</span>
                   </TabsTrigger>
-                  <TabsTrigger value="store" className="flex items-center gap-1">
+                  <TabsTrigger
+                    value="store"
+                    className="flex items-center gap-1"
+                  >
                     <Store className="h-4 w-4 md:mr-1" />
                     <span className="hidden md:inline">Store</span>
                   </TabsTrigger>
-                  <TabsTrigger value="notifications" className="flex items-center gap-1">
+                  <TabsTrigger
+                    value="notifications"
+                    className="flex items-center gap-1"
+                  >
                     <Bell className="h-4 w-4 md:mr-1" />
                     <span className="hidden md:inline">Notifications</span>
                   </TabsTrigger>
-                  <TabsTrigger value="security" className="flex items-center gap-1">
+                  <TabsTrigger
+                    value="security"
+                    className="flex items-center gap-1"
+                  >
                     <Shield className="h-4 w-4 md:mr-1" />
                     <span className="hidden md:inline">Security</span>
                   </TabsTrigger>
-                  <TabsTrigger value="billing" className="flex items-center gap-1">
+                  <TabsTrigger
+                    value="billing"
+                    className="flex items-center gap-1"
+                  >
                     <CreditCard className="h-4 w-4 md:mr-1" />
                     <span className="hidden md:inline">Billing</span>
                   </TabsTrigger>
-                  <TabsTrigger value="advanced" className="flex items-center gap-1">
+                  <TabsTrigger
+                    value="advanced"
+                    className="flex items-center gap-1"
+                  >
                     <SettingsIcon className="h-4 w-4 md:mr-1" />
                     <span className="hidden md:inline">Advanced</span>
                   </TabsTrigger>
@@ -174,7 +207,9 @@ const Settings = () => {
                   <Card>
                     <CardHeader>
                       <CardTitle>Personal Information</CardTitle>
-                      <CardDescription>Update your account information</CardDescription>
+                      <CardDescription>
+                        Update your account information
+                      </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
                       <FormRow label="Name" required>
@@ -193,8 +228,16 @@ const Settings = () => {
                             />
                           </div>
                           <div className="flex gap-2">
-                            <Button variant="outline" size="sm">Change</Button>
-                            <Button variant="outline" size="sm" className="text-muted-foreground">Remove</Button>
+                            <Button variant="outline" size="sm">
+                              Change
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="text-muted-foreground"
+                            >
+                              Remove
+                            </Button>
                           </div>
                         </div>
                       </FormRow>
@@ -214,7 +257,9 @@ const Settings = () => {
                   <Card>
                     <CardHeader>
                       <CardTitle>Store Information</CardTitle>
-                      <CardDescription>Manage your store details</CardDescription>
+                      <CardDescription>
+                        Manage your store details
+                      </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
                       <FormRow label="Store URL" required>
@@ -237,9 +282,15 @@ const Settings = () => {
                           <SelectContent>
                             <SelectItem value="USD">USD - US Dollar</SelectItem>
                             <SelectItem value="EUR">EUR - Euro</SelectItem>
-                            <SelectItem value="GBP">GBP - British Pound</SelectItem>
-                            <SelectItem value="CAD">CAD - Canadian Dollar</SelectItem>
-                            <SelectItem value="AUD">AUD - Australian Dollar</SelectItem>
+                            <SelectItem value="GBP">
+                              GBP - British Pound
+                            </SelectItem>
+                            <SelectItem value="CAD">
+                              CAD - Canadian Dollar
+                            </SelectItem>
+                            <SelectItem value="AUD">
+                              AUD - Australian Dollar
+                            </SelectItem>
                           </SelectContent>
                         </Select>
                       </FormRow>
@@ -249,16 +300,29 @@ const Settings = () => {
                             <SelectValue placeholder="Select timezone" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="America/New_York">Eastern Time (ET)</SelectItem>
-                            <SelectItem value="America/Chicago">Central Time (CT)</SelectItem>
-                            <SelectItem value="America/Denver">Mountain Time (MT)</SelectItem>
-                            <SelectItem value="America/Los_Angeles">Pacific Time (PT)</SelectItem>
-                            <SelectItem value="Europe/London">London (GMT)</SelectItem>
+                            <SelectItem value="America/New_York">
+                              Eastern Time (ET)
+                            </SelectItem>
+                            <SelectItem value="America/Chicago">
+                              Central Time (CT)
+                            </SelectItem>
+                            <SelectItem value="America/Denver">
+                              Mountain Time (MT)
+                            </SelectItem>
+                            <SelectItem value="America/Los_Angeles">
+                              Pacific Time (PT)
+                            </SelectItem>
+                            <SelectItem value="Europe/London">
+                              London (GMT)
+                            </SelectItem>
                           </SelectContent>
                         </Select>
                       </FormRow>
                       <FormRow label="Business Address">
-                        <Textarea defaultValue="123 Commerce Street&#10;Suite 101&#10;San Francisco, CA 94103" className="min-h-[120px]" />
+                        <Textarea
+                          defaultValue="123 Commerce Street&#10;Suite 101&#10;San Francisco, CA 94103"
+                          className="min-h-[120px]"
+                        />
                       </FormRow>
                     </CardContent>
                     <CardFooter className="justify-end">
@@ -268,11 +332,13 @@ const Settings = () => {
                       </Button>
                     </CardFooter>
                   </Card>
-                  
+
                   <Card>
                     <CardHeader>
                       <CardTitle>Store Appearance</CardTitle>
-                      <CardDescription>Customize how your dashboard looks</CardDescription>
+                      <CardDescription>
+                        Customize how your dashboard looks
+                      </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
                       <FormRow label="Logo">
@@ -285,36 +351,56 @@ const Settings = () => {
                             />
                           </div>
                           <div className="flex gap-2">
-                            <Button variant="outline" size="sm">Upload</Button>
-                            <Button variant="outline" size="sm" className="text-muted-foreground">Remove</Button>
+                            <Button variant="outline" size="sm">
+                              Upload
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="text-muted-foreground"
+                            >
+                              Remove
+                            </Button>
                           </div>
                         </div>
                       </FormRow>
                       <FormRow label="Theme">
                         <div className="grid grid-cols-3 gap-4">
-                          <div className={cn(
-                            "flex flex-col items-center p-4 rounded-md border cursor-pointer",
-                            "bg-background border-primary"
-                          )}>
+                          <div
+                            className={cn(
+                              "flex flex-col items-center p-4 rounded-md border cursor-pointer",
+                              "bg-background border-primary"
+                            )}
+                          >
                             <div className="h-10 w-full rounded bg-background border mb-2"></div>
                             <div className="h-20 w-full rounded bg-card"></div>
-                            <span className="mt-2 text-xs font-medium">Current Theme</span>
+                            <span className="mt-2 text-xs font-medium">
+                              Current Theme
+                            </span>
                           </div>
-                          <div className={cn(
-                            "flex flex-col items-center p-4 rounded-md border cursor-pointer",
-                            "border-muted-foreground/20 hover:border-muted-foreground/50 transition-colors"
-                          )}>
+                          <div
+                            className={cn(
+                              "flex flex-col items-center p-4 rounded-md border cursor-pointer",
+                              "border-muted-foreground/20 hover:border-muted-foreground/50 transition-colors"
+                            )}
+                          >
                             <div className="h-10 w-full rounded bg-white border mb-2"></div>
                             <div className="h-20 w-full rounded bg-gray-50"></div>
-                            <span className="mt-2 text-xs font-medium">Light Mode</span>
+                            <span className="mt-2 text-xs font-medium">
+                              Light Mode
+                            </span>
                           </div>
-                          <div className={cn(
-                            "flex flex-col items-center p-4 rounded-md border cursor-pointer",
-                            "border-muted-foreground/20 hover:border-muted-foreground/50 transition-colors"
-                          )}>
+                          <div
+                            className={cn(
+                              "flex flex-col items-center p-4 rounded-md border cursor-pointer",
+                              "border-muted-foreground/20 hover:border-muted-foreground/50 transition-colors"
+                            )}
+                          >
                             <div className="h-10 w-full rounded bg-gray-900 border mb-2"></div>
                             <div className="h-20 w-full rounded bg-gray-800"></div>
-                            <span className="mt-2 text-xs font-medium">Dark Mode</span>
+                            <span className="mt-2 text-xs font-medium">
+                              Dark Mode
+                            </span>
                           </div>
                         </div>
                       </FormRow>
@@ -328,79 +414,101 @@ const Settings = () => {
                   </Card>
                 </SettingsTab>
               </TabsContent>
-              
+
               <TabsContent value="notifications">
                 <SettingsTab>
                   <Card>
                     <CardHeader>
                       <CardTitle>Notification Preferences</CardTitle>
-                      <CardDescription>Control when and how you receive notifications</CardDescription>
+                      <CardDescription>
+                        Control when and how you receive notifications
+                      </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
                       <div className="space-y-4">
-                        <h3 className="text-sm font-medium">Email Notifications</h3>
+                        <h3 className="text-sm font-medium">
+                          Email Notifications
+                        </h3>
                         <Separator />
-                        
+
                         <div className="flex items-center justify-between">
                           <div className="space-y-0.5">
                             <Label>Order Notifications</Label>
-                            <p className="text-xs text-muted-foreground">Receive emails about new orders and updates</p>
+                            <p className="text-xs text-muted-foreground">
+                              Receive emails about new orders and updates
+                            </p>
                           </div>
                           <Switch defaultChecked />
                         </div>
-                        
+
                         <div className="flex items-center justify-between">
                           <div className="space-y-0.5">
                             <Label>Inventory Alerts</Label>
-                            <p className="text-xs text-muted-foreground">Get notified when products are low or out of stock</p>
+                            <p className="text-xs text-muted-foreground">
+                              Get notified when products are low or out of stock
+                            </p>
                           </div>
                           <Switch defaultChecked />
                         </div>
-                        
+
                         <div className="flex items-center justify-between">
                           <div className="space-y-0.5">
                             <Label>Customer Reviews</Label>
-                            <p className="text-xs text-muted-foreground">Receive notifications about new customer reviews</p>
+                            <p className="text-xs text-muted-foreground">
+                              Receive notifications about new customer reviews
+                            </p>
                           </div>
                           <Switch />
                         </div>
-                        
+
                         <div className="flex items-center justify-between">
                           <div className="space-y-0.5">
                             <Label>Marketing Updates</Label>
-                            <p className="text-xs text-muted-foreground">Receive tips and news about marketing your store</p>
+                            <p className="text-xs text-muted-foreground">
+                              Receive tips and news about marketing your store
+                            </p>
                           </div>
                           <Switch defaultChecked />
                         </div>
                       </div>
-                      
+
                       <div className="space-y-4 pt-4">
-                        <h3 className="text-sm font-medium">Mobile Notifications</h3>
+                        <h3 className="text-sm font-medium">
+                          Mobile Notifications
+                        </h3>
                         <Separator />
-                        
+
                         <div className="flex items-center justify-between">
                           <div className="space-y-0.5">
                             <div className="flex items-center gap-2">
                               <Label>Push Notifications</Label>
-                              <Badge className="bg-green-500 text-white">Connected</Badge>
+                              <Badge className="bg-green-500 text-white">
+                                Connected
+                              </Badge>
                             </div>
-                            <p className="text-xs text-muted-foreground">Receive push notifications on your mobile device</p>
+                            <p className="text-xs text-muted-foreground">
+                              Receive push notifications on your mobile device
+                            </p>
                           </div>
                           <Switch defaultChecked />
                         </div>
-                        
+
                         <div className="flex items-center justify-between">
                           <div className="space-y-0.5">
                             <Label>Order Alerts</Label>
-                            <p className="text-xs text-muted-foreground">Get notified immediately about new orders</p>
+                            <p className="text-xs text-muted-foreground">
+                              Get notified immediately about new orders
+                            </p>
                           </div>
                           <Switch defaultChecked />
                         </div>
-                        
+
                         <div className="flex items-center justify-between">
                           <div className="space-y-0.5">
                             <Label>Daily Summary</Label>
-                            <p className="text-xs text-muted-foreground">Get a daily summary of your store's activity</p>
+                            <p className="text-xs text-muted-foreground">
+                              Get a daily summary of your store's activity
+                            </p>
                           </div>
                           <Switch defaultChecked />
                         </div>
@@ -415,80 +523,114 @@ const Settings = () => {
                   </Card>
                 </SettingsTab>
               </TabsContent>
-              
+
               <TabsContent value="security">
                 <SettingsTab>
                   <Card>
                     <CardHeader>
                       <CardTitle>Security Settings</CardTitle>
-                      <CardDescription>Manage your account security</CardDescription>
+                      <CardDescription>
+                        Manage your account security
+                      </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
                       <FormRow label="Change Password">
                         <div className="space-y-4">
-                          <Input type="password" placeholder="Current password" />
+                          <Input
+                            type="password"
+                            placeholder="Current password"
+                          />
                           <Input type="password" placeholder="New password" />
-                          <Input type="password" placeholder="Confirm new password" />
+                          <Input
+                            type="password"
+                            placeholder="Confirm new password"
+                          />
                           <Button variant="outline">Update Password</Button>
                         </div>
                       </FormRow>
-                      
+
                       <Separator />
-                      
+
                       <FormRow label="Two-Factor Authentication">
                         <div className="space-y-4">
                           <div className="flex items-center justify-between">
                             <div>
                               <Label>Enable 2FA</Label>
-                              <p className="text-xs text-muted-foreground">Add an extra layer of security to your account</p>
+                              <p className="text-xs text-muted-foreground">
+                                Add an extra layer of security to your account
+                              </p>
                             </div>
                             <Switch />
                           </div>
-                          <Button variant="outline" disabled>Set Up 2FA</Button>
+                          <Button variant="outline" disabled>
+                            Set Up 2FA
+                          </Button>
                         </div>
                       </FormRow>
-                      
+
                       <Separator />
-                      
+
                       <FormRow label="API Access">
                         <div className="space-y-4">
                           <div className="flex items-center justify-between">
                             <div>
                               <Label>API Keys</Label>
-                              <p className="text-xs text-muted-foreground">Manage API keys for integrations</p>
+                              <p className="text-xs text-muted-foreground">
+                                Manage API keys for integrations
+                              </p>
                             </div>
                             <Button variant="outline">Manage Keys</Button>
                           </div>
                         </div>
                       </FormRow>
-                      
+
                       <Separator />
-                      
+
                       <FormRow label="Session Management">
                         <div className="space-y-4">
                           <div className="flex items-center justify-between">
                             <div>
                               <Label>Active Sessions</Label>
-                              <p className="text-xs text-muted-foreground">View and manage your active login sessions</p>
+                              <p className="text-xs text-muted-foreground">
+                                View and manage your active login sessions
+                              </p>
                             </div>
-                            <Button variant="destructive">Sign Out All Devices</Button>
+                            <Button variant="destructive">
+                              Sign Out All Devices
+                            </Button>
                           </div>
                           <div className="border rounded-md">
                             <div className="p-4 flex items-start justify-between border-b">
                               <div>
-                                <div className="font-medium">Current Session</div>
-                                <div className="text-xs text-muted-foreground">Chrome on macOS • San Francisco, CA</div>
-                                <div className="text-xs text-muted-foreground mt-1">Started 1 hour ago</div>
+                                <div className="font-medium">
+                                  Current Session
+                                </div>
+                                <div className="text-xs text-muted-foreground">
+                                  Chrome on macOS • San Francisco, CA
+                                </div>
+                                <div className="text-xs text-muted-foreground mt-1">
+                                  Started 1 hour ago
+                                </div>
                               </div>
                               <Badge className="bg-green-500">Current</Badge>
                             </div>
                             <div className="p-4 flex items-start justify-between">
                               <div>
                                 <div className="font-medium">Mobile App</div>
-                                <div className="text-xs text-muted-foreground">iPhone • New York, NY</div>
-                                <div className="text-xs text-muted-foreground mt-1">Last active 2 days ago</div>
+                                <div className="text-xs text-muted-foreground">
+                                  iPhone • New York, NY
+                                </div>
+                                <div className="text-xs text-muted-foreground mt-1">
+                                  Last active 2 days ago
+                                </div>
                               </div>
-                              <Button variant="ghost" size="sm" className="text-muted-foreground h-8">Sign Out</Button>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="text-muted-foreground h-8"
+                              >
+                                Sign Out
+                              </Button>
                             </div>
                           </div>
                         </div>
@@ -497,13 +639,15 @@ const Settings = () => {
                   </Card>
                 </SettingsTab>
               </TabsContent>
-              
+
               <TabsContent value="billing">
                 <SettingsTab>
                   <Card>
                     <CardHeader>
                       <CardTitle>Billing Information</CardTitle>
-                      <CardDescription>Manage your subscription and billing details</CardDescription>
+                      <CardDescription>
+                        Manage your subscription and billing details
+                      </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
                       <div className="p-4 bg-gradient-to-b from-green-500/10 to-green-500/5 rounded-xl border border-green-500/20">
@@ -513,28 +657,36 @@ const Settings = () => {
                               Current Plan
                               <Badge className="bg-primary">Advanced</Badge>
                             </h3>
-                            <p className="text-sm text-muted-foreground mt-1">Your plan renews on April 21, 2023</p>
+                            <p className="text-sm text-muted-foreground mt-1">
+                              Your plan renews on April 21, 2023
+                            </p>
                           </div>
                           <Button variant="outline">Upgrade Plan</Button>
                         </div>
                         <div className="mt-4 grid grid-cols-3 gap-4">
                           <div className="text-center p-3 bg-card rounded-md border">
-                            <p className="text-xs text-muted-foreground">Products</p>
+                            <p className="text-xs text-muted-foreground">
+                              Products
+                            </p>
                             <p className="font-bold">Unlimited</p>
                           </div>
                           <div className="text-center p-3 bg-card rounded-md border">
-                            <p className="text-xs text-muted-foreground">Staff Accounts</p>
+                            <p className="text-xs text-muted-foreground">
+                              Staff Accounts
+                            </p>
                             <p className="font-bold">15</p>
                           </div>
                           <div className="text-center p-3 bg-card rounded-md border">
-                            <p className="text-xs text-muted-foreground">Transaction Fee</p>
+                            <p className="text-xs text-muted-foreground">
+                              Transaction Fee
+                            </p>
                             <p className="font-bold">0.5%</p>
                           </div>
                         </div>
                       </div>
-                      
+
                       <Separator />
-                      
+
                       <FormRow label="Payment Method">
                         <div className="space-y-4">
                           <div className="flex items-center gap-4 p-3 border rounded-md">
@@ -543,27 +695,34 @@ const Settings = () => {
                             </div>
                             <div>
                               <p className="font-medium">Visa ending in 4242</p>
-                              <p className="text-xs text-muted-foreground">Expires 04/2025</p>
+                              <p className="text-xs text-muted-foreground">
+                                Expires 04/2025
+                              </p>
                             </div>
                             <div className="ml-auto">
-                              <Button variant="outline" size="sm">Edit</Button>
+                              <Button variant="outline" size="sm">
+                                Edit
+                              </Button>
                             </div>
                           </div>
                           <Button variant="outline">Add Payment Method</Button>
                         </div>
                       </FormRow>
-                      
+
                       <Separator />
-                      
+
                       <FormRow label="Billing Address">
                         <div className="space-y-4">
-                          <Textarea defaultValue="Jane Cooper&#10;123 Commerce Street&#10;Suite 101&#10;San Francisco, CA 94103&#10;United States" className="min-h-[120px]" />
+                          <Textarea
+                            defaultValue="Jane Cooper&#10;123 Commerce Street&#10;Suite 101&#10;San Francisco, CA 94103&#10;United States"
+                            className="min-h-[120px]"
+                          />
                           <Button variant="outline">Update Address</Button>
                         </div>
                       </FormRow>
-                      
+
                       <Separator />
-                      
+
                       <FormRow label="Billing History">
                         <div className="space-y-4">
                           <div className="border rounded-md">
@@ -578,7 +737,11 @@ const Settings = () => {
                               <div>Advanced Plan - Monthly</div>
                               <div>$299.00</div>
                               <div className="text-right">
-                                <Button variant="ghost" size="sm" className="h-8">
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-8"
+                                >
                                   <Mail className="h-4 w-4 mr-1" />
                                   PDF
                                 </Button>
@@ -589,7 +752,11 @@ const Settings = () => {
                               <div>Advanced Plan - Monthly</div>
                               <div>$299.00</div>
                               <div className="text-right">
-                                <Button variant="ghost" size="sm" className="h-8">
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-8"
+                                >
                                   <Mail className="h-4 w-4 mr-1" />
                                   PDF
                                 </Button>
@@ -600,7 +767,11 @@ const Settings = () => {
                               <div>Advanced Plan - Monthly</div>
                               <div>$299.00</div>
                               <div className="text-right">
-                                <Button variant="ghost" size="sm" className="h-8">
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-8"
+                                >
                                   <Mail className="h-4 w-4 mr-1" />
                                   PDF
                                 </Button>
@@ -614,13 +785,15 @@ const Settings = () => {
                   </Card>
                 </SettingsTab>
               </TabsContent>
-              
+
               <TabsContent value="advanced">
                 <SettingsTab>
                   <Card>
                     <CardHeader>
                       <CardTitle>Advanced Settings</CardTitle>
-                      <CardDescription>Configure advanced store settings</CardDescription>
+                      <CardDescription>
+                        Configure advanced store settings
+                      </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
                       <FormRow label="Store Timezone">
@@ -629,15 +802,25 @@ const Settings = () => {
                             <SelectValue placeholder="Select timezone" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="America/New_York">Eastern Time (ET)</SelectItem>
-                            <SelectItem value="America/Chicago">Central Time (CT)</SelectItem>
-                            <SelectItem value="America/Denver">Mountain Time (MT)</SelectItem>
-                            <SelectItem value="America/Los_Angeles">Pacific Time (PT)</SelectItem>
-                            <SelectItem value="Europe/London">London (GMT)</SelectItem>
+                            <SelectItem value="America/New_York">
+                              Eastern Time (ET)
+                            </SelectItem>
+                            <SelectItem value="America/Chicago">
+                              Central Time (CT)
+                            </SelectItem>
+                            <SelectItem value="America/Denver">
+                              Mountain Time (MT)
+                            </SelectItem>
+                            <SelectItem value="America/Los_Angeles">
+                              Pacific Time (PT)
+                            </SelectItem>
+                            <SelectItem value="Europe/London">
+                              London (GMT)
+                            </SelectItem>
                           </SelectContent>
                         </Select>
                       </FormRow>
-                      
+
                       <FormRow label="Weight Unit">
                         <Select defaultValue="lb">
                           <SelectTrigger className="w-full md:w-[240px]">
@@ -651,7 +834,7 @@ const Settings = () => {
                           </SelectContent>
                         </Select>
                       </FormRow>
-                      
+
                       <FormRow label="Dimension Unit">
                         <Select defaultValue="in">
                           <SelectTrigger className="w-full md:w-[240px]">
@@ -665,57 +848,77 @@ const Settings = () => {
                           </SelectContent>
                         </Select>
                       </FormRow>
-                      
+
                       <Separator />
-                      
+
                       <FormRow label="Shipping Settings">
                         <div className="space-y-4">
                           <div className="flex items-center justify-between">
                             <div>
                               <Label>Free Shipping Threshold</Label>
-                              <p className="text-xs text-muted-foreground">Minimum order amount for free shipping</p>
+                              <p className="text-xs text-muted-foreground">
+                                Minimum order amount for free shipping
+                              </p>
                             </div>
-                            <Input type="number" defaultValue="100" className="w-24 text-right" />
+                            <Input
+                              type="number"
+                              defaultValue="100"
+                              className="w-24 text-right"
+                            />
                           </div>
-                          
+
                           <div className="flex items-center justify-between">
                             <div>
                               <Label>Calculate Tax Based on</Label>
-                              <p className="text-xs text-muted-foreground">Where tax calculations are applied</p>
+                              <p className="text-xs text-muted-foreground">
+                                Where tax calculations are applied
+                              </p>
                             </div>
                             <Select defaultValue="shipping">
                               <SelectTrigger className="w-40">
                                 <SelectValue placeholder="Select address" />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="shipping">Shipping Address</SelectItem>
-                                <SelectItem value="billing">Billing Address</SelectItem>
-                                <SelectItem value="store">Store Address</SelectItem>
+                                <SelectItem value="shipping">
+                                  Shipping Address
+                                </SelectItem>
+                                <SelectItem value="billing">
+                                  Billing Address
+                                </SelectItem>
+                                <SelectItem value="store">
+                                  Store Address
+                                </SelectItem>
                               </SelectContent>
                             </Select>
                           </div>
-                          
+
                           <div className="flex items-center justify-between">
                             <div>
                               <Label>Shipping Rate Calculations</Label>
-                              <p className="text-xs text-muted-foreground">How shipping rates are calculated</p>
+                              <p className="text-xs text-muted-foreground">
+                                How shipping rates are calculated
+                              </p>
                             </div>
                             <Select defaultValue="weight">
                               <SelectTrigger className="w-40">
                                 <SelectValue placeholder="Select calculation" />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="weight">By Weight</SelectItem>
+                                <SelectItem value="weight">
+                                  By Weight
+                                </SelectItem>
                                 <SelectItem value="price">By Price</SelectItem>
-                                <SelectItem value="quantity">By Quantity</SelectItem>
+                                <SelectItem value="quantity">
+                                  By Quantity
+                                </SelectItem>
                               </SelectContent>
                             </Select>
                           </div>
                         </div>
                       </FormRow>
-                      
+
                       <Separator />
-                      
+
                       <FormRow label="API Integrations">
                         <div className="space-y-4">
                           <Button variant="outline">
@@ -723,13 +926,14 @@ const Settings = () => {
                             Manage API Keys
                           </Button>
                           <p className="text-xs text-muted-foreground">
-                            Configure API keys to connect with third-party services
+                            Configure API keys to connect with third-party
+                            services
                           </p>
                         </div>
                       </FormRow>
-                      
+
                       <Separator />
-                      
+
                       <FormRow label="Data Export">
                         <div className="space-y-4">
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -751,7 +955,8 @@ const Settings = () => {
                             </Button>
                           </div>
                           <p className="text-xs text-muted-foreground">
-                            Export your store data in CSV format for backup or analysis
+                            Export your store data in CSV format for backup or
+                            analysis
                           </p>
                         </div>
                       </FormRow>
@@ -763,42 +968,53 @@ const Settings = () => {
                       </Button>
                     </CardFooter>
                   </Card>
-                  
+
                   <Card className="bg-destructive/5 border-destructive/20">
                     <CardHeader>
-                      <CardTitle className="text-destructive">Danger Zone</CardTitle>
-                      <CardDescription>These actions cannot be undone</CardDescription>
+                      <CardTitle className="text-destructive">
+                        Danger Zone
+                      </CardTitle>
+                      <CardDescription>
+                        These actions cannot be undone
+                      </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div className="flex items-center justify-between">
                         <div>
-                          <Label className="text-destructive">Reset Store Data</Label>
+                          <Label className="text-destructive">
+                            Reset Store Data
+                          </Label>
                           <p className="text-xs text-muted-foreground">
                             This will delete all products, customers, and orders
                           </p>
                         </div>
                         <Button variant="destructive">Reset Store</Button>
                       </div>
-                      
+
                       <Separator />
-                      
+
                       <div className="flex items-center justify-between">
                         <div>
-                          <Label className="text-destructive">Close Store</Label>
+                          <Label className="text-destructive">
+                            Close Store
+                          </Label>
                           <p className="text-xs text-muted-foreground">
                             This will make your store inaccessible to customers
                           </p>
                         </div>
                         <Button variant="destructive">Close Store</Button>
                       </div>
-                      
+
                       <Separator />
-                      
+
                       <div className="flex items-center justify-between">
                         <div>
-                          <Label className="text-destructive">Delete Account</Label>
+                          <Label className="text-destructive">
+                            Delete Account
+                          </Label>
                           <p className="text-xs text-muted-foreground">
-                            This will permanently delete your account and all data
+                            This will permanently delete your account and all
+                            data
                           </p>
                         </div>
                         <Button variant="destructive">Delete Account</Button>
