@@ -1,6 +1,7 @@
+
 import { faker } from "@faker-js/faker";
 
-interface LocationData {
+export interface LocationData {
   name: string;
   value: number;
   coordinates: [number, number];
@@ -16,7 +17,7 @@ export const getSalesByChannel = () => {
 };
 
 // Sales by Location data
-export const getSalesByLocation = () => {
+export const getSalesByLocation = (): LocationData[] => {
   const locations: LocationData[] = [
     {
       name: "New York",

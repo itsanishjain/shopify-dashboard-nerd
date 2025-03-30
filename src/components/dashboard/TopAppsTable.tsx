@@ -1,0 +1,110 @@
+
+import React from "react";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { getTopPerformingApps, getLowPerformingApps, AppItem } from "@/data/appEcosystemData";
+import { ArrowUpIcon, ArrowDownIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+const formatCurrency = (value: number) => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  }).format(value);
+};
+
+const AppTableRow = ({ app }: { app: AppItem }) => {
+  return (
+    <TableRow>
+      <TableCell>
+        <div className="font-medium">{app.name}</div>
+        <div className="text-xs text-muted-foreground">{app.category}</div>
+      </TableCell>
+      <TableCell>{formatCurrency(app.cost)}/mo</TableCell>
+      <TableCell>{formatCurrency(app.revenue)}</TableCell>
+      <TableCell>
+        <div className="flex items-center">
+          <span className={cn(
+            "mr-2 font-medium",
+            app.roi > 0 ? "text-green-600" : "text-red-600"
+          )}>
+            {app.roi}%
+          </span>
+          {app.roi > 0 ? (
+            <ArrowUpIcon className="h-4 w-4 text-green-600" />
+          ) : (
+            <ArrowDownIcon className="h-4 w-4 text-red-600" />
+          )}
+        </div>
+      </TableCell>
+      <TableCell>
+        <Badge variant={app.roi > 1000 ? "success" : app.roi > 500 ? "default" : app.roi > 0 ? "secondary" : "destructive"}>
+          {app.roi > 1000 ? "Excellent" : app.roi > 500 ? "Good" : app.roi > 0 ? "Fair" : "Poor"}
+        </Badge>
+      </TableCell>
+    </TableRow>
+  );
+};
+
+const TopAppsTable: React.FC = () => {
+  const topApps = getTopPerformingApps();
+  const lowApps = getLowPerformingApps();
+  
+  return (
+    <Card className="col-span-12">
+      <CardHeader>
+        <CardTitle className="text-xl font-semibold">App Performance</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Tabs defaultValue="top">
+          <TabsList>
+            <TabsTrigger value="top">Top Performing</TabsTrigger>
+            <TabsTrigger value="low">Low Performing</TabsTrigger>
+          </TabsList>
+          <TabsContent value="top">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>App</TableHead>
+                  <TableHead>Monthly Cost</TableHead>
+                  <TableHead>Revenue Generated</TableHead>
+                  <TableHead>ROI</TableHead>
+                  <TableHead>Performance</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {topApps.map((app) => (
+                  <AppTableRow key={app.id} app={app} />
+                ))}
+              </TableBody>
+            </Table>
+          </TabsContent>
+          <TabsContent value="low">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>App</TableHead>
+                  <TableHead>Monthly Cost</TableHead>
+                  <TableHead>Revenue Generated</TableHead>
+                  <TableHead>ROI</TableHead>
+                  <TableHead>Performance</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {lowApps.map((app) => (
+                  <AppTableRow key={app.id} app={app} />
+                ))}
+              </TableBody>
+            </Table>
+          </TabsContent>
+        </Tabs>
+      </CardContent>
+    </Card>
+  );
+};
+
+export default TopAppsTable;
