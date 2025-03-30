@@ -19,7 +19,7 @@ const Apps = () => {
       >
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">App Ecosystem</h1>
+            <h1 className="text-3xl font-bold tracking-tight terminal-text">App Ecosystem</h1>
             <p className="text-muted-foreground mt-1">
               Analyze app performance, ROI, and cost-benefit metrics
             </p>

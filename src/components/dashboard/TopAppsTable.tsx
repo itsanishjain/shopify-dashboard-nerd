@@ -55,51 +55,65 @@ const TopAppsTable: React.FC = () => {
   const lowApps = getLowPerformingApps();
   
   return (
-    <Card className="col-span-12">
+    <Card className="col-span-12 matrix-flow shadow-glow-sm">
       <CardHeader>
-        <CardTitle className="text-xl font-semibold">App Performance</CardTitle>
+        <CardTitle className="text-xl font-semibold terminal-text">App Performance</CardTitle>
       </CardHeader>
       <CardContent>
-        <Tabs defaultValue="top">
-          <TabsList>
-            <TabsTrigger value="top">Top Performing</TabsTrigger>
-            <TabsTrigger value="low">Low Performing</TabsTrigger>
+        <Tabs defaultValue="top" className="w-full">
+          <TabsList className="grid w-full grid-cols-2 backdrop-blur-md bg-background/30 rounded-xl mb-4">
+            <TabsTrigger 
+              value="top" 
+              className="data-[state=active]:bg-primary/20 data-[state=active]:text-primary data-[state=active]:shadow-glow transition-all duration-300"
+            >
+              Top Performing
+            </TabsTrigger>
+            <TabsTrigger 
+              value="low" 
+              className="data-[state=active]:bg-primary/20 data-[state=active]:text-primary data-[state=active]:shadow-glow transition-all duration-300"
+            >
+              Low Performing
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="top">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>App</TableHead>
-                  <TableHead>Monthly Cost</TableHead>
-                  <TableHead>Revenue Generated</TableHead>
-                  <TableHead>ROI</TableHead>
-                  <TableHead>Performance</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {topApps.map((app) => (
-                  <AppTableRow key={app.id} app={app} />
-                ))}
-              </TableBody>
-            </Table>
+            <div className="bg-gradient-to-b from-[#10b981]/10 to-[#10b981]/5 border border-border/50 rounded-lg p-4">
+              <Table>
+                <TableHeader>
+                  <TableRow className="border-border/30">
+                    <TableHead>App</TableHead>
+                    <TableHead>Monthly Cost</TableHead>
+                    <TableHead>Revenue Generated</TableHead>
+                    <TableHead>ROI</TableHead>
+                    <TableHead>Performance</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {topApps.map((app) => (
+                    <AppTableRow key={app.id} app={app} />
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
           </TabsContent>
           <TabsContent value="low">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>App</TableHead>
-                  <TableHead>Monthly Cost</TableHead>
-                  <TableHead>Revenue Generated</TableHead>
-                  <TableHead>ROI</TableHead>
-                  <TableHead>Performance</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {lowApps.map((app) => (
-                  <AppTableRow key={app.id} app={app} />
-                ))}
-              </TableBody>
-            </Table>
+            <div className="bg-gradient-to-b from-[#f59e0b]/10 to-[#f59e0b]/5 border border-border/50 rounded-lg p-4">
+              <Table>
+                <TableHeader>
+                  <TableRow className="border-border/30">
+                    <TableHead>App</TableHead>
+                    <TableHead>Monthly Cost</TableHead>
+                    <TableHead>Revenue Generated</TableHead>
+                    <TableHead>ROI</TableHead>
+                    <TableHead>Performance</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {lowApps.map((app) => (
+                    <AppTableRow key={app.id} app={app} />
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
           </TabsContent>
         </Tabs>
       </CardContent>
