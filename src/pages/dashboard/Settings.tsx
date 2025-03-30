@@ -11,6 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
+import { useIsMobile } from "@/hooks/use-mobile";
 import {
   User,
   Store,
@@ -72,6 +73,8 @@ const FormRow = ({
 };
 
 const Settings = () => {
+  const isMobile = useIsMobile();
+
   return (
     <DashboardLayout>
       <motion.div
@@ -91,32 +94,80 @@ const Settings = () => {
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="profile" className="w-full">
-              <TabsList className="grid grid-cols-2 md:grid-cols-6 mb-6">
-                <TabsTrigger value="profile" className="flex items-center gap-1">
-                  <User className="h-4 w-4 md:mr-1" />
-                  <span className="hidden md:inline">Profile</span>
-                </TabsTrigger>
-                <TabsTrigger value="store" className="flex items-center gap-1">
-                  <Store className="h-4 w-4 md:mr-1" />
-                  <span className="hidden md:inline">Store</span>
-                </TabsTrigger>
-                <TabsTrigger value="notifications" className="flex items-center gap-1">
-                  <Bell className="h-4 w-4 md:mr-1" />
-                  <span className="hidden md:inline">Notifications</span>
-                </TabsTrigger>
-                <TabsTrigger value="security" className="flex items-center gap-1">
-                  <Shield className="h-4 w-4 md:mr-1" />
-                  <span className="hidden md:inline">Security</span>
-                </TabsTrigger>
-                <TabsTrigger value="billing" className="flex items-center gap-1">
-                  <CreditCard className="h-4 w-4 md:mr-1" />
-                  <span className="hidden md:inline">Billing</span>
-                </TabsTrigger>
-                <TabsTrigger value="advanced" className="flex items-center gap-1">
-                  <SettingsIcon className="h-4 w-4 md:mr-1" />
-                  <span className="hidden md:inline">Advanced</span>
-                </TabsTrigger>
-              </TabsList>
+              {isMobile ? (
+                <div className="mb-6">
+                  <Select defaultValue="profile">
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select tab" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="profile">
+                        <div className="flex items-center gap-2">
+                          <User className="h-4 w-4" />
+                          <span>Profile</span>
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="store">
+                        <div className="flex items-center gap-2">
+                          <Store className="h-4 w-4" />
+                          <span>Store</span>
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="notifications">
+                        <div className="flex items-center gap-2">
+                          <Bell className="h-4 w-4" />
+                          <span>Notifications</span>
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="security">
+                        <div className="flex items-center gap-2">
+                          <Shield className="h-4 w-4" />
+                          <span>Security</span>
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="billing">
+                        <div className="flex items-center gap-2">
+                          <CreditCard className="h-4 w-4" />
+                          <span>Billing</span>
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="advanced">
+                        <div className="flex items-center gap-2">
+                          <SettingsIcon className="h-4 w-4" />
+                          <span>Advanced</span>
+                        </div>
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              ) : (
+                <TabsList className="grid grid-cols-2 md:grid-cols-6 mb-6">
+                  <TabsTrigger value="profile" className="flex items-center gap-1">
+                    <User className="h-4 w-4 md:mr-1" />
+                    <span className="hidden md:inline">Profile</span>
+                  </TabsTrigger>
+                  <TabsTrigger value="store" className="flex items-center gap-1">
+                    <Store className="h-4 w-4 md:mr-1" />
+                    <span className="hidden md:inline">Store</span>
+                  </TabsTrigger>
+                  <TabsTrigger value="notifications" className="flex items-center gap-1">
+                    <Bell className="h-4 w-4 md:mr-1" />
+                    <span className="hidden md:inline">Notifications</span>
+                  </TabsTrigger>
+                  <TabsTrigger value="security" className="flex items-center gap-1">
+                    <Shield className="h-4 w-4 md:mr-1" />
+                    <span className="hidden md:inline">Security</span>
+                  </TabsTrigger>
+                  <TabsTrigger value="billing" className="flex items-center gap-1">
+                    <CreditCard className="h-4 w-4 md:mr-1" />
+                    <span className="hidden md:inline">Billing</span>
+                  </TabsTrigger>
+                  <TabsTrigger value="advanced" className="flex items-center gap-1">
+                    <SettingsIcon className="h-4 w-4 md:mr-1" />
+                    <span className="hidden md:inline">Advanced</span>
+                  </TabsTrigger>
+                </TabsList>
+              )}
 
               <TabsContent value="profile">
                 <SettingsTab>
