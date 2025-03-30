@@ -156,9 +156,9 @@ const DashboardSidebar = ({
         {/* Logo area */}
         <div className="flex items-center justify-between h-14 px-4 border-b border-border flex-shrink-0">
           <div className="flex items-center gap-2 justify-center">
-            <ShoppingCart className="h-6 w-6 terminal-text" />
+            {/* <ShoppingCart className="h-6 w-6 terminal-text" /> */}
             {!collapsed && (
-              <span className="whitespace-nowrap overflow-hidden font-bold text-lg terminal-text">
+              <span className="whitespace-nowrap overflow-hidden font-bold text-2xl terminal-text">
                 ShopNerd
               </span>
             )}
