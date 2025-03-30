@@ -18,6 +18,17 @@ import { cn } from "@/lib/utils";
 const AppROICard = () => {
   const data = getAppCategoryROI();
 
+  // Variables for elegant glassmorphism effect
+  const glassStyle = {
+    backgroundColor: "rgba(240, 240, 245, 0.85)",
+    borderRadius: "4px",
+    border: "1px solid rgba(200, 200, 220, 0.3)",
+    backdropFilter: "blur(12px)",
+    boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.15)",
+    color: "#000",
+    fontWeight: "600",
+  };
+
   return (
     <Card className="col-span-8 matrix-flow">
       <CardHeader>
@@ -28,57 +39,108 @@ const AppROICard = () => {
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={data}
-              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+              margin={{ top: 15, right: 30, left: 20, bottom: 15 }}
             >
-              <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
-              <XAxis dataKey="name" />
+              <defs>
+                <linearGradient id="colorCost" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#f97316" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#f97316" stopOpacity={0.2} />
+                </linearGradient>
+                <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#10b981" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#10b981" stopOpacity={0.2} />
+                </linearGradient>
+                <linearGradient id="colorROI" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0.2} />
+                </linearGradient>
+                <filter id="shadow" height="200%">
+                  <feDropShadow
+                    dx="0"
+                    dy="4"
+                    stdDeviation="8"
+                    floodColor="#10b981"
+                    floodOpacity="0.2"
+                  />
+                </filter>
+              </defs>
+              <CartesianGrid 
+                strokeDasharray="3 3" 
+                vertical={false}
+                stroke="#333"
+                opacity={0.2}
+              />
+              <XAxis 
+                dataKey="name" 
+                stroke="#999"
+                axisLine={false}
+                tickLine={false}
+                dy={10}
+              />
               <YAxis 
                 yAxisId="left" 
                 orientation="left" 
                 tickFormatter={(value) => `$${value}`}
-                axisLine={{ stroke: 'rgba(16, 185, 129, 0.2)' }}
-                tick={{ fill: 'var(--foreground)' }}
+                stroke="#999"
+                axisLine={false}
+                tickLine={false}
+                dx={-10}
               />
               <YAxis 
                 yAxisId="right" 
                 orientation="right" 
                 tickFormatter={(value) => `${value}%`}
-                axisLine={{ stroke: 'rgba(16, 185, 129, 0.2)' }}
-                tick={{ fill: 'var(--foreground)' }}
+                stroke="#999"
+                axisLine={false}
+                tickLine={false}
               />
               <Tooltip 
                 formatter={(value, name) => {
                   if (name === "roi") return [`${value}%`, "ROI"];
                   return [`$${value}`, name === "cost" ? "Cost" : "Revenue"];
                 }}
-                contentStyle={{ 
-                  backgroundColor: 'var(--background)',
-                  border: '1px solid var(--border)',
-                  borderRadius: '8px',
-                }}
+                contentStyle={glassStyle}
+                cursor={{ fill: "rgba(255, 255, 255, 0.05)" }}
+                animationDuration={300}
               />
-              <Legend wrapperStyle={{ opacity: 0.8 }} />
+              <Legend 
+                verticalAlign="top"
+                wrapperStyle={{ paddingBottom: "10px" }}
+              />
               <ReferenceLine yAxisId="right" y={0} stroke="rgba(16, 185, 129, 0.3)" />
               <Bar 
                 yAxisId="left" 
                 dataKey="cost" 
-                fill="rgba(249, 115, 22, 0.7)" 
                 name="Monthly Cost"
-                radius={[4, 4, 0, 0]}
+                fill="url(#colorCost)" 
+                radius={[8, 8, 0, 0]}
+                animationDuration={1500}
+                animationEasing="ease"
+                animationBegin={0}
+                isAnimationActive={true}
               />
               <Bar 
                 yAxisId="left" 
                 dataKey="revenue" 
-                fill="rgba(16, 185, 129, 0.7)" 
                 name="Generated Revenue"
-                radius={[4, 4, 0, 0]}
+                fill="url(#colorRevenue)" 
+                radius={[8, 8, 0, 0]}
+                animationDuration={1500}
+                animationEasing="ease"
+                animationBegin={150}
+                isAnimationActive={true}
+                filter="url(#shadow)"
               />
               <Bar 
                 yAxisId="right" 
                 dataKey="roi" 
-                fill="rgba(139, 92, 246, 0.7)" 
                 name="ROI %"
-                radius={[4, 4, 0, 0]}
+                fill="url(#colorROI)" 
+                radius={[8, 8, 0, 0]}
+                animationDuration={1500}
+                animationEasing="ease"
+                animationBegin={300}
+                isAnimationActive={true}
               />
             </BarChart>
           </ResponsiveContainer>
