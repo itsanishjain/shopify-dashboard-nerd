@@ -3,7 +3,6 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { getUserTypeData, getUserTypeRevenue, getUserTypeAOV } from "@/data/customerData";
 
 const CustomerOverviewSection = () => {
@@ -12,6 +11,15 @@ const CustomerOverviewSection = () => {
   const aovData = getUserTypeAOV();
 
   const COLORS = ["#10b981", "#6366f1"];
+  
+  // Glass morphism style for tooltips - matching Sales page
+  const glassStyle = {
+    backgroundColor: "rgba(17, 25, 40, 0.75)",
+    borderRadius: "16px",
+    border: "1px solid rgba(255, 255, 255, 0.125)",
+    backdropFilter: "blur(16px)",
+    boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.37)",
+  };
 
   return (
     <Card className="col-span-12 lg:col-span-6 matrix-flow shadow-glow-sm">
@@ -46,36 +54,50 @@ const CustomerOverviewSection = () => {
               <div className="bg-gradient-to-b from-[#10b981]/10 to-[#10b981]/5 border border-border/50 rounded-lg p-4 h-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
+                    <defs>
+                      {COLORS.map((color, index) => (
+                        <linearGradient key={`gradient-${index}`} id={`colorCustomer${index}`} x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor={color} stopOpacity={0.9} />
+                          <stop offset="100%" stopColor={color} stopOpacity={0.6} />
+                        </linearGradient>
+                      ))}
+                      <filter id="glow-pie-customer" height="200%">
+                        <feGaussianBlur stdDeviation="3.5" result="blur" />
+                        <feFlood floodOpacity="0.3" result="color" />
+                        <feComposite in="color" in2="blur" operator="in" result="shadow" />
+                        <feComposite in="SourceGraphic" in2="shadow" operator="over" />
+                      </filter>
+                    </defs>
                     <Pie
                       data={countData}
                       cx="50%"
                       cy="50%"
                       labelLine={false}
                       outerRadius={80}
+                      innerRadius={60}
+                      paddingAngle={5}
                       fill="#8884d8"
                       dataKey="value"
+                      label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                      animationDuration={2000}
+                      animationEasing="ease"
+                      isAnimationActive={true}
+                      filter="url(#glow-pie-customer)"
                     >
                       {countData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        <Cell 
+                          key={`cell-${index}`} 
+                          fill={`url(#colorCustomer${index})`}
+                          strokeWidth={1}
+                          stroke="rgba(255, 255, 255, 0.2)"
+                        />
                       ))}
                     </Pie>
                     <Tooltip 
-                      content={({ active, payload }) => {
-                        if (active && payload && payload.length) {
-                          return (
-                            <div className="bg-background/80 backdrop-blur-md border border-border/50 rounded-lg p-2 shadow-md">
-                              <p className="font-medium">{payload[0].name}</p>
-                              <p className="text-sm">
-                                <span className="font-mono">{payload[0].value}</span> customers 
-                                ({payload[0].payload.percentage}%)
-                              </p>
-                            </div>
-                          );
-                        }
-                        return null;
-                      }}
+                      contentStyle={glassStyle}
+                      formatter={(value) => [`${value.toLocaleString()} customers`, 'Count']}
+                      animationDuration={300}
                     />
-                    <Legend />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
@@ -89,25 +111,19 @@ const CustomerOverviewSection = () => {
                     <XAxis dataKey="name" />
                     <YAxis />
                     <Tooltip
-                      content={({ active, payload }) => {
-                        if (active && payload && payload.length) {
-                          return (
-                            <div className="bg-background/80 backdrop-blur-md border border-border/50 rounded-lg p-2 shadow-md">
-                              <p className="font-medium">{payload[0].name}</p>
-                              <p className="text-sm">
-                                <span className="font-mono">{payload[0].value}</span> customers
-                              </p>
-                            </div>
-                          );
-                        }
-                        return null;
-                      }}
+                      contentStyle={glassStyle}
+                      cursor={{ fill: "rgba(255, 255, 255, 0.05)" }}
+                      formatter={(value) => [`${value.toLocaleString()} customers`, 'Count']}
+                      animationDuration={300}
                     />
                     <Bar 
                       dataKey="value" 
                       name="Customers" 
                       fill="url(#customerCountFill)" 
                       radius={[4, 4, 0, 0]}
+                      animationDuration={1500}
+                      animationEasing="ease"
+                      isAnimationActive={true}
                     />
                     <defs>
                       <linearGradient id="customerCountFill" x1="0" y1="0" x2="0" y2="1">
@@ -132,25 +148,19 @@ const CustomerOverviewSection = () => {
                   <XAxis dataKey="name" />
                   <YAxis />
                   <Tooltip
-                    content={({ active, payload }) => {
-                      if (active && payload && payload.length) {
-                        return (
-                          <div className="bg-background/80 backdrop-blur-md border border-border/50 rounded-lg p-2 shadow-md">
-                            <p className="font-medium">{payload[0].name}</p>
-                            <p className="text-sm">
-                              <span className="font-mono">${payload[0].value.toLocaleString()}</span> revenue
-                            </p>
-                          </div>
-                        );
-                      }
-                      return null;
-                    }}
+                    contentStyle={glassStyle}
+                    cursor={{ fill: "rgba(255, 255, 255, 0.05)" }}
+                    formatter={(value) => [`$${value.toLocaleString()}`, 'Revenue']}
+                    animationDuration={300}
                   />
                   <Bar 
                     dataKey="value" 
                     name="Revenue" 
                     fill="url(#revenueGradient)" 
                     radius={[4, 4, 0, 0]}
+                    animationDuration={1500}
+                    animationEasing="ease"
+                    isAnimationActive={true}
                   />
                   <defs>
                     <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
@@ -174,25 +184,19 @@ const CustomerOverviewSection = () => {
                   <XAxis dataKey="name" />
                   <YAxis />
                   <Tooltip
-                    content={({ active, payload }) => {
-                      if (active && payload && payload.length) {
-                        return (
-                          <div className="bg-background/80 backdrop-blur-md border border-border/50 rounded-lg p-2 shadow-md">
-                            <p className="font-medium">{payload[0].name}</p>
-                            <p className="text-sm">
-                              <span className="font-mono">${payload[0].value.toLocaleString()}</span> AOV
-                            </p>
-                          </div>
-                        );
-                      }
-                      return null;
-                    }}
+                    contentStyle={glassStyle}
+                    cursor={{ fill: "rgba(255, 255, 255, 0.05)" }}
+                    formatter={(value) => [`$${value.toLocaleString()}`, 'AOV']}
+                    animationDuration={300}
                   />
                   <Bar 
                     dataKey="value" 
                     name="AOV" 
                     fill="url(#aovGradient)" 
                     radius={[4, 4, 0, 0]}
+                    animationDuration={1500}
+                    animationEasing="ease"
+                    isAnimationActive={true}
                   />
                   <defs>
                     <linearGradient id="aovGradient" x1="0" y1="0" x2="0" y2="1">
