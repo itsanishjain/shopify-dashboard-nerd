@@ -74,14 +74,14 @@ const glassStyle = {
   padding: "12px 16px",
 };
 
-// Updated green-focused color palette for charts
+// Updated color palette with vibrant punchy colors for charts
 const COLORS = [
-  "#10b981", // Main green (Emerald)
-  "#059669", // Dark green
-  "#34d399", // Light green
-  "#14b8a6", // Teal
+  "#8b5cf6", // Violet
+  "#ec4899", // Pink
+  "#f59e0b", // Amber
   "#06b6d4", // Cyan
-  "#0ea5e9", // Sky blue
+  "#10b981", // Emerald
+  "#ef4444", // Red
 ];
 
 const TrafficAcquisitionInsights = () => {
@@ -217,26 +217,18 @@ const TrafficAcquisitionInsights = () => {
                 >
                   <defs>
                     <linearGradient id="barFill1" x1="0" y1="0" x2="0" y2="1">
-                      <stop
-                        offset="0%"
-                        stopColor={COLORS[0]}
-                        stopOpacity={0.9}
-                      />
+                      <stop offset="0%" stopColor="#8b5cf6" stopOpacity={0.9} />
                       <stop
                         offset="100%"
-                        stopColor={COLORS[0]}
+                        stopColor="#8b5cf6"
                         stopOpacity={0.4}
                       />
                     </linearGradient>
                     <linearGradient id="barFill2" x1="0" y1="0" x2="0" y2="1">
-                      <stop
-                        offset="0%"
-                        stopColor={COLORS[1]}
-                        stopOpacity={0.9}
-                      />
+                      <stop offset="0%" stopColor="#ec4899" stopOpacity={0.9} />
                       <stop
                         offset="100%"
-                        stopColor={COLORS[1]}
+                        stopColor="#ec4899"
                         stopOpacity={0.4}
                       />
                     </linearGradient>
@@ -286,6 +278,7 @@ const TrafficAcquisitionInsights = () => {
                     radius={[4, 4, 0, 0]}
                     animationDuration={1500}
                     style={{ cursor: "default" }}
+                    className="hover:fill-current"
                   />
                   <Bar
                     yAxisId="right"
@@ -295,6 +288,7 @@ const TrafficAcquisitionInsights = () => {
                     animationDuration={1500}
                     animationBegin={300}
                     style={{ cursor: "default" }}
+                    className="hover:fill-current"
                   />
                 </BarChart>
               </ResponsiveContainer>
@@ -513,14 +507,10 @@ const TrafficAcquisitionInsights = () => {
                       x2="0"
                       y2="1"
                     >
-                      <stop
-                        offset="0%"
-                        stopColor={COLORS[0]}
-                        stopOpacity={0.8}
-                      />
+                      <stop offset="0%" stopColor="#8b5cf6" stopOpacity={0.8} />
                       <stop
                         offset="100%"
-                        stopColor={COLORS[0]}
+                        stopColor="#8b5cf6"
                         stopOpacity={0.3}
                       />
                     </linearGradient>
@@ -531,14 +521,10 @@ const TrafficAcquisitionInsights = () => {
                       x2="0"
                       y2="1"
                     >
-                      <stop
-                        offset="0%"
-                        stopColor={COLORS[1]}
-                        stopOpacity={0.8}
-                      />
+                      <stop offset="0%" stopColor="#ec4899" stopOpacity={0.8} />
                       <stop
                         offset="100%"
-                        stopColor={COLORS[1]}
+                        stopColor="#ec4899"
                         stopOpacity={0.3}
                       />
                     </linearGradient>
@@ -549,14 +535,10 @@ const TrafficAcquisitionInsights = () => {
                       x2="0"
                       y2="1"
                     >
-                      <stop
-                        offset="0%"
-                        stopColor={COLORS[2]}
-                        stopOpacity={0.8}
-                      />
+                      <stop offset="0%" stopColor="#f59e0b" stopOpacity={0.8} />
                       <stop
                         offset="100%"
-                        stopColor={COLORS[2]}
+                        stopColor="#f59e0b"
                         stopOpacity={0.3}
                       />
                     </linearGradient>
@@ -607,10 +589,10 @@ const TrafficAcquisitionInsights = () => {
                     type="monotone"
                     dataKey="convRate"
                     name="Conversion Rate"
-                    stroke={COLORS[0]}
+                    stroke="#8b5cf6"
                     strokeWidth={2}
-                    dot={{ r: 4, strokeWidth: 2, fill: "white" }}
-                    activeDot={{ r: 6, strokeWidth: 2, fill: "white" }}
+                    dot={{ r: 4, strokeWidth: 2, fill: "#8b5cf6" }}
+                    activeDot={{ r: 6, strokeWidth: 2, fill: "#8b5cf6" }}
                     animationDuration={1500}
                   />
                   <Line
@@ -618,10 +600,10 @@ const TrafficAcquisitionInsights = () => {
                     type="monotone"
                     dataKey="ctr"
                     name="Click-through Rate"
-                    stroke={COLORS[1]}
+                    stroke="#ec4899"
                     strokeWidth={2}
-                    dot={{ r: 4, strokeWidth: 2, fill: "white" }}
-                    activeDot={{ r: 6, strokeWidth: 2, fill: "white" }}
+                    dot={{ r: 4, strokeWidth: 2, fill: "#ec4899" }}
+                    activeDot={{ r: 6, strokeWidth: 2, fill: "#ec4899" }}
                     animationDuration={1500}
                     animationBegin={300}
                   />
@@ -630,10 +612,10 @@ const TrafficAcquisitionInsights = () => {
                     type="monotone"
                     dataKey="roas"
                     name="ROAS"
-                    stroke={COLORS[2]}
+                    stroke="#f59e0b"
                     strokeWidth={2}
-                    dot={{ r: 4, strokeWidth: 2, fill: "white" }}
-                    activeDot={{ r: 6, strokeWidth: 2, fill: "white" }}
+                    dot={{ r: 4, strokeWidth: 2, fill: "#f59e0b" }}
+                    activeDot={{ r: 6, strokeWidth: 2, fill: "#f59e0b" }}
                     animationDuration={1500}
                     animationBegin={600}
                   />
