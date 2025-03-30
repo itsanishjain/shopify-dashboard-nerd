@@ -176,12 +176,11 @@ const OrdersChart: React.FC<OrdersChartProps> = ({ data }) => {
   // Variables for elegant glassmorphism effect
   const glassStyle = {
     backgroundColor: "rgba(240, 240, 245, 0.85)",
-    borderRadius: "4px",
+    borderRadius: "16px",
     border: "1px solid rgba(200, 200, 220, 0.3)",
-    backdropFilter: "blur(12px)",
-    boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.15)",
-    color: "#000",
-    fontWeight: "600",
+    backdropFilter: "blur(16px)",
+    boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.2)",
+    color: "#000000",
   };
 
   return (
