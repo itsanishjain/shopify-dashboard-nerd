@@ -13,6 +13,10 @@ import RevenueByProduct from "@/components/revenue/RevenueByProduct";
 import RevenueByLocation from "@/components/revenue/RevenueByLocation";
 import RevenueForecast from "@/components/revenue/RevenueForecast";
 import SubscriptionMetrics from "@/components/revenue/SubscriptionMetrics";
+import RevenueByMarketing from "@/components/revenue/RevenueByMarketing";
+import CustomerSegment from "@/components/revenue/CustomerSegment";
+import SubscriptionVsOneTime from "@/components/revenue/SubscriptionVsOneTime";
+import TaxFeeBreakdown from "@/components/revenue/TaxFeeBreakdown";
 
 // Sample data for dashboard charts
 const revenueGrowthData = [
@@ -135,6 +139,38 @@ const retentionData = [
   { name: "Dec", retained: 96, churned: 4 },
 ];
 
+// Tax and Fee data
+const taxFeeData = [
+  {
+    name: "Q1",
+    tax: 2100,
+    shippingFees: 1200,
+    platformFees: 800,
+    processingFees: 600,
+  },
+  {
+    name: "Q2",
+    tax: 2400,
+    shippingFees: 1400,
+    platformFees: 900,
+    processingFees: 700,
+  },
+  {
+    name: "Q3",
+    tax: 2800,
+    shippingFees: 1700,
+    platformFees: 1100,
+    processingFees: 850,
+  },
+  {
+    name: "Q4",
+    tax: 3500,
+    shippingFees: 2200,
+    platformFees: 1450,
+    processingFees: 1050,
+  },
+];
+
 // Color schemes
 const COLORS = [
   "#10b981",
@@ -214,6 +250,18 @@ const Revenue = () => {
           <RevenueByCategory data={customerSegmentData} colors={COLORS} />
           <RevenueByLocation data={salesByLocation} />
           <RevenueByProduct data={topProducts} />
+        </div>
+
+        {/* Marketing & Customer Segments */}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <RevenueByMarketing data={marketingChannelData} colors={COLORS} />
+          <CustomerSegment data={customerSegmentData} />
+          <SubscriptionVsOneTime data={subscriptionVsOneTimeData} />
+        </div>
+
+        {/* Tax & Fee Breakdown */}
+        <div className="grid gap-6">
+          <TaxFeeBreakdown data={taxFeeData} />
         </div>
 
         {/* Subscription metrics */}
