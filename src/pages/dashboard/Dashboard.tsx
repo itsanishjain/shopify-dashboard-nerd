@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   BarChart,
   ResponsiveContainer,
@@ -31,12 +31,12 @@ import ProductPerformanceTable from "@/components/dashboard/ProductPerformanceTa
 import AppEcosystemCard from "@/components/dashboard/AppEcosystemCard";
 import TrafficAcquisitionInsights from "@/components/dashboard/TrafficAcquisitionInsights";
 import {
-  salesData,
-  productCategoryData,
-  productPerformanceData,
-  appEcosystemData,
-  revenueData,
-  statisticsData,
+  salesData as originalSalesData,
+  productCategoryData as originalProductCategoryData,
+  productPerformanceData as originalProductPerformanceData,
+  appEcosystemData as originalAppEcosystemData,
+  revenueData as originalRevenueData,
+  statisticsData as originalStatisticsData,
 } from "@/data/dashboardData";
 
 import { Button } from "@/components/ui/button";
@@ -128,9 +128,181 @@ const renderActiveShape = (props) => {
   );
 };
 
+// Helper function to filter data based on date range
+const filterDataByDateRange = (range) => {
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  const last7Days = new Date(today);
+  last7Days.setDate(last7Days.getDate() - 7);
+
+  const last30Days = new Date(today);
+  last30Days.setDate(last30Days.getDate() - 30);
+
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+  const yearStart = new Date(now.getFullYear(), 0, 1);
+
+  // Apply multipliers based on the selected range
+  let multiplier = 1;
+  switch (range) {
+    case "today":
+      multiplier = 0.3;
+      break;
+    case "yesterday":
+      multiplier = 0.25;
+      break;
+    case "last7":
+      multiplier = 0.6;
+      break;
+    case "last30":
+      multiplier = 1;
+      break;
+    case "month":
+      multiplier = 0.9;
+      break;
+    case "year":
+      multiplier = 1.5;
+      break;
+    default:
+      multiplier = 1;
+  }
+
+  // Filter and transform data based on the selected range
+  const modifiedSalesData = originalSalesData.map((item) => ({
+    ...item,
+    value: Math.round(item.value * multiplier),
+  }));
+
+  const modifiedRevenueData = originalRevenueData.map((item) => ({
+    ...item,
+    revenue: Math.round(item.revenue * multiplier),
+    expenses: Math.round(item.expenses * multiplier),
+  }));
+
+  const modifiedProductCategoryData = originalProductCategoryData.map(
+    (item) => ({
+      ...item,
+      value: Math.round(item.value * multiplier),
+    })
+  );
+
+  const modifiedAppEcosystemData = originalAppEcosystemData.map((item) => {
+    const newCostValue = parseFloat((item.costValue * multiplier).toFixed(2));
+    const newRevenue = Math.round(
+      parseInt(item.revenue.replace(/[^0-9]/g, "")) * multiplier
+    );
+    const newROI = Math.round((newRevenue / newCostValue - 1) * 100);
+
+    return {
+      ...item,
+      cost: `$${newCostValue.toFixed(2)}/mo`,
+      costValue: newCostValue,
+      revenue: `$${newRevenue}/mo`,
+      roi: newROI,
+    };
+  });
+
+  const modifiedProductPerformanceData = originalProductPerformanceData.map(
+    (item) => ({
+      ...item,
+      sales: Math.round(item.sales * multiplier),
+      profit: `$${Math.round(
+        parseFloat(item.profit.replace(/[^0-9.]/g, "")) * multiplier
+      ).toLocaleString()}.00`,
+      inventory: Math.round(
+        item.inventory *
+          (range === "today" || range === "yesterday" ? 1 : multiplier)
+      ),
+    })
+  );
+
+  const formatCurrency = (value, multiplier) => {
+    const numValue = parseFloat(value.replace(/[$,]/g, ""));
+    return `$${(numValue * multiplier).toLocaleString(undefined, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
+  };
+
+  const calculateChange = (original, multiplier) => {
+    const value = original.change;
+    // Change the trend direction occasionally based on the range
+    return range === "yesterday" || range === "today" ? -value : value;
+  };
+
+  const modifiedStatisticsData = {
+    totalRevenue: {
+      value: formatCurrency(
+        originalStatisticsData.totalRevenue.value,
+        multiplier
+      ),
+      change: calculateChange(originalStatisticsData.totalRevenue, multiplier),
+      changeLabel: originalStatisticsData.totalRevenue.changeLabel,
+    },
+    averageOrderValue: {
+      value: formatCurrency(
+        originalStatisticsData.averageOrderValue.value,
+        multiplier
+      ),
+      change: calculateChange(
+        originalStatisticsData.averageOrderValue,
+        multiplier
+      ),
+      changeLabel: originalStatisticsData.averageOrderValue.changeLabel,
+    },
+    conversionRate: {
+      value: `${(
+        parseFloat(originalStatisticsData.conversionRate.value) * multiplier
+      ).toFixed(1)}%`,
+      change: calculateChange(
+        originalStatisticsData.conversionRate,
+        multiplier
+      ),
+      changeLabel: originalStatisticsData.conversionRate.changeLabel,
+    },
+    activeCustomers: {
+      value: Math.round(
+        parseInt(
+          originalStatisticsData.activeCustomers.value.replace(/,/g, "")
+        ) * multiplier
+      ).toLocaleString(),
+      change: calculateChange(
+        originalStatisticsData.activeCustomers,
+        multiplier
+      ),
+      changeLabel: originalStatisticsData.activeCustomers.changeLabel,
+    },
+  };
+
+  return {
+    salesData: modifiedSalesData,
+    revenueData: modifiedRevenueData,
+    productCategoryData: modifiedProductCategoryData,
+    appEcosystemData: modifiedAppEcosystemData,
+    productPerformanceData: modifiedProductPerformanceData,
+    statisticsData: modifiedStatisticsData,
+  };
+};
+
 const Dashboard = () => {
   const [dateRange, setDateRange] = useState("last30");
   const [activeIndex, setActiveIndex] = useState(0);
+  const [filteredData, setFilteredData] = useState({
+    salesData: originalSalesData,
+    revenueData: originalRevenueData,
+    productCategoryData: originalProductCategoryData,
+    appEcosystemData: originalAppEcosystemData,
+    productPerformanceData: originalProductPerformanceData,
+    statisticsData: originalStatisticsData,
+  });
+
+  useEffect(() => {
+    // Update data when date range changes
+    const newData = filterDataByDateRange(dateRange);
+    setFilteredData(newData);
+  }, [dateRange]);
 
   const onPieEnter = (_, index) => {
     setActiveIndex(index);
@@ -164,31 +336,35 @@ const Dashboard = () => {
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <StatCard
             title="Total Revenue"
-            value={statisticsData.totalRevenue.value}
+            value={filteredData.statisticsData.totalRevenue.value}
             icon={<DollarSign className="h-5 w-5 text-primary" />}
-            change={statisticsData.totalRevenue.change}
-            changeLabel={statisticsData.totalRevenue.changeLabel}
+            change={filteredData.statisticsData.totalRevenue.change}
+            changeLabel={filteredData.statisticsData.totalRevenue.changeLabel}
           />
           <StatCard
             title="Average Order Value"
-            value={statisticsData.averageOrderValue.value}
+            value={filteredData.statisticsData.averageOrderValue.value}
             icon={<CreditCard className="h-5 w-5 text-primary" />}
-            change={statisticsData.averageOrderValue.change}
-            changeLabel={statisticsData.averageOrderValue.changeLabel}
+            change={filteredData.statisticsData.averageOrderValue.change}
+            changeLabel={
+              filteredData.statisticsData.averageOrderValue.changeLabel
+            }
           />
           <StatCard
             title="Conversion Rate"
-            value={statisticsData.conversionRate.value}
+            value={filteredData.statisticsData.conversionRate.value}
             icon={<ShoppingCart className="h-5 w-5 text-primary" />}
-            change={statisticsData.conversionRate.change}
-            changeLabel={statisticsData.conversionRate.changeLabel}
+            change={filteredData.statisticsData.conversionRate.change}
+            changeLabel={filteredData.statisticsData.conversionRate.changeLabel}
           />
           <StatCard
             title="Active Customers"
-            value={statisticsData.activeCustomers.value}
+            value={filteredData.statisticsData.activeCustomers.value}
             icon={<Users className="h-5 w-5 text-primary" />}
-            change={statisticsData.activeCustomers.change}
-            changeLabel={statisticsData.activeCustomers.changeLabel}
+            change={filteredData.statisticsData.activeCustomers.change}
+            changeLabel={
+              filteredData.statisticsData.activeCustomers.changeLabel
+            }
           />
         </div>
 
@@ -198,7 +374,7 @@ const Dashboard = () => {
             description="Monthly sales performance"
             chart={
               <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={salesData} margin={{ top: 20 }}>
+                <BarChart data={filteredData.salesData} margin={{ top: 20 }}>
                   <defs>
                     <linearGradient id="colorSales" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="5%" stopColor="#10b981" stopOpacity={0.8} />
@@ -241,7 +417,7 @@ const Dashboard = () => {
             chart={
               <ResponsiveContainer width="100%" height={300}>
                 <AreaChart
-                  data={revenueData}
+                  data={filteredData.revenueData}
                   margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
                 >
                   <defs>
@@ -391,7 +567,7 @@ const Dashboard = () => {
                   <Pie
                     activeIndex={activeIndex}
                     activeShape={renderActiveShape}
-                    data={productCategoryData}
+                    data={filteredData.productCategoryData}
                     cx="50%"
                     cy="50%"
                     innerRadius={60}
@@ -400,7 +576,7 @@ const Dashboard = () => {
                     dataKey="value"
                     onMouseEnter={onPieEnter}
                   >
-                    {productCategoryData.map((entry, index) => (
+                    {filteredData.productCategoryData.map((entry, index) => (
                       <Cell
                         key={`cell-${index}`}
                         fill={COLORS[index % COLORS.length]}
@@ -426,13 +602,15 @@ const Dashboard = () => {
             className="md:col-span-1"
           />
           <AppEcosystemCard
-            apps={appEcosystemData}
+            apps={filteredData.appEcosystemData}
             className="md:col-span-2 lg:col-span-2"
           />
         </div>
 
         <div className="grid gap-4">
-          <ProductPerformanceTable products={productPerformanceData} />
+          <ProductPerformanceTable
+            products={filteredData.productPerformanceData}
+          />
         </div>
       </div>
     </DashboardLayout>
