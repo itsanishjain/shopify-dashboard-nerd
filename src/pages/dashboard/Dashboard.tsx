@@ -48,6 +48,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
 
 // Modern, vibrant colors for the pie chart
 const COLORS = ["#8b5cf6", "#06b6d4", "#10b981", "#f59e0b", "#ef4444"];
@@ -374,39 +379,58 @@ const Dashboard = () => {
             description="Monthly sales performance"
             chart={
               <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={filteredData.salesData} margin={{ top: 20 }}>
-                  <defs>
-                    <linearGradient id="colorSales" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#10b981" stopOpacity={0.8} />
-                      <stop
-                        offset="95%"
-                        stopColor="#10b981"
-                        stopOpacity={0.2}
-                      />
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid
-                    strokeDasharray="3 3"
-                    vertical={false}
-                    stroke="#333"
-                  />
-                  <XAxis dataKey="name" stroke="#999" />
-                  <YAxis stroke="#999" />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: "#222",
-                      borderColor: "#333",
-                      color: "#fff",
-                    }}
-                  />
-                  <Bar
-                    dataKey="value"
-                    name="Sales"
-                    fill="url(#colorSales)"
-                    radius={[4, 4, 0, 0]}
-                    className="cursor-pointer"
-                  />
-                </BarChart>
+                <ChartContainer
+                  config={{
+                    sales: {
+                      label: "Sales",
+                      color: "hsl(142, 76%, 36%)", // Green theme primary color
+                    },
+                  }}
+                >
+                  <BarChart
+                    accessibilityLayer
+                    data={filteredData.salesData}
+                    margin={{ top: 20 }}
+                  >
+                    <CartesianGrid vertical={false} />
+                    <XAxis
+                      dataKey="name"
+                      tickLine={false}
+                      tickMargin={10}
+                      axisLine={false}
+                    />
+                    <ChartTooltip
+                      cursor={false}
+                      content={<ChartTooltipContent indicator="dashed" />}
+                    />
+                    <defs>
+                      <linearGradient
+                        id="salesGradient"
+                        x1="0"
+                        y1="0"
+                        x2="0"
+                        y2="1"
+                      >
+                        <stop
+                          offset="0%"
+                          stopColor="#059669"
+                          stopOpacity={0.9}
+                        />
+                        <stop
+                          offset="100%"
+                          stopColor="#10b981"
+                          stopOpacity={0.7}
+                        />
+                      </linearGradient>
+                    </defs>
+                    <Bar
+                      dataKey="value"
+                      name="Sales"
+                      fill="url(#salesGradient)"
+                      radius={4}
+                    />
+                  </BarChart>
+                </ChartContainer>
               </ResponsiveContainer>
             }
           />
