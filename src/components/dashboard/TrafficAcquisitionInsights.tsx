@@ -211,30 +211,12 @@ const TrafficAcquisitionInsights = () => {
             <div className="h-80 overflow-x-auto">
               <ResponsiveContainer width="100%" height="100%" minWidth={600}>
                 <BarChart
+                  accessibilityLayer
                   data={trafficSourcesData}
                   margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
                   barGap={8}
                 >
-                  <defs>
-                    <linearGradient id="barFill1" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#8b5cf6" stopOpacity={0.9} />
-                      <stop
-                        offset="100%"
-                        stopColor="#8b5cf6"
-                        stopOpacity={0.4}
-                      />
-                    </linearGradient>
-                    <linearGradient id="barFill2" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#ec4899" stopOpacity={0.9} />
-                      <stop
-                        offset="100%"
-                        stopColor="#ec4899"
-                        stopOpacity={0.4}
-                      />
-                    </linearGradient>
-                  </defs>
                   <CartesianGrid
-                    strokeDasharray="3 3"
                     vertical={false}
                     stroke="rgba(255,255,255,0.1)"
                   />
@@ -242,6 +224,7 @@ const TrafficAcquisitionInsights = () => {
                     dataKey="source"
                     tick={{ fontSize: 12 }}
                     tickLine={false}
+                    tickMargin={10}
                     axisLine={{ stroke: "rgba(255,255,255,0.15)" }}
                   />
                   <YAxis
@@ -261,6 +244,7 @@ const TrafficAcquisitionInsights = () => {
                     axisLine={{ stroke: "rgba(255,255,255,0.15)" }}
                   />
                   <Tooltip
+                    cursor={false}
                     contentStyle={glassStyle}
                     formatter={(value, name) => {
                       if (name === "visitors")
@@ -271,24 +255,52 @@ const TrafficAcquisitionInsights = () => {
                     }}
                   />
                   <Legend />
+                  <defs>
+                    <linearGradient
+                      id="visitorsGradient"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
+                      <stop offset="0%" stopColor="#8b5cf6" stopOpacity={0.9} />
+                      <stop
+                        offset="100%"
+                        stopColor="#8b5cf6"
+                        stopOpacity={0.4}
+                      />
+                    </linearGradient>
+                    <linearGradient
+                      id="conversionGradient"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
+                      <stop offset="0%" stopColor="#ec4899" stopOpacity={0.9} />
+                      <stop
+                        offset="100%"
+                        stopColor="#ec4899"
+                        stopOpacity={0.4}
+                      />
+                    </linearGradient>
+                  </defs>
                   <Bar
                     yAxisId="left"
                     dataKey="visitors"
-                    fill="url(#barFill1)"
-                    radius={[4, 4, 0, 0]}
+                    name="Visitors"
+                    fill="url(#visitorsGradient)"
+                    radius={4}
                     animationDuration={1500}
-                    style={{ cursor: "default" }}
-                    className="hover:fill-current"
                   />
                   <Bar
                     yAxisId="right"
                     dataKey="conversionRate"
-                    fill="url(#barFill2)"
-                    radius={[4, 4, 0, 0]}
+                    name="Conversion Rate"
+                    fill="url(#conversionGradient)"
+                    radius={4}
                     animationDuration={1500}
                     animationBegin={300}
-                    style={{ cursor: "default" }}
-                    className="hover:fill-current"
                   />
                 </BarChart>
               </ResponsiveContainer>
