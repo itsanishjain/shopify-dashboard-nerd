@@ -428,13 +428,16 @@ const Sales = () => {
           </motion.div>
         </motion.div>
 
-        {/* Sales Breakdown */}
+        {/* Sales Breakdown - Bento Grid Layout */}
         <motion.div
-          className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+          className="grid gap-6 grid-cols-1 md:grid-cols-6 lg:grid-cols-12"
           variants={itemVariants}
         >
           {/* By Channel */}
-          <motion.div variants={itemVariants}>
+          <motion.div
+            className="md:col-span-3 lg:col-span-4"
+            variants={itemVariants}
+          >
             <ChartCard
               title="Sales by Channel"
               chart={
@@ -446,7 +449,10 @@ const Sales = () => {
           </motion.div>
 
           {/* By Device */}
-          <motion.div variants={itemVariants}>
+          <motion.div
+            className="md:col-span-3 lg:col-span-4"
+            variants={itemVariants}
+          >
             <ChartCard
               title="Sales by Device"
               chart={
@@ -531,13 +537,16 @@ const Sales = () => {
           </motion.div>
 
           {/* Average Order Value (AOV) Trend */}
-          <motion.div className="lg:col-span-1" variants={itemVariants}>
+          <motion.div
+            className="md:col-span-6 lg:col-span-4"
+            variants={itemVariants}
+          >
             <Card className="matrix-flow shadow-glow-sm h-full">
               <CardHeader>
                 <CardTitle className="terminal-text">AOV Trend</CardTitle>
               </CardHeader>
               <CardContent>
-                <ResponsiveContainer width="100%" height={350}>
+                <ResponsiveContainer width="100%" height={280}>
                   <BarChart
                     data={aovData}
                     margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
@@ -605,15 +614,12 @@ const Sales = () => {
               </CardContent>
             </Card>
           </motion.div>
-        </motion.div>
 
-        {/* Order Status Overview + Discount Code Performance */}
-        <motion.div
-          className="grid gap-6 md:grid-cols-2"
-          variants={itemVariants}
-        >
           {/* Order Status Overview */}
-          <motion.div variants={itemVariants}>
+          <motion.div
+            className="md:col-span-3 lg:col-span-6"
+            variants={itemVariants}
+          >
             <Card className="matrix-flow shadow-glow-sm h-full">
               <CardHeader>
                 <CardTitle className="terminal-text">
@@ -660,7 +666,10 @@ const Sales = () => {
           </motion.div>
 
           {/* Discount Code Performance */}
-          <motion.div variants={itemVariants}>
+          <motion.div
+            className="md:col-span-3 lg:col-span-6"
+            variants={itemVariants}
+          >
             <Card className="matrix-flow shadow-glow-sm h-full">
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle className="terminal-text">
