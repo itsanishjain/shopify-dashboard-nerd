@@ -116,10 +116,11 @@ const DashboardSidebar = ({
       <Button
         variant="ghost"
         size="icon"
-        className="fixed top-3 left-3 z-40 flex items-center justify-center md:hidden hover:bg-accent shadow-sm"
+        className="fixed top-3 left-3 z-40 flex items-center justify-center md:hidden hover:bg-accent shadow-sm rounded-md bg-background/80 backdrop-blur-sm border border-border/50"
         onClick={() => setMobileOpen(!mobileOpen)}
+        aria-label="Toggle menu"
       >
-        <Menu className="h-6 w-6 text-foreground" />
+        <Menu className="h-5 w-5 text-foreground" />
       </Button>
 
       {/* Mobile overlay with animation */}
