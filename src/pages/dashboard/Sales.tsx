@@ -1,26 +1,8 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  ArrowUpDown,
-  Smartphone,
-  ShoppingBag,
-  Globe,
-  Store,
-  Clock,
-  Calendar,
-  Percent,
-  CreditCard,
-  ShoppingCart,
-  BarChart4,
-  MapPin,
-} from "lucide-react";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { MapPin } from "lucide-react";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
 import {
   BarChart,
   ResponsiveContainer,
@@ -36,12 +18,7 @@ import {
   Cell,
   Legend,
 } from "recharts";
-import {
-  salesData,
-  salesOverTimeData,
-  customerAcquisitionData,
-  productCategoryData,
-} from "@/data/dashboardData";
+import { salesData, salesOverTimeData } from "@/data/dashboardData";
 import {
   getSalesByChannel,
   getSalesByLocation,
@@ -53,19 +30,9 @@ import {
   getAbandonedCheckouts,
 } from "@/data/salesAnalyticsData";
 import ChartCard from "@/components/dashboard/ChartCard";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { format } from "date-fns";
 import SalesHeatmap from "@/components/dashboard/SalesHeatmap";
 import DiscountCodeTable from "@/components/dashboard/DiscountCodeTable";
 import SalesChannelChart from "@/components/dashboard/SalesChannelChart";
